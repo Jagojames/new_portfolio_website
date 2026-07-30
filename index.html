@@ -598,6 +598,42 @@
     footer .f-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     footer .f-links a:hover { color: var(--text); }
 
+    /* ─── Custom Video Player ─── */
+    .vid-player { position: relative; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    .vid-player video { width: 100%; display: block; }
+    .vid-controls {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(8px);
+    }
+    .vid-btn {
+      background: none; border: none; cursor: pointer; padding: 4px 6px;
+      color: var(--muted); border-radius: 4px; display: flex; align-items: center; justify-content: center;
+      transition: color 0.15s, background 0.15s;
+      flex-shrink: 0;
+    }
+    .vid-btn:hover { color: var(--orange); background: rgba(249,115,22,0.1); }
+    .vid-progress {
+      flex: 1; height: 3px; background: #2a2a2a; border-radius: 2px;
+      cursor: pointer; position: relative; overflow: hidden;
+    }
+    .vid-progress-fill { height: 100%; background: var(--orange); border-radius: 2px; width: 0%; pointer-events: none; transition: width 0.1s linear; }
+    .vid-progress:hover .vid-progress-fill { background: #fb923c; }
+    .vid-volume {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .vid-volume-slider {
+      -webkit-appearance: none; appearance: none;
+      width: 64px; height: 3px; border-radius: 2px;
+      background: #2a2a2a; cursor: pointer; outline: none;
+    }
+    .vid-volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 11px; height: 11px;
+      border-radius: 50%; background: var(--orange); cursor: pointer;
+    }
+    .vid-time { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
     /* ─── Project Pages ─── */
     .project-page { display: none; min-height: 100vh; }
     .project-page.active { display: block; }
@@ -1011,11 +1047,24 @@
       <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:6px">// Featured · SAP · BoSH Prototype</div>
       <div style="font-size:15px;font-weight:600">Self-healing AI platform — vibe coded prototype built in Lovable</div>
     </div>
-    <video
-      src="https://carbon-media.accelerator.net/0000000mKt5/frN25GXPdNxbNSAfCLhgPr;video.mp4"
-      autoplay muted loop playsinline
-      style="width:100%;display:block;max-height:520px;object-fit:cover">
-    </video>
+    <div class="vid-player" style="border-radius:0;border-left:none;border-right:none;border-top:none;">
+      <video id="vid-hero" src="https://carbon-media.accelerator.net/0000000mKt5/frN25GXPdNxbNSAfCLhgPr;video.mp4" autoplay muted loop playsinline style="width:100%;display:block;max-height:520px;object-fit:cover"></video>
+      <div class="vid-controls">
+        <button class="vid-btn" data-vid="vid-hero" data-action="playpause" title="Play / Pause">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+        </button>
+        <div class="vid-progress" data-vid="vid-hero" data-action="seek">
+          <div class="vid-progress-fill" id="vid-hero-fill"></div>
+        </div>
+        <span class="vid-time" id="vid-hero-time">0:00</span>
+        <div class="vid-volume">
+          <button class="vid-btn" data-vid="vid-hero" data-action="mute" title="Mute / Unmute">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
+          <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-hero" data-action="volume">
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1237,10 +1286,23 @@
 
     <div class="content-block">
       <div class="content-block-label">// Hub MVP Video</div>
-      <div class="drop-zone drop-zone-lg" style="min-height:320px">
-        <video src="https://carbon-media.accelerator.net/0000000mKt5/cOapxQRgMPueEiGQul1NKi;audio,video(1920x1364,1280x910,960x682,768x546)/master.m3u8" controls style="width:100%;border-radius:4px;display:none" id="ss-video"></video>
-        <span>Hub MVP Demo Video</span><br>
-        <button onclick="document.getElementById('ss-video').style.display='block';this.style.display='none'" style="margin-top:12px;background:var(--orange);color:#000;border:none;padding:10px 20px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px">▶ Play Video</button>
+      <div class="vid-player">
+        <video id="vid-silverstream" src="https://carbon-media.accelerator.net/0000000mKt5/cOapxQRgMPueEiGQul1NKi;audio,video(1920x1364,1280x910,960x682,768x546)/master.m3u8" autoplay muted loop playsinline style="width:100%;max-height:480px;object-fit:contain;background:#000"></video>
+        <div class="vid-controls">
+          <button class="vid-btn" data-vid="vid-silverstream" data-action="playpause" title="Play / Pause">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          </button>
+          <div class="vid-progress" data-vid="vid-silverstream" data-action="seek">
+            <div class="vid-progress-fill" id="vid-silverstream-fill"></div>
+          </div>
+          <span class="vid-time" id="vid-silverstream-time">0:00</span>
+          <div class="vid-volume">
+            <button class="vid-btn" data-vid="vid-silverstream" data-action="mute" title="Mute / Unmute">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </button>
+            <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-silverstream" data-action="volume">
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1319,7 +1381,24 @@
 
     <div class="content-block">
       <div class="content-block-label">// BoSH Prototype</div>
-      <video src="https://carbon-media.accelerator.net/0000000mKt5/frN25GXPdNxbNSAfCLhgPr;video.mp4" controls muted style="width:100%;border-radius:8px;border:1px solid var(--border)"></video>
+      <div class="vid-player">
+        <video id="vid-bosh" src="https://carbon-media.accelerator.net/0000000mKt5/frN25GXPdNxbNSAfCLhgPr;video.mp4" autoplay muted loop playsinline style="width:100%;max-height:480px;object-fit:contain;background:#000"></video>
+        <div class="vid-controls">
+          <button class="vid-btn" data-vid="vid-bosh" data-action="playpause" title="Play / Pause">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          </button>
+          <div class="vid-progress" data-vid="vid-bosh" data-action="seek">
+            <div class="vid-progress-fill" id="vid-bosh-fill"></div>
+          </div>
+          <span class="vid-time" id="vid-bosh-time">0:00</span>
+          <div class="vid-volume">
+            <button class="vid-btn" data-vid="vid-bosh" data-action="mute" title="Mute / Unmute">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </button>
+            <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-bosh" data-action="volume">
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="content-block">
@@ -2068,6 +2147,81 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
     gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
   }
+
+  /* ─── Custom Video Player Controls ─── */
+  (function() {
+    const PLAY_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+    const PAUSE_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>`;
+    const MUTE_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>`;
+    const VOL_ICON  = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+
+    function fmt(s) {
+      const m = Math.floor((s || 0) / 60);
+      const sec = Math.floor((s || 0) % 60);
+      return m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
+    function initPlayer(id) {
+      const vid = document.getElementById(id);
+      if (!vid) return;
+      const fill = document.getElementById(id + '-fill');
+      const timeEl = document.getElementById(id + '-time');
+      const playBtn = document.querySelector(`[data-vid="${id}"][data-action="playpause"]`);
+      const muteBtn = document.querySelector(`[data-vid="${id}"][data-action="mute"]`);
+      const volSlider = document.querySelector(`[data-vid="${id}"][data-action="volume"]`);
+      const seekBar = document.querySelector(`[data-vid="${id}"][data-action="seek"]`);
+
+      // Sync play/pause icon
+      function syncPlay() {
+        if (playBtn) playBtn.innerHTML = vid.paused ? PLAY_ICON : PAUSE_ICON;
+      }
+      // Sync mute icon and slider
+      function syncMute() {
+        if (muteBtn) muteBtn.innerHTML = vid.muted ? MUTE_ICON : VOL_ICON;
+        if (volSlider) volSlider.value = vid.muted ? 0 : vid.volume;
+      }
+      // Sync progress bar
+      function syncProgress() {
+        if (fill && vid.duration) {
+          fill.style.width = (vid.currentTime / vid.duration * 100) + '%';
+        }
+        if (timeEl) timeEl.textContent = fmt(vid.currentTime) + (vid.duration ? ' / ' + fmt(vid.duration) : '');
+      }
+
+      vid.addEventListener('play', syncPlay);
+      vid.addEventListener('pause', syncPlay);
+      vid.addEventListener('volumechange', syncMute);
+      vid.addEventListener('timeupdate', syncProgress);
+      vid.addEventListener('loadedmetadata', syncProgress);
+
+      if (playBtn) playBtn.addEventListener('click', () => vid.paused ? vid.play() : vid.pause());
+      if (muteBtn) muteBtn.addEventListener('click', () => { vid.muted = !vid.muted; });
+      if (volSlider) volSlider.addEventListener('input', e => {
+        vid.volume = parseFloat(e.target.value);
+        vid.muted = vid.volume === 0;
+      });
+      if (seekBar) seekBar.addEventListener('click', e => {
+        const rect = seekBar.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+        if (vid.duration) vid.currentTime = pct * vid.duration;
+      });
+
+      // Initial state (starts muted/autoplaying)
+      syncPlay(); syncMute(); syncProgress();
+    }
+
+    // Init all players once DOM is ready
+    function initAll() {
+      initPlayer('vid-hero');
+      initPlayer('vid-silverstream');
+      initPlayer('vid-bosh');
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+  })();
 </script>
 
 
