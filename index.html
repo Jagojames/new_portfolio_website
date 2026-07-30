@@ -103,6 +103,7 @@
       50% { opacity: 0.5; transform: scale(0.85); }
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ─── Base ─── */
     html { scroll-behavior: smooth; }
@@ -483,13 +484,13 @@
       font-size: 22px;
       font-weight: 800;
       letter-spacing: -0.02em;
-      color: #2a2a2a;
+      color: #555;
       white-space: nowrap;
       transition: color 0.25s;
       cursor: default;
       user-select: none;
     }
-    .ticker-item:hover { color: var(--muted); }
+    .ticker-item:hover { color: var(--orange); }
     /* separator dot */
     .ticker-sep {
       font-size: 8px;
@@ -598,6 +599,11 @@
     footer .f-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     footer .f-links a:hover { color: var(--text); }
 
+    /* ─── Avatar Canvas ─── */
+    #avatar-canvas { cursor: pointer; transition: box-shadow 0.2s; }
+    #avatar-canvas:hover { box-shadow: 0 0 0 2px var(--orange); }
+    #avatar-card.drag-over #avatar-canvas { box-shadow: 0 0 0 2px var(--orange); opacity: 0.7; }
+
     /* ─── Custom Video Player ─── */
     .vid-player { position: relative; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
     .vid-player video { width: 100%; display: block; }
@@ -633,6 +639,17 @@
       border-radius: 50%; background: var(--orange); cursor: pointer;
     }
     .vid-time { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .vid-muted-badge {
+      font-size: 10px; letter-spacing: 0.06em; font-family: monospace; text-transform: uppercase;
+      color: var(--orange); border: 1px solid rgba(249,115,22,0.35); border-radius: 4px;
+      padding: 2px 7px; white-space: nowrap; opacity: 1; transition: opacity 0.3s;
+    }
+    .vid-muted-badge.hidden { opacity: 0; pointer-events: none; }
+    .vid-noaudio-badge {
+      font-size: 10px; letter-spacing: 0.06em; font-family: monospace; text-transform: uppercase;
+      color: var(--muted); border: 1px solid #2a2a2a; border-radius: 4px;
+      padding: 2px 7px; white-space: nowrap;
+    }
 
     /* ─── Project Pages ─── */
     .project-page { display: none; min-height: 100vh; }
@@ -652,11 +669,12 @@
     .back-btn {
       display: inline-flex; align-items: center; gap: 10px;
       font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
-      color: var(--muted); background: none; border: 1px solid var(--border);
+      color: var(--orange); background: none; border: 1px solid var(--orange);
       border-radius: 6px; padding: 8px 16px; cursor: pointer;
-      text-transform: uppercase; transition: color 0.2s, border-color 0.2s;
+      text-transform: uppercase; transition: color 0.2s, border-color 0.2s, background 0.2s;
+      opacity: 0.6;
     }
-    .back-btn:hover { color: var(--orange); border-color: var(--orange); }
+    .back-btn:hover { opacity: 1; background: rgba(249,115,22,0.08); }
 
     .proj-hero {
       height: 58vh; min-height: 380px;
@@ -939,23 +957,6 @@
         </div>
       </div>
 
-      <div class="connector">
-        <div class="connector-pill">
-          <div class="c-dot"></div>
-          <div class="c-dot"></div>
-          <div class="c-dot"></div>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="panel-card">
-        <div class="panel-badge badge-orange">New session</div>
-        <div class="panel-row">User ID: <span class="val typewriter" data-type="DAE123ADS"></span></div>
-        <div class="panel-row">Name: <span class="val typewriter" data-type="You"></span></div>
-        <div class="panel-row">Company: <span class="val typewriter" data-type="Your Company"></span></div>
-        <div class="panel-row">Email: <span class="val typewriter" data-type="N/A"></span></div>
-        <div class="panel-row">Location: <span class="val typewriter" data-type="Worldwide"></span></div>
-      </div>
 
     </div>
   </div>
@@ -1040,31 +1041,45 @@
   </div>
 </div>
 
-<!-- ═══════════════ FEATURED VIDEO ═══════════════ -->
-<div style="max-width:1280px;margin:0 auto;padding:0 52px 80px">
-  <div class="g-up" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative">
-    <div style="padding:28px 32px;border-bottom:1px solid var(--border)">
-      <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:6px">// Featured · SAP · BoSH Prototype</div>
-      <div style="font-size:15px;font-weight:600">Self-healing AI platform — vibe coded prototype built in Lovable</div>
+<!-- ═══════════════ INTERVIEW PROJECTS ═══════════════ -->
+<hr class="ruled" />
+<div class="section" id="interview">
+  <div class="work-header">
+    <div>
+      <div class="eyebrow g-up">// Interview Projects</div>
+      <h2 class="section-title g-up">Designed under<br>time pressure.</h2>
     </div>
-    <div class="vid-player" style="border-radius:0;border-left:none;border-right:none;border-top:none;">
-      <video id="vid-hero" src="https://carbon-media.accelerator.net/0000000mKt5/frN25GXPdNxbNSAfCLhgPr;video.mp4" autoplay muted loop playsinline style="width:100%;display:block;max-height:520px;object-fit:cover"></video>
-      <div class="vid-controls">
-        <button class="vid-btn" data-vid="vid-hero" data-action="playpause" title="Play / Pause">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
-        </button>
-        <div class="vid-progress" data-vid="vid-hero" data-action="seek">
-          <div class="vid-progress-fill" id="vid-hero-fill"></div>
-        </div>
-        <span class="vid-time" id="vid-hero-time">0:00</span>
-        <div class="vid-volume">
-          <button class="vid-btn" data-vid="vid-hero" data-action="mute" title="Mute / Unmute">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-          </button>
-          <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-hero" data-action="volume">
-        </div>
+    <p class="section-body g-up" style="max-width:340px">
+      Take-home design challenges completed as part of interview processes — full brief and work shown.
+    </p>
+  </div>
+
+  <div class="work-grid g-up">
+
+    <!-- Global Relay -->
+    <div class="tile" onclick="openProject('global-relay')" style="cursor:pointer">
+      <div class="tile-bg" style="background:linear-gradient(135deg,#0a1628 0%,#0d2044 50%,#0a1628 100%);display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 200 200" width="120" height="120" style="opacity:0.18"><circle cx="100" cy="100" r="80" fill="none" stroke="#fff" stroke-width="6"/><path d="M40 100 Q100 40 160 100 Q100 160 40 100Z" fill="none" stroke="#fff" stroke-width="4"/><circle cx="100" cy="100" r="20" fill="#fff" opacity="0.4"/></svg>
+      </div>
+      <div class="tile-overlay">
+        <div class="tile-cat">Interview Task · Auth UX · Compliance SaaS</div>
+        <div class="tile-name">Global Relay</div>
+        <div style="font-size:12px;color:#aaa;margin-top:6px">Unified login system for a financial-grade SaaS platform — 4-day brief, 30-page response</div>
       </div>
     </div>
+
+    <!-- Zen Educate -->
+    <div class="tile" onclick="openProject('zen-educate')" style="cursor:pointer">
+      <div class="tile-bg" style="background:linear-gradient(135deg,#0d1f0d 0%,#142814 50%,#0d1f0d 100%);display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 200 200" width="120" height="120" style="opacity:0.18"><rect x="40" y="40" width="120" height="120" rx="16" fill="none" stroke="#fff" stroke-width="6"/><line x1="70" y1="80" x2="130" y2="80" stroke="#fff" stroke-width="4" stroke-linecap="round"/><line x1="70" y1="100" x2="110" y2="100" stroke="#fff" stroke-width="4" stroke-linecap="round"/><line x1="70" y1="120" x2="120" y2="120" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>
+      </div>
+      <div class="tile-overlay">
+        <div class="tile-cat">Interview Task · EdTech · Product Design</div>
+        <div class="tile-name">Zen Educate</div>
+        <div style="font-size:12px;color:#aaa;margin-top:6px">Design challenge for a teacher supply platform — brief + prototype in progress</div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1296,12 +1311,7 @@
             <div class="vid-progress-fill" id="vid-silverstream-fill"></div>
           </div>
           <span class="vid-time" id="vid-silverstream-time">0:00</span>
-          <div class="vid-volume">
-            <button class="vid-btn" data-vid="vid-silverstream" data-action="mute" title="Mute / Unmute">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-            </button>
-            <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-silverstream" data-action="volume">
-          </div>
+          <span class="vid-noaudio-badge">No audio</span>
         </div>
       </div>
     </div>
@@ -1373,9 +1383,18 @@
 
     <div class="content-block">
       <div class="content-block-label">// CDS Promo Video</div>
-      <div class="drop-zone drop-zone-lg" style="min-height:320px">
-        <span>CDS Promo Video</span><br>
-        <a href="https://carbon-media.accelerator.net/0000000mKt5/hOcBnu4o5lBe7kux90FU9P;audio,video(1920x1080,1280x720,960x540,768x432)/master.m3u8" target="_blank" style="color:var(--orange);font-size:12px;margin-top:8px;display:block">Open video link ↗</a>
+      <div class="vid-player">
+        <video id="vid-cds" src="https://carbon-media.accelerator.net/0000000mKt5/hOcBnu4o5lBe7kux90FU9P;audio,video(1920x1080,1280x720,960x540,768x432)/master.m3u8" autoplay muted loop playsinline style="width:100%;max-height:480px;object-fit:contain;background:#000"></video>
+        <div class="vid-controls">
+          <button class="vid-btn" data-vid="vid-cds" data-action="playpause"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></button>
+          <div class="vid-progress" data-vid="vid-cds" data-action="seek"><div class="vid-progress-fill" id="vid-cds-fill"></div></div>
+          <span class="vid-time" id="vid-cds-time">0:00</span>
+          <span class="vid-muted-badge" id="vid-cds-badge">🔇 Muted</span>
+          <div class="vid-volume">
+            <button class="vid-btn" data-vid="vid-cds" data-action="mute"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+            <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-cds" data-action="volume">
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1391,12 +1410,7 @@
             <div class="vid-progress-fill" id="vid-bosh-fill"></div>
           </div>
           <span class="vid-time" id="vid-bosh-time">0:00</span>
-          <div class="vid-volume">
-            <button class="vid-btn" data-vid="vid-bosh" data-action="mute" title="Mute / Unmute">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-            </button>
-            <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-bosh" data-action="volume">
-          </div>
+          <span class="vid-noaudio-badge">No audio</span>
         </div>
       </div>
     </div>
@@ -1459,9 +1473,18 @@
 
     <div class="content-block">
       <div class="content-block-label">// Get2Know Demo Video</div>
-      <div class="drop-zone drop-zone-lg" style="min-height:320px">
-        <span>Get2Know Video</span><br>
-        <a href="https://carbon-media.accelerator.net/0000000mKt5/7xZlDTreJsOf164Axytdlh;audio,video(1920x1330,1280x886,960x664,768x532)/master.m3u8" target="_blank" style="color:var(--orange);font-size:12px;margin-top:8px;display:block">Open video link ↗</a>
+      <div class="vid-player">
+        <video id="vid-get2know" src="https://carbon-media.accelerator.net/0000000mKt5/7xZlDTreJsOf164Axytdlh;audio,video(1920x1330,1280x886,960x664,768x532)/master.m3u8" autoplay muted loop playsinline style="width:100%;max-height:480px;object-fit:contain;background:#000"></video>
+        <div class="vid-controls">
+          <button class="vid-btn" data-vid="vid-get2know" data-action="playpause"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></button>
+          <div class="vid-progress" data-vid="vid-get2know" data-action="seek"><div class="vid-progress-fill" id="vid-get2know-fill"></div></div>
+          <span class="vid-time" id="vid-get2know-time">0:00</span>
+          <span class="vid-muted-badge" id="vid-get2know-badge">🔇 Muted</span>
+          <div class="vid-volume">
+            <button class="vid-btn" data-vid="vid-get2know" data-action="mute"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+            <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-get2know" data-action="volume">
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1611,6 +1634,257 @@
   <div class="proj-next" onclick="goHome()">
     <div><div class="proj-next-label">Back to</div><div class="proj-next-name">All Work</div></div>
     <div class="proj-next-arrow">↑</div>
+  </div>
+</div>
+
+
+<!-- ── Global Relay ── -->
+<div id="project-global-relay" class="project-page">
+  <nav class="proj-nav">
+    <button class="back-btn" onclick="goHome()">← Back to work</button>
+    <div style="text-align:right">
+      <div class="proj-nav-cat">Interview Task · Auth UX · Compliance SaaS</div>
+      <div class="proj-nav-title">Global Relay</div>
+    </div>
+  </nav>
+
+  <!-- Hero bar -->
+  <div style="background:linear-gradient(135deg,#0a1628 0%,#0d2044 60%,#0a1628 100%);height:300px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+    <svg viewBox="0 0 400 300" width="100%" height="100%" style="position:absolute;inset:0;opacity:0.12" preserveAspectRatio="xMidYMid slice">
+      <circle cx="200" cy="150" r="120" fill="none" stroke="#fff" stroke-width="3"/>
+      <circle cx="200" cy="150" r="80" fill="none" stroke="#fff" stroke-width="2"/>
+      <circle cx="200" cy="150" r="40" fill="none" stroke="#fff" stroke-width="1.5"/>
+      <path d="M80 150 Q200 60 320 150 Q200 240 80 150Z" fill="none" stroke="#fff" stroke-width="2"/>
+    </svg>
+    <div style="position:relative;text-align:center">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:12px">// Interview Task</div>
+      <div style="font-size:clamp(28px,5vw,48px);font-weight:700;letter-spacing:-0.03em;color:#fff">Global Relay</div>
+      <div style="font-size:13px;color:#6b8cae;margin-top:8px;font-family:var(--mono)">Unified Login System · 4-day brief · 30-page response</div>
+    </div>
+  </div>
+
+  <div class="proj-body">
+    <div class="proj-eyebrow">// Interview Task · Auth UX</div>
+    <h1 class="proj-title">Global Relay</h1>
+
+    <div class="proj-meta">
+      <div class="proj-meta-item"><div class="proj-meta-label">Format</div><div class="proj-meta-val">Take-home design challenge</div></div>
+      <div class="proj-meta-item"><div class="proj-meta-label">Deadline</div><div class="proj-meta-val">4 days</div></div>
+      <div class="proj-meta-item"><div class="proj-meta-label">Disciplines</div><div class="proj-meta-val">Auth UX · Security · Responsive</div></div>
+      <div class="proj-meta-item"><div class="proj-meta-label">Deliverable</div><div class="proj-meta-val">30-page design document</div></div>
+    </div>
+
+    <!-- The Brief -->
+    <div class="content-block">
+      <div class="content-block-label">// The Brief</div>
+      <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:24px">
+        Global Relay — a financial SaaS archiving and compliance platform — asked candidates to design a unified login panel handling two distinct authentication flows: traditional ID/password, and SAML-based SSO redirected to a customer-hosted page.
+      </p>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:24px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:18px">// Core requirements</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">01 · Determine Login Method</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">System detects whether a user is configured for password or SSO based on their Login ID — without users needing to know which they use.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">02 · Password Auth</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Standard ID/password flow with full error handling and security — malicious users must not be able to enumerate valid IDs.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">03 · SSO / SAML Flow</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">After ID lookup, redirect to customer-hosted login page. Global Relay never sees the password. Handle all edge cases and errors.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">04 · Scope</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Responsive — large monitors to mobile browsers. Single-login UX (log in once, in to everything). Localisation-ready. Async error states.</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="global-relay-brief.pdf" target="_blank" style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:6px;padding:10px 18px;font-size:13px;color:var(--muted);text-decoration:none;font-family:var(--mono);transition:border-color 0.2s,color 0.2s"
+         onmouseover="this.style.borderColor='var(--orange)';this.style.color='var(--orange)'"
+         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        View full brief PDF
+      </a>
+    </div>
+  </div>
+
+  <!-- PDF Viewer — full bleed -->
+  <div style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 52px 16px;max-width:1280px;margin:0 auto;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:4px">// The Work</div>
+        <div style="font-size:18px;font-weight:600;margin-bottom:4px">Design response — 30 pages</div>
+        <div style="font-size:13px;color:var(--muted)">Competitor analysis · Personas · Flows · Wireframes · Error states · Accessibility</div>
+      </div>
+      <a href="global-relay-work.pdf" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);text-decoration:none;font-family:var(--mono);border:1px solid var(--border);border-radius:6px;padding:8px 14px;transition:border-color 0.2s,color 0.2s;flex-shrink:0"
+         onmouseover="this.style.borderColor='var(--orange)';this.style.color='var(--orange)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+        ↗ Open in new tab
+      </a>
+    </div>
+    <div style="padding:0 52px 32px;max-width:1280px;margin:0 auto">
+      <iframe src="global-relay-work.pdf" style="width:100%;height:820px;border:1px solid var(--border);border-radius:10px;display:block;background:#1a1a1a" title="Global Relay design response"></iframe>
+    </div>
+  </div>
+
+  <div class="proj-body" style="padding-top:40px">
+    <div class="content-block">
+      <div class="content-block-label">// Process highlights</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+        <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
+          <div style="font-size:11px;color:var(--orange);font-family:var(--mono);margin-bottom:6px">Research</div>
+          <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7">Competitor analysis across Miro, Amplitude, Zoom, Stripe, Adobe and Coinbase — studying login flow patterns and SSO handling.</p>
+        </div>
+        <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
+          <div style="font-size:11px;color:var(--orange);font-family:var(--mono);margin-bottom:6px">Security</div>
+          <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7">Reviewed NIST, OWASP, and SAML standards. Error messages deliberately vague to prevent ID/password enumeration attacks.</p>
+        </div>
+        <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
+          <div style="font-size:11px;color:var(--orange);font-family:var(--mono);margin-bottom:6px">Flows</div>
+          <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7">Happy path, SSO path, error states, password reset, MFA, and account lockout — all documented with annotated wireframes.</p>
+        </div>
+        <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
+          <div style="font-size:11px;color:var(--orange);font-family:var(--mono);margin-bottom:6px">Accessibility</div>
+          <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7">WCAG-aligned labels, keyboard navigation, screen reader support, and clear input validation with inline guidance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="proj-next" onclick="openProject('zen-educate')">
+    <div><div class="proj-next-label">Next Interview Project</div><div class="proj-next-name">Zen Educate</div></div>
+    <div class="proj-next-arrow">→</div>
+  </div>
+</div>
+
+
+<!-- ── Zen Educate ── -->
+<div id="project-zen-educate" class="project-page">
+  <nav class="proj-nav">
+    <button class="back-btn" onclick="goHome()">← Back to work</button>
+    <div style="text-align:right">
+      <div class="proj-nav-cat">Interview Task · EdTech · Product Design</div>
+      <div class="proj-nav-title">Zen Educate</div>
+    </div>
+  </nav>
+
+  <!-- Hero bar -->
+  <div style="background:linear-gradient(135deg,#0d1f0d 0%,#142814 60%,#0d1f0d 100%);height:300px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+    <svg viewBox="0 0 400 300" width="100%" height="100%" style="position:absolute;inset:0;opacity:0.12" preserveAspectRatio="xMidYMid slice">
+      <rect x="120" y="60" width="160" height="180" rx="12" fill="none" stroke="#fff" stroke-width="3"/>
+      <line x1="148" y1="100" x2="252" y2="100" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="148" y1="125" x2="220" y2="125" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="148" y1="150" x2="235" y2="150" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="148" y1="175" x2="200" y2="175" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <div style="position:relative;text-align:center">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:12px">// Interview Task</div>
+      <div style="font-size:clamp(28px,5vw,48px);font-weight:700;letter-spacing:-0.03em;color:#fff">Zen Educate</div>
+      <div style="font-size:13px;color:#6a8f6a;margin-top:8px;font-family:var(--mono)">EdTech Product Design · June 2026</div>
+    </div>
+  </div>
+
+  <div class="proj-body">
+    <div class="proj-eyebrow">// Interview Task · EdTech</div>
+    <h1 class="proj-title">Zen Educate</h1>
+
+    <div class="proj-meta">
+      <div class="proj-meta-item"><div class="proj-meta-label">Format</div><div class="proj-meta-val">Take-home design challenge</div></div>
+      <div class="proj-meta-item"><div class="proj-meta-label">Date</div><div class="proj-meta-val">June 2026</div></div>
+      <div class="proj-meta-item"><div class="proj-meta-label">Disciplines</div><div class="proj-meta-val">Product Design · EdTech · UX</div></div>
+      <div class="proj-meta-item"><div class="proj-meta-label">Status</div><div class="proj-meta-val">Prototype in progress</div></div>
+    </div>
+
+    <!-- Brief — scraped & hosted -->
+    <div class="content-block">
+      <div class="content-block-label">// The Brief</div>
+      <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:24px">
+        Zen Educate is a two-sided marketplace connecting schools with educators for short and long-term work. The June 2026 challenge set a hypothetical Edinburgh scenario — the marketplace looks healthy on the surface, but five signals suggest educators aren't being served across their full lifecycle.
+      </p>
+
+      <!-- Scenario signals -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:24px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:18px">// Edinburgh scenario — five signals</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">35% · Post-placement drop-off</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Educators who complete a long-term placement do not return to Zen for their next role.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">50% · Early friction</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Verified educators do not secure work within their first 10 days.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">&lt;1× · Engagement gap</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Educators in long-term roles open the app less than once per week vs. 8+ times for daily supply staff.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">4:1 · Marketplace imbalance</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Supply to demand ratio creates a "Hunger Games" dynamic — fatigue and disengagement.</p>
+          </div>
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">25% · Perceived utility ceiling</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Respondents say they don't find Zen useful for anything beyond accepting work.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- The two parts -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:24px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:18px">// The task — two parts</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px">
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">Part 1 · 30% — Discovery</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Is there meaningful additional value to unlock? How would you structure discovery, prioritise signal, and decide whether this is a supply/demand constraint or a real product gap?</p>
+          </div>
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">Part 2 · 70% — Design the system</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Pick a cohort, define the problem, choose a direction, and bring it to life. End-to-end journey, key screens, behaviour change, and how you'd measure it. High enough fidelity to assess design quality.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="proj-body"><div>
+    <div class="content-block-label">// Interactive Prototype</div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Live prototype — The Nudge · Wrap Up · What's Next · One Tap · Lined Up</p>
+  </div></div>
+  <!-- Zen prototype launch card -->
+  <div style="width:100%;padding:0;margin:0;">
+    <div onclick="window.open('zen-prototype.html','_blank')" style="position:relative;cursor:pointer;overflow:hidden;background:#080d1c;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+      <!-- Phones row — no text overlap -->
+      <div style="background:radial-gradient(1200px 600px at 50% -10%, #16284d 0%, #0c1326 60%, #080d1c 100%);display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:48px 60px 0;overflow:hidden;min-height:360px;">
+        <img src="zen-screen-1-the-nudge.png" style="height:320px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:rotate(-4deg) translateY(20px);opacity:0.7;flex-shrink:0">
+        <img src="zen-screen-3-whats-next.png" style="height:360px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.7);transform:rotate(-1deg);opacity:0.95;flex-shrink:0;position:relative;z-index:2">
+        <img src="zen-screen-5-lined-up.png" style="height:320px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:rotate(4deg) translateY(20px);opacity:0.7;flex-shrink:0">
+      </div>
+      <!-- CTA below — clean, no overlap -->
+      <div style="background:#080d1c;padding:36px 24px 44px;text-align:center;">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);border-radius:100px;padding:6px 16px;margin-bottom:20px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#f97316;display:inline-block;animation:pulse 2s ease-in-out infinite"></span>
+          <span style="color:#f97316;font-size:11px;letter-spacing:0.12em;font-family:monospace;text-transform:uppercase">Live Prototype</span>
+        </div>
+        <h3 style="color:#fff;font-size:clamp(20px,3vw,32px);font-weight:600;margin:0 0 12px;letter-spacing:-0.02em">Try the working prototype</h3>
+        <p style="color:#6b7280;font-size:14px;margin:0 0 28px;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.6">The full Zen Educate flow — 5 screens, animated transitions, interactive throughout.</p>
+        <div style="display:inline-flex;align-items:center;gap:10px;background:#f97316;color:#000;font-weight:700;font-size:14px;padding:14px 28px;border-radius:8px;letter-spacing:0.01em;transition:transform 0.2s,box-shadow 0.2s"
+             onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 0 32px rgba(249,115,22,0.4)'"
+             onmouseout="this.style.transform='scale(1)';this.style.boxShadow='none'">
+          Launch prototype
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="proj-next" onclick="openProject('global-relay')">
+    <div><div class="proj-next-label">Previous Interview Project</div><div class="proj-next-name">Global Relay</div></div>
+    <div class="proj-next-arrow">→</div>
   </div>
 </div>
 
@@ -2112,25 +2386,6 @@
   const homeView = document.getElementById('home-view');
   const homeNav  = document.getElementById('nav');
 
-  function openProject(id) {
-    // Hide home
-    homeView.style.display = 'none';
-    homeNav.style.display  = 'none';
-    // Hide all projects
-    document.querySelectorAll('.project-page').forEach(p => {
-      p.classList.remove('active');
-      p.style.display = 'none';
-    });
-    // Show target
-    const page = document.getElementById('project-' + id);
-    if (!page) return;
-    page.style.display = 'block';
-    page.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    // Animate in
-    gsap.fromTo(page, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
-  }
-
   function launchECAPrototype() {
     window.open('eca-prototype.html', '_blank');
   }
@@ -2147,6 +2402,160 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
     gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
   }
+
+  function openProject(id) {
+    // Hide home
+    homeView.style.display = 'none';
+    homeNav.style.display  = 'none';
+    // Hide all projects
+    document.querySelectorAll('.project-page').forEach(p => {
+      p.classList.remove('active');
+      p.style.display = 'none';
+    });
+    // Show target
+    const page = document.getElementById('project-' + id);
+    if (!page) return;
+    page.style.display = 'block';
+    page.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    gsap.fromTo(page, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+  }
+
+  /* ─── Halftone Avatar Canvas ─── */
+  (function() {
+    const canvas = document.getElementById('avatar-canvas');
+    const hint   = document.getElementById('avatar-drop-hint');
+    const card   = document.getElementById('avatar-card');
+    if (!canvas) return;
+
+    const COLS = 40, ROWS = 40;
+    const ORANGE = '#F97316';
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const PX  = 96 * DPR;
+    canvas.width  = PX;
+    canvas.height = PX;
+    const ctx = canvas.getContext('2d');
+
+    // Animated idle state — pulsing orange dots on black
+    let idleAnim, idleDots = [];
+    function buildIdleDots() {
+      idleDots = [];
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          if (Math.random() < 0.18) {
+            idleDots.push({ c, r, phase: Math.random() * Math.PI * 2, speed: 0.6 + Math.random() * 0.8 });
+          }
+        }
+      }
+    }
+    function drawIdle(t) {
+      ctx.clearRect(0, 0, PX, PX);
+      const cw = PX / COLS, rh = PX / ROWS;
+      idleDots.forEach(d => {
+        const alpha = 0.15 + 0.5 * (0.5 + 0.5 * Math.sin(t * d.speed + d.phase));
+        const r = cw * 0.28 * (0.5 + 0.5 * Math.sin(t * d.speed * 0.7 + d.phase));
+        ctx.beginPath();
+        ctx.arc(d.c * cw + cw / 2, d.r * rh + rh / 2, Math.max(r, 0.5), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(249,115,22,${alpha.toFixed(2)})`;
+        ctx.fill();
+      });
+      idleAnim = requestAnimationFrame(t2 => drawIdle(t2 / 1000));
+    }
+    buildIdleDots();
+    requestAnimationFrame(t => drawIdle(t / 1000));
+
+    // Render halftone from an ImageData
+    function renderHalftone(imgEl) {
+      cancelAnimationFrame(idleAnim);
+
+      // Draw image to offscreen canvas for pixel sampling
+      const off = document.createElement('canvas');
+      off.width = COLS; off.height = ROWS;
+      const octx = off.getContext('2d');
+      octx.drawImage(imgEl, 0, 0, COLS, ROWS);
+      const data = octx.getImageData(0, 0, COLS, ROWS).data;
+
+      // Pass 1: collect brightness values
+      const brightness = new Float32Array(COLS * ROWS);
+      for (let i = 0; i < COLS * ROWS; i++) {
+        const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
+        brightness[i] = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      }
+
+      // Pass 2: percentile stretch (p5 → p95 → 0..1)
+      const sorted = [...brightness].sort((a, b) => a - b);
+      const lo = sorted[Math.floor(sorted.length * 0.05)];
+      const hi = sorted[Math.floor(sorted.length * 0.95)];
+      const range = hi - lo || 1;
+      const norm = brightness.map(v => Math.min(1, Math.max(0, (v - lo) / range)));
+
+      // Pass 3: build dot targets and animate in
+      const cw = PX / COLS, rh = PX / ROWS;
+      const maxR = cw * 0.46;
+      const dots = [];
+      for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS; col++) {
+          const n = norm[row * COLS + col];
+          if (n > 0.08) {
+            dots.push({ x: col * cw + cw / 2, y: row * rh + rh / 2, r: maxR * n, t: 0 });
+          }
+        }
+      }
+
+      // Shuffle so dots draw in randomly
+      dots.sort(() => Math.random() - 0.5);
+
+      let frame = 0;
+      const TOTAL_FRAMES = 60;
+      function animate() {
+        ctx.clearRect(0, 0, PX, PX);
+        frame++;
+        const progress = Math.min(frame / TOTAL_FRAMES, 1);
+        const visible = Math.floor(progress * dots.length);
+        for (let i = 0; i < visible; i++) {
+          const d = dots[i];
+          const age = (visible - i) / dots.length;
+          const alpha = Math.min(1, age * 3);
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(249,115,22,${alpha.toFixed(2)})`;
+          ctx.fill();
+        }
+        if (frame < TOTAL_FRAMES + dots.length * 0.5) requestAnimationFrame(animate);
+      }
+      animate();
+      if (hint) hint.style.display = 'none';
+    }
+
+    // Drag-and-drop
+    card.addEventListener('dragover', e => { e.preventDefault(); card.classList.add('drag-over'); });
+    card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
+    card.addEventListener('drop', e => {
+      e.preventDefault();
+      card.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (!file || !file.type.startsWith('image/')) return;
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => { renderHalftone(img); URL.revokeObjectURL(url); };
+      img.src = url;
+    });
+
+    // Click to pick file
+    canvas.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file'; input.accept = 'image/*';
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => { renderHalftone(img); URL.revokeObjectURL(url); };
+        img.src = url;
+      };
+      input.click();
+    });
+  })();
 
   /* ─── Custom Video Player Controls ─── */
   (function() {
@@ -2175,10 +2584,12 @@
       function syncPlay() {
         if (playBtn) playBtn.innerHTML = vid.paused ? PLAY_ICON : PAUSE_ICON;
       }
+      const badge = document.getElementById(id + '-badge');
       // Sync mute icon and slider
       function syncMute() {
         if (muteBtn) muteBtn.innerHTML = vid.muted ? MUTE_ICON : VOL_ICON;
         if (volSlider) volSlider.value = vid.muted ? 0 : vid.volume;
+        if (badge) badge.classList.toggle('hidden', !vid.muted);
       }
       // Sync progress bar
       function syncProgress() {
@@ -2212,9 +2623,10 @@
 
     // Init all players once DOM is ready
     function initAll() {
-      initPlayer('vid-hero');
       initPlayer('vid-silverstream');
       initPlayer('vid-bosh');
+      initPlayer('vid-cds');
+      initPlayer('vid-get2know');
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initAll);
