@@ -105,6 +105,19 @@
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ─── Jago LLM ─── */
+    .llm-chip {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+      color: var(--muted); background: none; border: 1px solid var(--border);
+      border-radius: 100px; padding: 7px 16px; cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .llm-chip:hover { color: var(--orange); border-color: var(--orange); }
+    .llm-msg-sys { margin-bottom: 14px; }
+    .llm-msg-you { margin-bottom: 6px; }
+    .llm-msg-jago { margin-bottom: 18px; padding-left: 0; }
+    .llm-cursor { display:inline-block; width:8px; height:14px; background:var(--orange); vertical-align:middle; animation: blink 1s step-end infinite; margin-left:2px; }
+
     /* ─── Base ─── */
     html { scroll-behavior: smooth; }
     body {
@@ -913,6 +926,7 @@
     <a href="#work">Work</a>
     <a href="#about">About</a>
     <a href="#" onclick="event.preventDefault();openProject('cv')">CV</a>
+    <a href="#" onclick="event.preventDefault();openProject('jago-llm')" style="color:var(--orange);font-family:var(--mono);font-size:11px;letter-spacing:0.08em">Jago_LLM</a>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">☀</button>
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
@@ -1146,9 +1160,81 @@
   <div class="eyebrow g-up" style="text-align:center">// Let's build</div>
   <h2 class="section-title g-up" style="font-size:clamp(52px,8vw,108px);margin-bottom:28px">Got a project?</h2>
   <p class="cta-sub g-up">Let's talk about building something great from the ground up.</p>
-  <a href="mailto:jagojames@gmail.com" class="btn btn-fill g-up" style="font-size:15px;padding:16px 36px">
+  <button class="btn btn-fill g-up" onclick="openContactModal()" style="font-size:15px;padding:16px 36px;border:none;cursor:pointer">
     Get in touch →
-  </a>
+  </button>
+</div>
+
+<!-- Contact Modal -->
+<div id="contact-modal" style="display:none;position:fixed;inset:0;z-index:1000;align-items:center;justify-content:center;padding:24px">
+  <!-- Backdrop -->
+  <div onclick="closeContactModal()" style="position:absolute;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px)"></div>
+  <!-- Panel -->
+  <div style="position:relative;width:100%;max-width:520px;background:#111;border:1px solid #2a2a2a;border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.7)">
+
+    <!-- Header -->
+    <div style="padding:28px 32px 0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.18em;text-transform:uppercase">// Get in touch</div>
+        <button onclick="closeContactModal()" style="background:none;border:none;color:#555;cursor:pointer;font-size:20px;line-height:1;padding:4px;transition:color 0.2s"
+          onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#555'">×</button>
+      </div>
+      <h3 style="font-size:24px;font-weight:700;margin-bottom:4px">Let's talk</h3>
+      <p style="color:#555;font-size:13px;margin-bottom:24px">I'll reply within 24 hours.</p>
+    </div>
+
+    <!-- Form (replace YOUR_FORM_ID with your Formspree ID) -->
+    <form id="contact-form" action="https://formspree.io/f/mqeroajq" method="POST" onsubmit="handleContactSubmit(event)"
+      style="padding:0 32px 32px;display:flex;flex-direction:column;gap:14px">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label style="display:block;font-size:11px;font-family:var(--mono);color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Name</label>
+          <input type="text" name="name" required placeholder="Jane Smith"
+            style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;color:#e0e0e0;font-size:14px;outline:none;transition:border-color 0.2s;font-family:inherit"
+            onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='#2a2a2a'">
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;font-family:var(--mono);color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Company</label>
+          <input type="text" name="company" placeholder="Acme Ltd"
+            style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;color:#e0e0e0;font-size:14px;outline:none;transition:border-color 0.2s;font-family:inherit"
+            onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='#2a2a2a'">
+        </div>
+      </div>
+
+      <div>
+        <label style="display:block;font-size:11px;font-family:var(--mono);color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Email</label>
+        <input type="email" name="email" required placeholder="jane@company.com"
+          style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;color:#e0e0e0;font-size:14px;outline:none;transition:border-color 0.2s;font-family:inherit"
+          onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='#2a2a2a'">
+      </div>
+
+      <div>
+        <label style="display:block;font-size:11px;font-family:var(--mono);color:#555;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Message</label>
+        <textarea name="message" required rows="4" placeholder="Tell me about the role or project..."
+          style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;color:#e0e0e0;font-size:14px;outline:none;resize:vertical;transition:border-color 0.2s;font-family:inherit"
+          onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='#2a2a2a'"></textarea>
+      </div>
+
+      <button type="submit" id="contact-submit"
+        style="width:100%;background:var(--orange);color:#000;font-weight:700;font-size:14px;padding:14px;border:none;border-radius:8px;cursor:pointer;transition:opacity 0.2s,transform 0.2s;margin-top:4px"
+        onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+        Send message →
+      </button>
+
+      <p style="text-align:center;font-size:12px;color:#333;margin:0">Or email directly: <a href="mailto:jagojames@gmail.com" style="color:#555;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='#555'">jagojames@gmail.com</a></p>
+    </form>
+
+    <!-- Success state -->
+    <div id="contact-success" style="display:none;padding:40px 32px 40px;text-align:center">
+      <div style="width:52px;height:52px;border-radius:50%;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:22px">✓</div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:8px">Message sent</div>
+      <p style="color:#555;font-size:14px;margin-bottom:24px">Thanks — I'll get back to you within 24 hours.</p>
+      <button onclick="closeContactModal()" style="background:none;border:1px solid #2a2a2a;border-radius:8px;color:#888;padding:10px 24px;cursor:pointer;font-size:13px;font-family:var(--mono);transition:border-color 0.2s"
+        onmouseover="this.style.borderColor='var(--orange)';this.style.color='var(--orange)'" onmouseout="this.style.borderColor='#2a2a2a';this.style.color='#888'">Close</button>
+    </div>
+
+  </div>
 </div>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
@@ -1885,6 +1971,70 @@
 </div>
 
 
+<!-- ── Jago LLM ── -->
+<div id="project-jago-llm" class="project-page">
+  <nav class="proj-nav">
+    <button class="back-btn" onclick="goHome()">← Back to work</button>
+    <div style="text-align:right">
+      <div class="proj-nav-cat">First-person AI responses</div>
+      <div class="proj-nav-title">Jago_LLM</div>
+    </div>
+  </nav>
+
+  <div style="min-height:calc(100vh - 65px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;background:var(--bg)">
+
+    <!-- Header -->
+    <div style="text-align:center;margin-bottom:48px;max-width:620px">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.22em;text-transform:uppercase;margin-bottom:18px">// First-person AI responses</div>
+      <h1 style="font-size:clamp(40px,7vw,80px);font-weight:800;letter-spacing:-0.04em;line-height:1;margin-bottom:20px">Ask Me Anything</h1>
+      <p style="color:var(--muted);font-size:16px;line-height:1.65">I'm Jago. Ask me about my experience, design process, tools, or what I'm looking for next.</p>
+    </div>
+
+    <!-- Terminal window -->
+    <div style="width:100%;max-width:820px;background:#111;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5)">
+
+      <!-- Title bar -->
+      <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;background:#1a1a1a;border-bottom:1px solid #2a2a2a">
+        <span style="width:12px;height:12px;border-radius:50%;background:#ff5f57;display:inline-block"></span>
+        <span style="width:12px;height:12px;border-radius:50%;background:#febc2e;display:inline-block"></span>
+        <span style="width:12px;height:12px;border-radius:50%;background:#28c840;display:inline-block"></span>
+        <span style="font-family:var(--mono);font-size:12px;color:#555;margin-left:8px">jago@portfolio — ask me anything</span>
+      </div>
+
+      <!-- Chat output -->
+      <div id="llm-output" style="min-height:320px;max-height:420px;overflow-y:auto;padding:24px 28px;font-family:var(--mono);font-size:13px;line-height:1.75;scrollbar-width:thin;scrollbar-color:#2a2a2a transparent">
+        <div class="llm-msg-sys"><span style="color:var(--orange);font-weight:700">sys</span> <span style="color:#ccc">Hi — I'm Jago. Ask me about my experience, the work I've shipped, my design process, or what I'm looking for next. I'll reply directly.</span></div>
+      </div>
+
+      <!-- Input bar -->
+      <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-top:1px solid #2a2a2a;background:#111">
+        <span style="font-family:var(--mono);font-size:13px;color:var(--orange);white-space:nowrap;flex-shrink:0">you@visitor:~$</span>
+        <input id="llm-input" type="text" placeholder="e.g. What's your strongest skill?" autocomplete="off" spellcheck="false"
+          style="flex:1;background:none;border:none;outline:none;font-family:var(--mono);font-size:13px;color:#e0e0e0;caret-color:var(--orange)"
+          onkeydown="if(event.key==='Enter')llmSend()">
+        <button onclick="llmSend()" title="Send"
+          style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:6px;color:#888;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:14px;transition:border-color 0.2s,color 0.2s"
+          onmouseover="this.style.borderColor='var(--orange)';this.style.color='var(--orange)'"
+          onmouseout="this.style.borderColor='#2a2a2a';this.style.color='#888'">↵</button>
+      </div>
+    </div>
+
+    <!-- Quick prompts -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px;max-width:820px">
+      <button class="llm-chip" onclick="llmAsk('Top skills')">Top skills</button>
+      <button class="llm-chip" onclick="llmAsk('Open to work?')">Open to work?</button>
+      <button class="llm-chip" onclick="llmAsk('Tell me about your experience')">Experience</button>
+      <button class="llm-chip" onclick="llmAsk('What AI tools do you use?')">AI tools</button>
+      <button class="llm-chip" onclick="llmAsk('What are you looking for next?')">What next?</button>
+      <button class="llm-chip" onclick="llmAsk('London market')">London market</button>
+      <button class="llm-chip" onclick="llmAsk('Biggest achievement')">Biggest achievement</button>
+      <button class="llm-chip" onclick="llmAsk('How do you work with engineers?')">With engineers</button>
+    </div>
+
+  </div>
+</div>
+
+
 <!-- ── CV Page ── -->
 <div id="project-cv" class="project-page">
   <nav class="proj-nav">
@@ -2397,6 +2547,147 @@
     homeNav.style.display  = 'flex';
     window.scrollTo({ top: 0, behavior: 'instant' });
     gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+  }
+
+  /* ══ Jago LLM ══ */
+  const llmKB = [
+    {
+      keys: ['skill','strong','best at','speciali','strength'],
+      answer: `My strongest skills are translating complex, probabilistic systems into clear human interfaces — specifically AI-powered products where trust, transparency and human oversight matter. I'm equally comfortable at the whiteboard setting strategy as I am in Figma sweating the details. On the craft side: information architecture, interaction design, and design systems are where I'm most confident. I also write production-ready component specs that engineers can pick up without a handoff meeting.`
+    },
+    {
+      keys: ['open to work','available','looking','hire','job','role','opportunity','position'],
+      answer: `Yes — actively looking. I'm interested in Lead or Principal Product Designer roles, ideally at a company building something genuinely hard: AI-native products, enterprise SaaS, or anything where design has to wrestle with real complexity. I'm based in the UK and happy to work hybrid or remote. If you're building something interesting, let's talk — jagojames@gmail.com.`
+    },
+    {
+      keys: ['experience','background','career','history','worked','years'],
+      answer: `20+ years across enterprise SaaS, fintech, pharma, automotive, telco and consumer. I've led design at SAP (where my work contributed to a £3.5m acquisition and a suite that's still on their price list at £1.5m per licence), Silverstream Technologies (built the entire product from zero to ship in 6 months), ECA International (three concurrent AI workstreams), and Candyspace (AI voice UX for Rolls-Royce engine diagnostics). I've also built and led distributed teams across the UK, Poland and Germany.`
+    },
+    {
+      keys: ['ai','machine learning','llm','gpt','artificial intelligence','claude','cursor','lovable'],
+      answer: `AI is central to most of what I do now. I design AI-powered products — building the trust frameworks, human-in-the-loop controls, and uncertainty communication that makes probabilistic outputs usable. On the tooling side I use Cursor, Claude, Lovable and v0 daily — I vibe-coded the BoSH prototype in Lovable as part of an SAP engagement. I think the most valuable design skill right now is knowing when to hand off to a model and when to keep a human in the loop.`
+    },
+    {
+      keys: ['next','looking for','want','future','ideal'],
+      answer: `I want to work somewhere that gives design a real seat at the table — where I can set the vision, not just execute someone else's wireframes. Ideally a product with genuine technical depth: AI, data-heavy systems, or enterprise tools that need humanising. I'm excited by the 0→1 phase but I've also scaled mature products, so either works. Most importantly: a team that argues well and ships.`
+    },
+    {
+      keys: ['london','uk','market','location','where','remote','hybrid'],
+      answer: `Based in the UK. I've worked across London, Warsaw and Munich — leading distributed teams and flying in for sprints when it mattered. Happy with hybrid; fully remote works too if the async culture is strong. I'm not tied to a specific city.`
+    },
+    {
+      keys: ['achievement','proud','impact','metric','number','result','outcome'],
+      answer: `A few that stand out: the design work I led at SAP contributed to a £3.5m acquisition — the suite I shipped is still live on their price list at £1.5m per licence. At Lloyds I reduced drop-off on a critical form flow by 35%. At Silverstream I took a product from zero to ship in 6 months — web platform and iOS. And the ECA AI document builder I prototyped compressed a multi-hour expert process into a single AI-assisted interaction.`
+    },
+    {
+      keys: ['engineer','dev','developer','technical','handoff','collaborate','team'],
+      answer: `I try to make handoff a non-event. I write component specs in Figma that include states, edge cases, error conditions and accessibility notes — so engineers aren't guessing. I also understand enough about architecture to have honest conversations about build cost. At Silverstream I worked daily with the engineering lead; at SAP I was embedded in an agile squad. I prefer working closer to the build than a typical "design then throw over the wall" setup.`
+    },
+    {
+      keys: ['process','design process','approach','how do you','methodology'],
+      answer: `I start with the problem, not the UI. Discovery first — user research, competitive analysis, data review. Then I move fast through concepts, testing assumptions early with low-fidelity flows before committing to high-fidelity. I use a lot of annotated flows rather than pixel-perfect mocks at the early stage — they communicate intent better and invite better feedback. I also believe strongly in UX writing as a core design tool, not an afterthought.`
+    },
+    {
+      keys: ['tool','figma','software','use','stack'],
+      answer: `Primary: Figma (deep — variables, auto layout, design systems, component specs). For prototyping: Framer, Principle, and increasingly Lovable/v0 for high-fidelity coded prototypes. For research: Maze, Hotjar, Dovetail. For AI assistance: Claude, Cursor, ChatGPT. I also run this entire portfolio myself — hand-coded HTML/CSS/JS, deployed via GitHub Actions.`
+    },
+    {
+      keys: ['rate','salary','day rate','compensation','pay','cost'],
+      answer: `I'd rather discuss this directly once we've established there's a good fit. Drop me a line at jagojames@gmail.com and we can have that conversation properly.`
+    },
+    {
+      keys: ['contact','email','reach','get in touch','talk','call','meet'],
+      answer: `Best way: jagojames@gmail.com — I check it daily. If you'd prefer to see the full CV first, there's a download link in the CV section of this portfolio. Happy to do an intro call at short notice.`
+    },
+    {
+      keys: ['hello','hi','hey','who are you','introduce','about you'],
+      answer: `Hi — I'm Jago Livingstone, Founding Designer with 20+ years shipping enterprise SaaS, AI products, and consumer experiences. I'm currently looking for my next role. You can ask me anything about my background, the work I've done, my process, or what I'm looking for — I'll answer directly.`
+    },
+  ];
+
+  function llmMatch(q) {
+    const lower = q.toLowerCase();
+    for (const entry of llmKB) {
+      if (entry.keys.some(k => lower.includes(k))) return entry.answer;
+    }
+    return `That's a great question — it's not one I've pre-loaded a specific answer for yet. The best way to dig into it is to reach out directly: jagojames@gmail.com. I'll get back to you fast.`;
+  }
+
+  function llmAppend(html) {
+    const out = document.getElementById('llm-output');
+    out.insertAdjacentHTML('beforeend', html);
+    out.scrollTop = out.scrollHeight;
+  }
+
+  function llmTypeAnswer(text) {
+    const out = document.getElementById('llm-output');
+    const div = document.createElement('div');
+    div.className = 'llm-msg-jago';
+    div.innerHTML = `<span style="color:var(--orange);font-weight:700">jago</span> <span class="llm-answer-text"></span><span class="llm-cursor"></span>`;
+    out.appendChild(div);
+    out.scrollTop = out.scrollHeight;
+
+    const span = div.querySelector('.llm-answer-text');
+    const cursor = div.querySelector('.llm-cursor');
+    let i = 0;
+    const speed = 18;
+    const interval = setInterval(() => {
+      span.textContent += text[i];
+      i++;
+      out.scrollTop = out.scrollHeight;
+      if (i >= text.length) {
+        clearInterval(interval);
+        cursor.remove();
+      }
+    }, speed);
+  }
+
+  function llmAsk(q) {
+    document.getElementById('llm-input').value = q;
+    llmSend();
+  }
+
+  function llmSend() {
+    const input = document.getElementById('llm-input');
+    const q = input.value.trim();
+    if (!q) return;
+    input.value = '';
+    llmAppend(`<div class="llm-msg-you"><span style="color:#555">you</span> <span style="color:#e0e0e0">${q}</span></div>`);
+    setTimeout(() => llmTypeAnswer(llmMatch(q)), 320);
+  }
+
+  /* ══ Contact Modal ══ */
+  function openContactModal() {
+    const m = document.getElementById('contact-modal');
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    gsap.fromTo(m.querySelector('div:nth-child(2)'), { opacity: 0, y: 20, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'power2.out' });
+  }
+  function closeContactModal() {
+    document.getElementById('contact-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeContactModal(); });
+
+  async function handleContactSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('contact-submit');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    const form = document.getElementById('contact-form');
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('contact-success').style.display = 'block';
+      } else {
+        btn.textContent = 'Error — try again';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Error — try again';
+      btn.disabled = false;
+    }
   }
 
   function openProject(id) {
