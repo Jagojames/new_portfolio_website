@@ -176,7 +176,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 64px;
-      align-items: center;
+      align-items: stretch;
       padding: 130px 52px 80px;
       max-width: 1280px;
       margin: 0 auto;
@@ -266,6 +266,7 @@
       border: 1px solid var(--border);
       min-width: 0;
       width: 100%;
+      height: 100%; /* fill full hero-right height */
     }
     .panel-stack > * { grid-area: 1 / 1; }
 
@@ -901,7 +902,8 @@
     #galaxy-canvas {
       display: block;
       width: 100%;
-      aspect-ratio: 100 / 62; /* defines panel height before JS fires */
+      aspect-ratio: 100 / 62;
+      align-self: center; /* vertically center in taller panel */
       border-radius: 0;
       z-index: 0;
     }
