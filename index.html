@@ -260,13 +260,14 @@
 
     .panel-stack {
       position: relative;
-      aspect-ratio: 100 / 62;
+      display: grid;
       overflow: hidden;
       border-radius: 14px;
       border: 1px solid var(--border);
       min-width: 0;
       width: 100%;
     }
+    .panel-stack > * { grid-area: 1 / 1; }
 
     .panel-card {
       background: var(--surface);
@@ -898,24 +899,22 @@
     /* ─── Responsive ─── */
     /* Galaxy canvas */
     #galaxy-canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
       display: block;
+      width: 100%;
+      aspect-ratio: 100 / 62; /* defines panel height before JS fires */
       border-radius: 0;
       z-index: 0;
     }
     #avatar-card {
-      position: absolute !important;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(8,8,8,0.70) !important;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      align-self: end; /* pin to bottom of shared grid cell */
+      z-index: 1;
+      background: rgba(8,8,8,0.85) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-radius: 0 !important;
       border: none !important;
       border-top: 1px solid var(--border) !important;
-      z-index: 1;
+      overflow: visible !important; /* let badge poke above the card edge */
     }
 
     @media (max-width: 900px) {
