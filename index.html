@@ -895,9 +895,15 @@
     .g-up { opacity: 0; transform: translateY(40px); }
 
     /* ─── Responsive ─── */
+    /* Galaxy canvas */
+    #galaxy-canvas {
+      display: block; border-radius: 12px; max-width: 100%;
+      opacity: 0; /* JS sets transition and fades in */
+    }
+
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 60px; }
-      .hero-right { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; }
+      .hero-right { display: flex; }
       .work-grid { grid-template-columns: repeat(2, 1fr); }
       .stats-grid { grid-template-columns: 1fr; }
       .about-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -953,6 +959,9 @@
   <div class="hero-right" id="hero-right">
     <div class="dot-bg"></div>
     <div class="panel-stack">
+
+      <!-- Galaxy canvas -->
+      <canvas id="galaxy-canvas"></canvas>
 
       <!-- Card 1 — Designer Setup + portrait -->
       <div class="panel-card" id="avatar-card" style="display:flex;gap:14px;align-items:center">
@@ -2655,6 +2664,212 @@
     llmAppend(`<div class="llm-msg-you"><span style="color:#555">you</span> <span style="color:#e0e0e0">${q}</span></div>`);
     setTimeout(() => llmTypeAnswer(llmMatch(q)), 320);
   }
+
+  /* ══ Galaxy Canvas (Three.js WebGL port of dgreenheck/webgpu-galaxy) ══ */
+  (function() {
+    const canvas = document.getElementById('galaxy-canvas');
+    if (!canvas) return;
+
+    // Dynamically load Three.js then boot
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js';
+    s.onload = bootGalaxy;
+    document.head.appendChild(s);
+
+    function bootGalaxy() {
+      const THREE = window.THREE;
+      const container = canvas.parentElement;
+
+      function getSize() {
+        const w = container.offsetWidth || 500;
+        const h = Math.round(w * 0.65);
+        return [w, h];
+      }
+
+      let [W, H] = getSize();
+
+      // Renderer reuses the existing canvas element
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(W, H);
+      renderer.setClearColor(0x000000, 0);
+
+      const scene = new THREE.Scene();
+
+      // Camera: slightly elevated angle, like the original's default view
+      const camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 100);
+      camera.position.set(0, 3.8, 5.5);
+      camera.lookAt(0, 0, 0);
+
+      // Soft glow sprite texture (radial gradient → CanvasTexture)
+      const spriteCv = document.createElement('canvas');
+      spriteCv.width = spriteCv.height = 64;
+      const sctx = spriteCv.getContext('2d');
+      const g = sctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      g.addColorStop(0,    'rgba(255,255,255,1)');
+      g.addColorStop(0.12, 'rgba(255,255,255,0.9)');
+      g.addColorStop(0.35, 'rgba(255,255,255,0.4)');
+      g.addColorStop(1,    'rgba(255,255,255,0)');
+      sctx.fillStyle = g;
+      sctx.fillRect(0, 0, 64, 64);
+      const starTex = new THREE.CanvasTexture(spriteCv);
+
+      // ── Galaxy parameters (ported directly from galaxy.js config defaults) ──
+      const N           = 80000;   // starCount
+      const ARMS        = 2;       // armCount
+      const R           = 4.0;     // galaxyRadius
+      const TIGHTNESS   = 2.5;     // spiralTightness
+      const ARM_W       = 1.1;     // armWidth
+      const RAND        = 1.0;     // randomness
+      const THICK       = 0.12;    // galaxyThickness
+      // Colors from original source
+      const denseC  = new THREE.Color('#99ccff'); // denseStarColor
+      const sparseC = new THREE.Color('#ffb380'); // sparseStarColor
+
+      // Deterministic hash – same logic as helpers.js hash()
+      function hash(n) {
+        const x = Math.sin(n * 127.1 + 311.7) * 43758.5453123;
+        return x - Math.floor(x);
+      }
+
+      // ── Generate star positions (CPU port of computeInit TSL shader) ──
+      const pos    = new Float32Array(N * 3);
+      const col    = new Float32Array(N * 3);
+
+      for (let i = 0; i < N; i++) {
+        // Distance: square root for even radial distribution
+        const radius           = Math.pow(hash(i + 1), 0.5) * R;
+        const normalizedRadius = radius / R;
+
+        // Spiral arm selection
+        const armIndex = Math.floor(hash(i + 2) * ARMS);
+        const armAngle = (armIndex / ARMS) * Math.PI * 2;
+
+        // Logarithmic spiral angle
+        const spiralAngle = normalizedRadius * TIGHTNESS * Math.PI * 2;
+
+        // Randomness offsets
+        const angleOffset  = (hash(i + 3) - 0.5) * RAND;
+        const radiusOffset = (hash(i + 4) - 0.5) * ARM_W;
+
+        const angle       = armAngle + spiralAngle + angleOffset;
+        const offsetRadius = radius + radiusOffset;
+
+        const x = Math.cos(angle) * offsetRadius;
+        const z = Math.sin(angle) * offsetRadius;
+        // Vertical: thicker at centre, thinner at edge (matches TSL shader)
+        const thicknessFactor = (1.0 - normalizedRadius) + 0.2;
+        const y = (hash(i + 5) - 0.5) * THICK * thicknessFactor;
+
+        pos[i * 3]     = x;
+        pos[i * 3 + 1] = y;
+        pos[i * 3 + 2] = z;
+
+        // Density factor → colour (dense=blue-white, sparse=orange)
+        const rSparsity  = Math.abs(radiusOffset) / (ARM_W * 0.5 + 0.01);
+        const aSparsity  = Math.abs(angleOffset)  / (RAND  * 0.5 + 0.01);
+        const sparsity   = Math.min((rSparsity + aSparsity) * 0.5, 1.0);
+
+        const c = denseC.clone().lerp(sparseC, sparsity);
+        col[i * 3]     = c.r;
+        col[i * 3 + 1] = c.g;
+        col[i * 3 + 2] = c.b;
+      }
+
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+
+      const mat = new THREE.PointsMaterial({
+        size: 0.07,
+        map: starTex,
+        vertexColors: true,
+        blending: THREE.AdditiveBlending,
+        transparent: true,
+        depthWrite: false,
+        sizeAttenuation: true,
+      });
+
+      const stars = new THREE.Points(geo, mat);
+      scene.add(stars);
+
+      // ── Bright core cluster (warm white, high opacity) ──
+      const CN = 4000;
+      const cPos = new Float32Array(CN * 3);
+      const cCol = new Float32Array(CN * 3);
+      for (let i = 0; i < CN; i++) {
+        const seed = i + 500000;
+        const r = Math.pow(hash(seed), 1.8) * R * 0.22;
+        const a = hash(seed + 1) * Math.PI * 2;
+        cPos[i * 3]     = Math.cos(a) * r;
+        cPos[i * 3 + 1] = (hash(seed + 2) - 0.5) * 0.06;
+        cPos[i * 3 + 2] = Math.sin(a) * r;
+        cCol[i * 3] = 1.0; cCol[i * 3 + 1] = 0.92; cCol[i * 3 + 2] = 0.75;
+      }
+      const cGeo = new THREE.BufferGeometry();
+      cGeo.setAttribute('position', new THREE.BufferAttribute(cPos, 3));
+      cGeo.setAttribute('color',    new THREE.BufferAttribute(cCol, 3));
+      const cMat = new THREE.PointsMaterial({
+        size: 0.2, map: starTex, vertexColors: true,
+        blending: THREE.AdditiveBlending, transparent: true,
+        depthWrite: false, opacity: 0.55,
+      });
+      const core = new THREE.Points(cGeo, cMat);
+      scene.add(core);
+
+      // ── Build-in animation: scale from 1.8→1 over 2.2 s (particles fly in from sides) ──
+      const BUILD_MS = 2200;
+      const START_SCALE = 1.8;
+      let elapsed = 0;
+      let lastT = performance.now();
+      let rotation = 0;
+
+      // Start scaled out, invisible
+      stars.scale.set(START_SCALE, 1, START_SCALE);
+      core.scale.set(START_SCALE, 1, START_SCALE);
+      canvas.style.opacity = '0';
+      canvas.style.transition = 'opacity 0.9s ease';
+      setTimeout(() => { canvas.style.opacity = '1'; }, 80);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const now = performance.now();
+        const dt  = now - lastT;
+        lastT = now;
+        elapsed += dt;
+
+        // Ease-out cubic scale (1.8 → 1.0)
+        if (elapsed < BUILD_MS) {
+          const t    = elapsed / BUILD_MS;
+          const ease = 1 - Math.pow(1 - t, 3);
+          const sc   = START_SCALE - (START_SCALE - 1.0) * ease;
+          stars.scale.set(sc, 1, sc);
+          core.scale.set(sc, 1, sc);
+        }
+
+        // Differential rotation (inner faster than outer — approximated by single speed)
+        rotation += 0.00015 * dt;
+        stars.rotation.y = rotation;
+        core.rotation.y  = rotation;
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // Responsive resize
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          [W, H] = getSize();
+          renderer.setSize(W, H);
+          camera.aspect = W / H;
+          camera.updateProjectionMatrix();
+        }, 200);
+      });
+    }
+  })();
 
   /* ══ Contact Modal ══ */
   function openContactModal() {
