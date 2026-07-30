@@ -259,11 +259,13 @@
     }
 
     .panel-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
       position: relative;
-      z-index: 1;
+      aspect-ratio: 100 / 62;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      min-width: 0;
+      width: 100%;
     }
 
     .panel-card {
@@ -296,6 +298,10 @@
       line-height: 1.5;
     }
     .panel-row .val { color: var(--orange); }
+
+    /* Designer Setup tile */
+    #avatar-card { padding: 28px 20px 20px; overflow: hidden; min-width: 0; box-sizing: border-box; }
+    #avatar-card .panel-row { font-size: 12.5px; margin: 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* Connector between cards */
     .connector {
@@ -341,7 +347,6 @@
       50% { opacity: 1; transform: scale(1); }
     }
 
-    #avatar-canvas { display: block; }
 
     /* ─── Full-width ruled divider ─── */
     .ruled {
@@ -612,10 +617,6 @@
     footer .f-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     footer .f-links a:hover { color: var(--text); }
 
-    /* ─── Avatar Canvas ─── */
-    #avatar-canvas { cursor: pointer; transition: box-shadow 0.2s; }
-    #avatar-canvas:hover { box-shadow: 0 0 0 2px var(--orange); }
-    #avatar-card.drag-over #avatar-canvas { box-shadow: 0 0 0 2px var(--orange); opacity: 0.7; }
 
     /* ─── Custom Video Player ─── */
     .vid-player { position: relative; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
@@ -897,8 +898,24 @@
     /* ─── Responsive ─── */
     /* Galaxy canvas */
     #galaxy-canvas {
-      display: block; border-radius: 12px; max-width: 100%;
-      opacity: 0; /* JS sets transition and fades in */
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 0;
+      z-index: 0;
+    }
+    #avatar-card {
+      position: absolute !important;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(8,8,8,0.70) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 0 !important;
+      border: none !important;
+      border-top: 1px solid var(--border) !important;
+      z-index: 1;
     }
 
     @media (max-width: 900px) {
@@ -963,21 +980,13 @@
       <!-- Galaxy canvas -->
       <canvas id="galaxy-canvas"></canvas>
 
-      <!-- Card 1 — Designer Setup + portrait -->
-      <div class="panel-card" id="avatar-card" style="display:flex;gap:14px;align-items:center">
-        <div style="flex:1;min-width:0">
-          <div class="panel-badge badge-orange">Designer Setup</div>
-          <div class="panel-row">Agent: <span class="val typewriter" data-type="Jago Livingstone"></span></div>
-          <div class="panel-row">Role: <span class="val typewriter" data-type="Founding Designer"></span></div>
-          <div class="panel-row">Speciality: <span class="val typewriter" data-type="UX · UI · AI · SaaS"></span></div>
-          <div class="panel-row">Experience: <span class="val typewriter" data-type="20 Years"></span></div>
-        </div>
-        <div style="position:relative;flex-shrink:0">
-          <canvas id="avatar-canvas" style="display:block;width:96px;height:96px;border-radius:10px"></canvas>
-          <div id="avatar-drop-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0.4">
-            <span style="font-size:22px">📸</span>
-          </div>
-        </div>
+      <!-- Card 1 — Designer Setup -->
+      <div class="panel-card" id="avatar-card">
+        <div class="panel-badge badge-orange">Designer Setup</div>
+        <div class="panel-row">Agent: <span class="val typewriter" data-type="Jago Livingstone"></span></div>
+        <div class="panel-row">Role: <span class="val typewriter" data-type="Founding Designer / Former Head of Design"></span></div>
+        <div class="panel-row">Speciality: <span class="val typewriter" data-type="UX · UI · SaaS · Agentic AI · Conversation AI · Chat bots"></span></div>
+        <div class="panel-row">Experience: <span class="val typewriter" data-type="22 Years"></span></div>
       </div>
 
 
@@ -2301,17 +2310,17 @@
     nav.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
 
-  /* ── Hero entrance ── */
-  gsap.timeline({ delay: 0.1 })
-    .to('#h-tag',   { opacity: 1, duration: 0.5, ease: 'power2.out' })
-    .to('#h-title', { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' }, '-=0.2')
-    .to('#h-sub',   { opacity: 1, y: 0, duration: 0.6,  ease: 'power2.out' }, '-=0.45')
-    .to('#h-ctas',  { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, '-=0.35')
-    .to('#hero-right', { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, '-=0.55');
-
-  /* initial states */
+  /* initial states — must be set before timeline is created */
   gsap.set(['#h-title','#h-sub','#h-ctas','#hero-right'], { y: 35 });
   gsap.set('#hero-right', { opacity: 0 });
+
+  /* ── Hero entrance ── */
+  gsap.timeline({ delay: 0.1 })
+    .to('#h-tag',      { opacity: 1,       duration: 0.5,  ease: 'power2.out' })
+    .to('#h-title',    { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' }, '-=0.2')
+    .to('#h-sub',      { opacity: 1, y: 0, duration: 0.6,  ease: 'power2.out' }, '-=0.45')
+    .to('#h-ctas',     { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, '-=0.35')
+    .to('#hero-right', { opacity: 1, y: 0, duration: 0.9,  ease: 'power2.out' }, '-=0.55');
 
   /* ── Hero parallax ── */
   gsap.to('#hero-left', {
@@ -2322,6 +2331,7 @@
   gsap.to('#hero-right', {
     y: -40,
     ease: 'none',
+    immediateRender: false,
     scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 }
   });
 
@@ -2377,165 +2387,6 @@
     track.appendChild(el);
   });
 
-  /* ── Avatar canvas — real-pixel halftone portrait ── */
-  (function() {
-    const canvas  = document.getElementById('avatar-canvas');
-    const card    = document.getElementById('avatar-card');
-    const hint    = document.getElementById('avatar-drop-hint');
-    const ctx     = canvas.getContext('2d');
-    const COLS    = 40;
-    const ROWS    = 40;
-    const DOT_COLOR = '#F97316'; // orange dots on dark background
-    let dots      = [];
-    let rafId;
-    let startTime = null;
-
-    function buildDotsFromData(greyData, srcW, srcH) {
-      const W = canvas.offsetWidth || 96;
-      const H = W;
-      canvas.width        = W * devicePixelRatio;
-      canvas.height       = H * devicePixelRatio;
-      canvas.style.height = H + 'px';
-      ctx.setTransform(1,0,0,1,0,0);
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-
-      const cellW = W / COLS;
-      const cellH = H / ROWS;
-      const maxR  = Math.min(cellW, cellH) * 0.48;
-
-      // ── Pass 1: sample + mask ──
-      const raw = [];
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          // 3×3 area sample
-          let sum = 0;
-          for (let dy = -1; dy <= 1; dy++) {
-            for (let dx = -1; dx <= 1; dx++) {
-              const sx = Math.round((c + 0.5 + dx * 0.4) * srcW / COLS);
-              const sy = Math.round((r + 0.5 + dy * 0.4) * srcH / ROWS);
-              sum += greyData[Math.min(srcH-1,Math.max(0,sy)) * srcW + Math.min(srcW-1,Math.max(0,sx))];
-            }
-          }
-          const bright = sum / 9 / 255;
-
-          // Subject mask: two ovals (head + body), exclude upper-right bokeh
-          const nx = (c + 0.5) / COLS;
-          const ny = (r + 0.5) / ROWS;
-          const hd = Math.sqrt(Math.pow((nx-0.43)/0.30,2) + Math.pow((ny-0.27)/0.33,2));
-          const bd = Math.sqrt(Math.pow((nx-0.45)/0.44,2) + Math.pow((ny-0.72)/0.34,2));
-          const mask = Math.max(0, Math.min(1, 1.15 - Math.min(hd, bd)));
-
-          raw.push({ bright: bright * mask, mask });
-        }
-      }
-
-      // ── Pass 2: percentile stretch within subject ──
-      const fg = raw.filter(d => d.mask > 0.25).map(d => d.bright).sort((a,b) => a-b);
-      const lo = fg[Math.floor(fg.length * 0.04)] || 0;
-      const hi = fg[Math.floor(fg.length * 0.96)] || 1;
-      const span = Math.max(0.01, hi - lo);
-
-      // ── Pass 3: build dots ──
-      dots = [];
-      raw.forEach((d, i) => {
-        const c = i % COLS;
-        const r = Math.floor(i / COLS);
-        let b = Math.min(1, Math.max(0, (d.bright - lo) / span));
-        // Mild gamma to lift mid-tones (skin) towards white
-        b = Math.pow(b, 0.65);
-        if (b < 0.09) b = 0;
-
-        dots.push({
-          x: (c + 0.5) * cellW,
-          y: (r + 0.5) * cellH,
-          targetR: maxR * b,
-          b,
-          phase:    Math.random() * Math.PI * 2,
-          speed:    Math.random() * 0.5 + 0.3,
-          revealAt: Math.random() * 1800,
-        });
-      });
-      startTime = null;
-    }
-
-    function processImage(img) {
-      const oc = document.createElement('canvas');
-      oc.width  = img.naturalWidth  || 400;
-      oc.height = img.naturalHeight || 400;
-      const oc2 = oc.getContext('2d');
-      oc2.drawImage(img, 0, 0);
-      let raw;
-      try { raw = oc2.getImageData(0, 0, oc.width, oc.height).data; }
-      catch(e) { showHint(); return; }
-      const grey = new Uint8Array(oc.width * oc.height);
-      for (let i = 0; i < grey.length; i++)
-        grey[i] = raw[i*4]*0.299 + raw[i*4+1]*0.587 + raw[i*4+2]*0.114;
-      buildDotsFromData(grey, oc.width, oc.height);
-      if (hint) hint.style.display = 'none';
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(draw);
-    }
-
-    function draw(ts) {
-      if (!startTime) startTime = ts;
-      const elapsed = ts - startTime;
-      const W = canvas.width  / devicePixelRatio;
-      const H = canvas.height / devicePixelRatio;
-      // Transparent background — dark card shows through
-      ctx.clearRect(0, 0, W, H);
-      const t = ts / 1000;
-      dots.forEach(d => {
-        if (d.b < 0.04) return;
-        const prog  = Math.min(1, Math.max(0, (elapsed - d.revealAt) / 300));
-        const eased = 1 - Math.pow(1 - prog, 3);
-        // Continuous fade in/out after reveal
-        const fade  = elapsed > d.revealAt
-          ? 0.55 + Math.sin(t * d.speed + d.phase) * 0.45
-          : 0;
-        const alpha = eased * Math.max(0, Math.min(1, fade)) * (0.3 + d.b * 0.7);
-        const r     = Math.max(0, d.targetR * eased);
-        if (alpha < 0.01) return;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(249,115,22,${alpha.toFixed(2)})`; // orange
-        ctx.fill();
-      });
-      rafId = requestAnimationFrame(draw);
-    }
-
-    function showHint() {
-      if (hint) hint.style.display = 'flex';
-      const W = canvas.offsetWidth || 96;
-      canvas.width  = W * devicePixelRatio;
-      canvas.height = W * devicePixelRatio;
-      canvas.style.height = W + 'px';
-      ctx.setTransform(1,0,0,1,0,0);
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-      ctx.clearRect(0, 0, W, W);
-    }
-
-    card.addEventListener('dragover', e => { e.preventDefault(); card.style.outline = '2px dashed rgba(0,0,0,0.4)'; });
-    card.addEventListener('dragleave', () => { card.style.outline = ''; });
-    card.addEventListener('drop', e => {
-      e.preventDefault();
-      card.style.outline = '';
-      const file = e.dataTransfer.files[0];
-      if (!file || !file.type.startsWith('image/')) return;
-      const reader = new FileReader();
-      reader.onload = ev => {
-        const img = new Image();
-        img.onload = () => processImage(img);
-        img.src = ev.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
-
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload  = () => processImage(img);
-    img.onerror = showHint;
-    img.src = './portrait.jpg';
-  })();
 
   /* ══ SPA Navigation ══ */
   const homeView = document.getElementById('home-view');
@@ -2665,207 +2516,259 @@
     setTimeout(() => llmTypeAnswer(llmMatch(q)), 320);
   }
 
-  /* ══ Galaxy Canvas (Three.js WebGL port of dgreenheck/webgpu-galaxy) ══ */
+  /* ══ Galaxy Canvas (Three.js WebGL – port of dgreenheck/webgpu-galaxy) ══ */
   (function() {
     const canvas = document.getElementById('galaxy-canvas');
     if (!canvas) return;
 
-    // Dynamically load Three.js then boot
-    const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js';
-    s.onload = bootGalaxy;
-    document.head.appendChild(s);
+    function loadScript(src, cb, errCb) {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = cb;
+      s.onerror = errCb || cb; // always continue
+      document.head.appendChild(s);
+    }
+
+    const CDN = 'https://cdn.jsdelivr.net/npm/three@0.128.0/';
+    // Load Three.js first (required), then layer on extras
+    loadScript(CDN + 'build/three.min.js', function() {
+      if (!window.THREE) { console.error('Galaxy: THREE failed to load'); return; }
+      bootGalaxy();
+      // Load OrbitControls after galaxy is already running
+      loadScript(CDN + 'examples/js/controls/OrbitControls.js', function() {
+        if (window.THREE && window.THREE.OrbitControls && window._galaxyCamera && window._galaxyCanvas) {
+          const oc = new THREE.OrbitControls(window._galaxyCamera, window._galaxyCanvas);
+          oc.enableDamping = true; oc.dampingFactor = 0.05;
+          oc.minDistance = 4; oc.maxDistance = 16;
+          oc.maxPolarAngle = Math.PI * 0.58;  // ~104° max — keeps galaxy always in 3D view
+          window._galaxyControls = oc;
+        }
+      });
+      // Load bloom chain after — enhance visuals if it works
+      loadScript(CDN + 'examples/js/shaders/LuminosityHighPassShader.js', function() {
+      loadScript(CDN + 'examples/js/shaders/CopyShader.js', function() {
+      loadScript(CDN + 'examples/js/postprocessing/EffectComposer.js', function() {
+      loadScript(CDN + 'examples/js/postprocessing/RenderPass.js', function() {
+      loadScript(CDN + 'examples/js/postprocessing/UnrealBloomPass.js', function() {
+        if (window.THREE.EffectComposer && window._galaxyRenderer && window._galaxyScene && window._galaxyCamera) {
+          const R = window._galaxyRenderer, S = window._galaxyScene, C = window._galaxyCamera;
+          const composer = new THREE.EffectComposer(R);
+          composer.addPass(new THREE.RenderPass(S, C));
+          composer.addPass(new THREE.UnrealBloomPass(
+            new THREE.Vector2(canvas.width, canvas.height), 1.4, 0.5, 0.0
+          ));
+          window._galaxyComposer = composer;
+          console.log('Galaxy: bloom enabled');
+        }
+      }); }); }); }); });
+    });
 
     function bootGalaxy() {
       const THREE = window.THREE;
       const container = canvas.parentElement;
 
       function getSize() {
-        const w = container.offsetWidth || 500;
-        const h = Math.round(w * 0.65);
+        const w = container.offsetWidth || 520;
+        const h = Math.round(w * 0.62);
         return [w, h];
       }
-
       let [W, H] = getSize();
 
-      // Renderer reuses the existing canvas element
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+      // ── Renderer ──
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(W, H);
-      renderer.setClearColor(0x000000, 0);
+      renderer.setClearColor(0x000000, 1);
 
-      const scene = new THREE.Scene();
-
-      // Camera: slightly elevated angle, like the original's default view
-      const camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 100);
-      camera.position.set(0, 3.8, 5.5);
+      // Expose for post-load upgrades (bloom, orbit controls)
+      window._galaxyRenderer = renderer;
+      const scene  = new THREE.Scene();
+      window._galaxyScene = scene;
+      const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
+      camera.position.set(0, 3.0, 7.5);   // low angle (~22°) — matches reference's 3D side view
       camera.lookAt(0, 0, 0);
+      window._galaxyCamera = camera;
+      window._galaxyCanvas = canvas;
 
-      // Soft glow sprite texture (radial gradient → CanvasTexture)
+      // ── Sprite texture (soft glow circle) ──
       const spriteCv = document.createElement('canvas');
       spriteCv.width = spriteCv.height = 64;
       const sctx = spriteCv.getContext('2d');
-      const g = sctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-      g.addColorStop(0,    'rgba(255,255,255,1)');
-      g.addColorStop(0.12, 'rgba(255,255,255,0.9)');
-      g.addColorStop(0.35, 'rgba(255,255,255,0.4)');
-      g.addColorStop(1,    'rgba(255,255,255,0)');
-      sctx.fillStyle = g;
+      const grd  = sctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      grd.addColorStop(0,    'rgba(255,255,255,1)');
+      grd.addColorStop(0.15, 'rgba(255,255,255,0.85)');
+      grd.addColorStop(0.4,  'rgba(255,255,255,0.3)');
+      grd.addColorStop(1,    'rgba(255,255,255,0)');
+      sctx.fillStyle = grd;
       sctx.fillRect(0, 0, 64, 64);
       const starTex = new THREE.CanvasTexture(spriteCv);
 
-      // ── Galaxy parameters (ported directly from galaxy.js config defaults) ──
-      const N           = 80000;   // starCount
-      const ARMS        = 2;       // armCount
-      const R           = 4.0;     // galaxyRadius
-      const TIGHTNESS   = 2.5;     // spiralTightness
-      const ARM_W       = 1.1;     // armWidth
-      const RAND        = 1.0;     // randomness
-      const THICK       = 0.12;    // galaxyThickness
-      // Colors from original source
-      const denseC  = new THREE.Color('#99ccff'); // denseStarColor
-      const sparseC = new THREE.Color('#ffb380'); // sparseStarColor
+      // ── Galaxy parameters (galaxy.js defaults) ──
+      const N      = 100000;
+      const ARMS   = 2;
+      const R      = 4.0;
+      const TIGHTN = 2.5;
+      const ARM_W  = 1.1;
+      const RAND   = 1.0;
+      const THICK  = 1.8;   // real 3D depth — ratio ~4.4:1 width:height like reference
+      const denseC  = new THREE.Color('#88bbff');  // blue-white inner arms (matches reference)
+      const sparseC = new THREE.Color('#ffaa44');  // warm amber outer arms (matches reference)
 
-      // Deterministic hash – same logic as helpers.js hash()
       function hash(n) {
         const x = Math.sin(n * 127.1 + 311.7) * 43758.5453123;
         return x - Math.floor(x);
       }
 
-      // ── Generate star positions (CPU port of computeInit TSL shader) ──
-      const pos    = new Float32Array(N * 3);
-      const col    = new Float32Array(N * 3);
-
+      // ── Generate geometry (CPU port of computeInit TSL shader) ──
+      const pos = new Float32Array(N * 3);
+      const col = new Float32Array(N * 3);
       for (let i = 0; i < N; i++) {
-        // Distance: square root for even radial distribution
-        const radius           = Math.pow(hash(i + 1), 0.5) * R;
-        const normalizedRadius = radius / R;
-
-        // Spiral arm selection
-        const armIndex = Math.floor(hash(i + 2) * ARMS);
-        const armAngle = (armIndex / ARMS) * Math.PI * 2;
-
-        // Logarithmic spiral angle
-        const spiralAngle = normalizedRadius * TIGHTNESS * Math.PI * 2;
-
-        // Randomness offsets
-        const angleOffset  = (hash(i + 3) - 0.5) * RAND;
-        const radiusOffset = (hash(i + 4) - 0.5) * ARM_W;
-
-        const angle       = armAngle + spiralAngle + angleOffset;
-        const offsetRadius = radius + radiusOffset;
-
-        const x = Math.cos(angle) * offsetRadius;
-        const z = Math.sin(angle) * offsetRadius;
-        // Vertical: thicker at centre, thinner at edge (matches TSL shader)
-        const thicknessFactor = (1.0 - normalizedRadius) + 0.2;
-        const y = (hash(i + 5) - 0.5) * THICK * thicknessFactor;
-
-        pos[i * 3]     = x;
-        pos[i * 3 + 1] = y;
-        pos[i * 3 + 2] = z;
-
-        // Density factor → colour (dense=blue-white, sparse=orange)
-        const rSparsity  = Math.abs(radiusOffset) / (ARM_W * 0.5 + 0.01);
-        const aSparsity  = Math.abs(angleOffset)  / (RAND  * 0.5 + 0.01);
-        const sparsity   = Math.min((rSparsity + aSparsity) * 0.5, 1.0);
-
-        const c = denseC.clone().lerp(sparseC, sparsity);
-        col[i * 3]     = c.r;
-        col[i * 3 + 1] = c.g;
-        col[i * 3 + 2] = c.b;
+        const radius = Math.pow(hash(i + 1), 0.5) * R;
+        const nr  = radius / R;
+        const arm = Math.floor(hash(i + 2) * ARMS);
+        const ao  = (hash(i + 3) - 0.5) * RAND;
+        const ro  = (hash(i + 4) - 0.5) * ARM_W;
+        const ang = (arm / ARMS) * Math.PI * 2 + nr * TIGHTN * Math.PI * 2 + ao;
+        const or  = radius + ro;
+        pos[i*3]   = Math.cos(ang) * or;
+        pos[i*3+1] = (hash(i+5) - 0.5) * THICK * ((1 - nr) + 0.2);
+        pos[i*3+2] = Math.sin(ang) * or;
+        const sp = Math.min(((Math.abs(ro)/(ARM_W*0.5+0.01))+(Math.abs(ao)/(RAND*0.5+0.01)))*0.5, 1.0);
+        const c  = denseC.clone().lerp(sparseC, sp);
+        col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
       }
 
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+      geo.setAttribute('aColor',   new THREE.BufferAttribute(col, 3));
 
-      const mat = new THREE.PointsMaterial({
-        size: 0.07,
-        map: starTex,
-        vertexColors: true,
-        blending: THREE.AdditiveBlending,
-        transparent: true,
-        depthWrite: false,
-        sizeAttenuation: true,
-      });
+      // ── Shaders: GPU build-in animation + mouse repulsion ──
+      const uniforms = {
+        uTex:         { value: starTex },
+        uHalfH:       { value: H * 0.5 },
+        uStarSize:    { value: 0.055 },  // visible individual stars like reference
+        uBuildT:      { value: 0.0 },
+        uMousePos:    { value: new THREE.Vector3() },
+        uMouseActive: { value: 0.0 },
+        uMouseRadius: { value: 1.2 },
+        uMouseForce:  { value: 0.65 },
+      };
 
+      const vert = `
+        attribute vec3 aColor;
+        varying   vec3 vColor;
+        uniform float uHalfH, uStarSize, uBuildT;
+        uniform vec3  uMousePos;
+        uniform float uMouseActive, uMouseRadius, uMouseForce;
+        void main() {
+          vColor = aColor;
+          vec3 p = position;
+          float sc = 1.8 - 0.8 * uBuildT;
+          p.xz *= sc;
+          if (uMouseActive > 0.5) {
+            vec3 diff = p - uMousePos; diff.y = 0.0;
+            float d = length(diff);
+            if (d < uMouseRadius && d > 0.001)
+              p += normalize(diff) * pow(1.0 - d/uMouseRadius, 2.0) * uMouseForce;
+          }
+          vec4 mv = modelViewMatrix * vec4(p, 1.0);
+          gl_PointSize = uStarSize * (uHalfH / -mv.z);
+          gl_Position  = projectionMatrix * mv;
+        }
+      `;
+      const frag = `
+        uniform sampler2D uTex;
+        varying vec3 vColor;
+        void main() {
+          vec4 t = texture2D(uTex, gl_PointCoord);
+          if (t.a < 0.01) discard;
+          gl_FragColor = vec4(vColor * t.r * 1.6, t.a);
+        }
+      `;
+
+      const mat  = new THREE.ShaderMaterial({ uniforms, vertexShader: vert, fragmentShader: frag, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false });
       const stars = new THREE.Points(geo, mat);
       scene.add(stars);
 
-      // ── Bright core cluster (warm white, high opacity) ──
-      const CN = 4000;
-      const cPos = new Float32Array(CN * 3);
-      const cCol = new Float32Array(CN * 3);
+      // ── Core cluster ──
+      const CN = 5000;
+      const cpos = new Float32Array(CN * 3), ccol = new Float32Array(CN * 3);
       for (let i = 0; i < CN; i++) {
-        const seed = i + 500000;
-        const r = Math.pow(hash(seed), 1.8) * R * 0.22;
-        const a = hash(seed + 1) * Math.PI * 2;
-        cPos[i * 3]     = Math.cos(a) * r;
-        cPos[i * 3 + 1] = (hash(seed + 2) - 0.5) * 0.06;
-        cPos[i * 3 + 2] = Math.sin(a) * r;
-        cCol[i * 3] = 1.0; cCol[i * 3 + 1] = 0.92; cCol[i * 3 + 2] = 0.75;
+        const sd = i + 500000, r = Math.pow(hash(sd), 1.8) * R * 0.22, a = hash(sd+1)*Math.PI*2;
+        cpos[i*3]=Math.cos(a)*r; cpos[i*3+1]=(hash(sd+2)-0.5)*THICK*0.6; cpos[i*3+2]=Math.sin(a)*r;
+        ccol[i*3]=1; ccol[i*3+1]=0.92; ccol[i*3+2]=0.75;
       }
-      const cGeo = new THREE.BufferGeometry();
-      cGeo.setAttribute('position', new THREE.BufferAttribute(cPos, 3));
-      cGeo.setAttribute('color',    new THREE.BufferAttribute(cCol, 3));
-      const cMat = new THREE.PointsMaterial({
-        size: 0.2, map: starTex, vertexColors: true,
-        blending: THREE.AdditiveBlending, transparent: true,
-        depthWrite: false, opacity: 0.55,
-      });
-      const core = new THREE.Points(cGeo, cMat);
+      const cgeo = new THREE.BufferGeometry();
+      cgeo.setAttribute('position', new THREE.BufferAttribute(cpos, 3));
+      cgeo.setAttribute('aColor',   new THREE.BufferAttribute(ccol, 3));
+      const cUniforms = {
+        uTex:{value:starTex}, uHalfH:{value:H*0.5}, uStarSize:{value:0.18},
+        uBuildT:{value:0.0}, uMousePos:{value:new THREE.Vector3()},
+        uMouseActive:{value:0.0}, uMouseRadius:{value:1.2}, uMouseForce:{value:0.65}
+      };
+      const core = new THREE.Points(cgeo, new THREE.ShaderMaterial({ uniforms:cUniforms, vertexShader:vert, fragmentShader:frag, blending:THREE.AdditiveBlending, transparent:true, depthWrite:false }));
       scene.add(core);
 
-      // ── Build-in animation: scale from 1.8→1 over 2.2 s (particles fly in from sides) ──
-      const BUILD_MS = 2200;
-      const START_SCALE = 1.8;
-      let elapsed = 0;
-      let lastT = performance.now();
-      let rotation = 0;
+      // ── Mouse repulsion ──
+      const ray = new THREE.Raycaster();
+      const galaxyPlane = new THREE.Plane(new THREE.Vector3(0,1,0), 0);
+      const mWorld = new THREE.Vector3();
+      let mouseActive = false;
 
-      // Start scaled out, invisible
-      stars.scale.set(START_SCALE, 1, START_SCALE);
-      core.scale.set(START_SCALE, 1, START_SCALE);
+      function trackMouse(cx, cy) {
+        const rect = canvas.getBoundingClientRect();
+        ray.setFromCamera({ x:((cx-rect.left)/rect.width)*2-1, y:-((cy-rect.top)/rect.height)*2+1 }, camera);
+        if (ray.ray.intersectPlane(galaxyPlane, mWorld)) {
+          uniforms.uMousePos.value.copy(mWorld);
+          cUniforms.uMousePos.value.copy(mWorld);
+        }
+      }
+      canvas.addEventListener('mousedown',  e => { mouseActive=true;  trackMouse(e.clientX,e.clientY); });
+      canvas.addEventListener('mousemove',  e => { if(mouseActive) trackMouse(e.clientX,e.clientY); });
+      canvas.addEventListener('mouseup',    () => mouseActive=false);
+      canvas.addEventListener('mouseleave', () => mouseActive=false);
+      canvas.addEventListener('touchstart', e => { mouseActive=true; trackMouse(e.touches[0].clientX,e.touches[0].clientY); }, {passive:true});
+      canvas.addEventListener('touchmove',  e => { trackMouse(e.touches[0].clientX,e.touches[0].clientY); }, {passive:true});
+      canvas.addEventListener('touchend',   () => mouseActive=false);
+
+      // ── Animation loop ──
+      const BUILD_MS = 2200;
+      let elapsed = 0, lastT = performance.now(), rotY = 0;
+
+      // Fade in on first rendered frame
       canvas.style.opacity = '0';
-      canvas.style.transition = 'opacity 0.9s ease';
-      setTimeout(() => { canvas.style.opacity = '1'; }, 80);
+      canvas.style.transition = 'opacity 1s ease';
+      requestAnimationFrame(() => requestAnimationFrame(() => { canvas.style.opacity = '1'; }));
 
       function animate() {
         requestAnimationFrame(animate);
-        const now = performance.now();
-        const dt  = now - lastT;
-        lastT = now;
-        elapsed += dt;
-
-        // Ease-out cubic scale (1.8 → 1.0)
-        if (elapsed < BUILD_MS) {
-          const t    = elapsed / BUILD_MS;
-          const ease = 1 - Math.pow(1 - t, 3);
-          const sc   = START_SCALE - (START_SCALE - 1.0) * ease;
-          stars.scale.set(sc, 1, sc);
-          core.scale.set(sc, 1, sc);
-        }
-
-        // Differential rotation (inner faster than outer — approximated by single speed)
-        rotation += 0.00015 * dt;
-        stars.rotation.y = rotation;
-        core.rotation.y  = rotation;
-
-        renderer.render(scene, camera);
+        const now = performance.now(), dt = now-lastT; lastT=now; elapsed+=dt;
+        const et = 1 - Math.pow(1 - Math.min(1, elapsed/BUILD_MS), 3);
+        uniforms.uBuildT.value = cUniforms.uBuildT.value = et;
+        uniforms.uMouseActive.value = cUniforms.uMouseActive.value = mouseActive ? 1.0 : 0.0;
+        rotY += 0.00015 * dt;
+        stars.rotation.y = core.rotation.y = rotY;
+        if (window._galaxyControls) window._galaxyControls.update();
+        // Use composer if bloom loaded, else plain render
+        if (window._galaxyComposer) window._galaxyComposer.render();
+        else renderer.render(scene, camera);
       }
 
       animate();
+      console.log('Galaxy: rendering started');
 
-      // Responsive resize
+      // ── Responsive resize ──
       let resizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
           [W, H] = getSize();
           renderer.setSize(W, H);
+          if (window._galaxyComposer) window._galaxyComposer.setSize(W, H);
           camera.aspect = W / H;
           camera.updateProjectionMatrix();
+          uniforms.uHalfH.value  = H * 0.5;
+          cUniforms.uHalfH.value = H * 0.5;
         }, 200);
       });
     }
@@ -2923,141 +2826,6 @@
     gsap.fromTo(page, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
   }
 
-  /* ─── Halftone Avatar Canvas ─── */
-  (function() {
-    const canvas = document.getElementById('avatar-canvas');
-    const hint   = document.getElementById('avatar-drop-hint');
-    const card   = document.getElementById('avatar-card');
-    if (!canvas) return;
-
-    const COLS = 40, ROWS = 40;
-    const ORANGE = '#F97316';
-    const DPR = Math.min(window.devicePixelRatio || 1, 2);
-    const PX  = 96 * DPR;
-    canvas.width  = PX;
-    canvas.height = PX;
-    const ctx = canvas.getContext('2d');
-
-    // Animated idle state — pulsing orange dots on black
-    let idleAnim, idleDots = [];
-    function buildIdleDots() {
-      idleDots = [];
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          if (Math.random() < 0.18) {
-            idleDots.push({ c, r, phase: Math.random() * Math.PI * 2, speed: 0.6 + Math.random() * 0.8 });
-          }
-        }
-      }
-    }
-    function drawIdle(t) {
-      ctx.clearRect(0, 0, PX, PX);
-      const cw = PX / COLS, rh = PX / ROWS;
-      idleDots.forEach(d => {
-        const alpha = 0.15 + 0.5 * (0.5 + 0.5 * Math.sin(t * d.speed + d.phase));
-        const r = cw * 0.28 * (0.5 + 0.5 * Math.sin(t * d.speed * 0.7 + d.phase));
-        ctx.beginPath();
-        ctx.arc(d.c * cw + cw / 2, d.r * rh + rh / 2, Math.max(r, 0.5), 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(249,115,22,${alpha.toFixed(2)})`;
-        ctx.fill();
-      });
-      idleAnim = requestAnimationFrame(t2 => drawIdle(t2 / 1000));
-    }
-    buildIdleDots();
-    requestAnimationFrame(t => drawIdle(t / 1000));
-
-    // Render halftone from an ImageData
-    function renderHalftone(imgEl) {
-      cancelAnimationFrame(idleAnim);
-
-      // Draw image to offscreen canvas for pixel sampling
-      const off = document.createElement('canvas');
-      off.width = COLS; off.height = ROWS;
-      const octx = off.getContext('2d');
-      octx.drawImage(imgEl, 0, 0, COLS, ROWS);
-      const data = octx.getImageData(0, 0, COLS, ROWS).data;
-
-      // Pass 1: collect brightness values
-      const brightness = new Float32Array(COLS * ROWS);
-      for (let i = 0; i < COLS * ROWS; i++) {
-        const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
-        brightness[i] = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-      }
-
-      // Pass 2: percentile stretch (p5 → p95 → 0..1)
-      const sorted = [...brightness].sort((a, b) => a - b);
-      const lo = sorted[Math.floor(sorted.length * 0.05)];
-      const hi = sorted[Math.floor(sorted.length * 0.95)];
-      const range = hi - lo || 1;
-      const norm = brightness.map(v => Math.min(1, Math.max(0, (v - lo) / range)));
-
-      // Pass 3: build dot targets and animate in
-      const cw = PX / COLS, rh = PX / ROWS;
-      const maxR = cw * 0.46;
-      const dots = [];
-      for (let row = 0; row < ROWS; row++) {
-        for (let col = 0; col < COLS; col++) {
-          const n = norm[row * COLS + col];
-          if (n > 0.08) {
-            dots.push({ x: col * cw + cw / 2, y: row * rh + rh / 2, r: maxR * n, t: 0 });
-          }
-        }
-      }
-
-      // Shuffle so dots draw in randomly
-      dots.sort(() => Math.random() - 0.5);
-
-      let frame = 0;
-      const TOTAL_FRAMES = 60;
-      function animate() {
-        ctx.clearRect(0, 0, PX, PX);
-        frame++;
-        const progress = Math.min(frame / TOTAL_FRAMES, 1);
-        const visible = Math.floor(progress * dots.length);
-        for (let i = 0; i < visible; i++) {
-          const d = dots[i];
-          const age = (visible - i) / dots.length;
-          const alpha = Math.min(1, age * 3);
-          ctx.beginPath();
-          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(249,115,22,${alpha.toFixed(2)})`;
-          ctx.fill();
-        }
-        if (frame < TOTAL_FRAMES + dots.length * 0.5) requestAnimationFrame(animate);
-      }
-      animate();
-      if (hint) hint.style.display = 'none';
-    }
-
-    // Drag-and-drop
-    card.addEventListener('dragover', e => { e.preventDefault(); card.classList.add('drag-over'); });
-    card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
-    card.addEventListener('drop', e => {
-      e.preventDefault();
-      card.classList.remove('drag-over');
-      const file = e.dataTransfer.files[0];
-      if (!file || !file.type.startsWith('image/')) return;
-      const url = URL.createObjectURL(file);
-      const img = new Image();
-      img.onload = () => { renderHalftone(img); URL.revokeObjectURL(url); };
-      img.src = url;
-    });
-
-    // Click to pick file
-    canvas.addEventListener('click', () => {
-      const input = document.createElement('input');
-      input.type = 'file'; input.accept = 'image/*';
-      input.onchange = e => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const url = URL.createObjectURL(file);
-        const img = new Image();
-        img.onload = () => { renderHalftone(img); URL.revokeObjectURL(url); };
-        img.src = url;
-      };
-      input.click();
-    });
-  })();
 
   /* ─── Custom Video Player Controls ─── */
   (function() {
