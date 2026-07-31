@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jago — Founding Designer</title>
+  <title>Jago - Founding Designer</title>
   <style>
 
     /* ─── ECA Prototype Isolation ─── */
@@ -44,7 +44,7 @@
       --surface2: #161616;
       --border: #202020;
       --text: #FFFFFF;
-      --muted: #555555;
+      --muted: #888888;
       --mono: 'Courier New', Courier, monospace;
     }
 
@@ -158,7 +158,6 @@
       text-decoration: none;
       font-size: 13px;
       letter-spacing: 0.04em;
-      transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--text); }
     .nav-cta {
@@ -172,11 +171,10 @@
 
     /* ─── Hero ─── */
     .hero {
-      min-height: 100vh;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 64px;
-      align-items: stretch;
+      align-items: start;
       padding: 130px 52px 80px;
       max-width: 1280px;
       margin: 0 auto;
@@ -266,7 +264,7 @@
       border: 1px solid var(--border);
       min-width: 0;
       width: 100%;
-      height: 100%; /* fill full hero-right height */
+      height: 100%;
     }
     .panel-stack > * { grid-area: 1 / 1; }
 
@@ -862,7 +860,7 @@
       margin-bottom: 8px; padding-left: 18px; position: relative;
     }
     .cv-bullets li::before {
-      content: '—';
+      content: '-';
       position: absolute; left: 0;
       color: var(--orange); font-size: 11px;
     }
@@ -895,7 +893,28 @@
 
     /* ─── GSAP init states ─── */
     .g-hidden { opacity: 0; }
-    .g-up { opacity: 0; transform: translateY(40px); }
+
+    /* ─── CSS scroll-driven fade ─── */
+    @keyframes reveal-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes reveal-out {
+      from { opacity: 1; }
+      to   { opacity: 0; }
+    }
+
+    .tile,
+    .section-title,
+    .section-body,
+    .stat-box,
+    .stats-grid,
+    .panel-card,
+    .about-grid {
+      animation: reveal-in linear both, reveal-out linear both;
+      animation-timeline: view(), view();
+      animation-range: cover 0% cover 40%, cover 60% cover 100%;
+    }
 
     /* ─── Responsive ─── */
     /* Galaxy canvas */
@@ -903,7 +922,7 @@
       display: block;
       width: 100%;
       aspect-ratio: 100 / 62;
-      align-self: center; /* vertically center in taller panel */
+      align-self: center;
       border-radius: 0;
       z-index: 0;
     }
@@ -932,10 +951,6 @@
   </style>
 
   <!-- ECA Prototype dependencies -->
-          <script>
-    // Disable Tailwind preflight so it doesn't reset portfolio styles
-    tailwind.config = { corePlugins: { preflight: false } };
-  </script>
 
   </head>
 <body>
@@ -947,10 +962,10 @@
 <nav id="nav">
   <div class="nav-logo" style="cursor:pointer" onclick="goHome()">Jago</div>
   <div class="nav-links">
-    <a href="#work">Work</a>
-    <a href="#about">About</a>
-    <a href="#" onclick="event.preventDefault();openProject('cv')">CV</a>
-    <a href="#" onclick="event.preventDefault();openProject('jago-llm')" style="color:var(--orange);font-family:var(--mono);font-size:11px;letter-spacing:0.08em">Jago_LLM</a>
+    <a href="#work" onmousedown="this.style.color='#f97316';var s=this;setTimeout(function(){s.style.color=''},400)">Work</a>
+    <a href="#about" onmousedown="this.style.color='#f97316';var s=this;setTimeout(function(){s.style.color=''},400)">About</a>
+    <a href="#" onmousedown="var s=this;s.style.color='#f97316';setTimeout(function(){s.style.color=''},400)" onclick="event.preventDefault();setTimeout(function(){openProject('cv')},300)">CV</a>
+    <a href="#" onmousedown="var s=this;s.style.color='#f97316';setTimeout(function(){s.style.color=''},400)" onclick="event.preventDefault();setTimeout(function(){openProject('jago-llm')},300)">Jago LLM</a>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">☀</button>
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
@@ -966,7 +981,7 @@
       <span class="accent">ships.</span>
     </h1>
     <p class="hero-sub g-hidden" id="h-sub">
-      20+ years shaping AI-powered, data-rich platforms from zero to production. Enterprise SaaS, fintech, pharma, maritime, telco — and a £3.5M acquisition.
+      20+ years shaping AI-powered, data-rich platforms from zero to production. Enterprise SaaS, fintech, pharma, maritime, telco - and a £3.5M acquisition.
     </p>
     <div class="ctas g-hidden" id="h-ctas">
       <a href="#work" class="btn btn-fill">View work →</a>
@@ -981,7 +996,7 @@
       <!-- Galaxy canvas -->
       <canvas id="galaxy-canvas"></canvas>
 
-      <!-- Card 1 — Designer Setup -->
+      <!-- Card 1 - Designer Setup -->
       <div class="panel-card" id="avatar-card">
         <div class="panel-badge badge-orange">Designer Setup</div>
         <div class="panel-row">Agent: <span class="val typewriter" data-type="Jago Livingstone"></span></div>
@@ -995,23 +1010,21 @@
   </div>
 </div>
 
-<hr class="ruled" />
-
 <!-- ═══════════════ WORK ═══════════════ -->
 <div class="section" id="work">
   <div class="work-header">
     <div>
-      <div class="eyebrow g-up">// Selected Work</div>
-      <h2 class="section-title g-up">Built from<br>the ground up.</h2>
+      <div class="eyebrow">// Selected Work</div>
+      <h2 class="section-title">Built from<br>the ground up.</h2>
     </div>
-    <p class="section-body g-up" style="max-width:340px">
-      Enterprise SaaS, AI tools, maritime tech, gaming, and brand work — across agencies, startups, and global companies.
+    <p class="section-body" style="max-width:340px">
+      Enterprise SaaS, AI tools, maritime tech, gaming, and brand work - across agencies, startups, and global companies.
     </p>
   </div>
 
-  <div class="work-grid g-up">
+  <div class="work-grid">
 
-    <!-- 1 — ECA International -->
+    <!-- 1 - ECA International -->
     <div class="tile" onclick="openProject('eca')" style="cursor:pointer">
       <div class="tile-bg" style="background-image:url('https://carbon-media.accelerator.net/0000000mKt5/5vzRABcWysDebjTRpwKG4E;crop(348,0,778,778)/528x528.png');background-size:cover;background-position:center;"></div>
       <div class="tile-overlay">
@@ -1021,37 +1034,37 @@
       </div>
     </div>
 
-    <!-- 2 — Silverstream -->
+    <!-- 2 - Silverstream -->
     <div class="tile" onclick="openProject('silverstream')" style="cursor:pointer">
       <div class="tile-bg" style="background-image:url('https://carbon-media.accelerator.net/0000000mKt5/ibfqV52hmYSf1aiysruJRN;crop(348,0,778,778)/528x528.png');background-size:cover;background-position:center;"></div>
       <div class="tile-overlay">
         <div class="tile-cat">Head of Design · Web & iOS</div>
         <div class="tile-name">Silverstream Technologies</div>
-        <div style="font-size:12px;color:#aaa;margin-top:6px">Maritime ALS performance platform — web app & iOS in 6 months</div>
+        <div style="font-size:12px;color:#aaa;margin-top:6px">Maritime ALS performance platform - web app & iOS in 6 months</div>
       </div>
     </div>
 
-    <!-- 3 — SAP -->
+    <!-- 3 - SAP -->
     <div class="tile" onclick="openProject('sap')" style="cursor:pointer">
       <div class="tile-bg" style="background-image:url('https://carbon-media.accelerator.net/0000000mKt5/4fiqQzOlj3HeqBDdvclQbv;crop(348,0,778,778)/528x528.png');background-size:cover;background-position:center;"></div>
       <div class="tile-overlay">
         <div class="tile-cat">UX/UI · £1M+ Product</div>
         <div class="tile-name">SAP</div>
-        <div style="font-size:12px;color:#aaa;margin-top:6px">Led Context-Driven Services from concept to delivery — still on the price list</div>
+        <div style="font-size:12px;color:#aaa;margin-top:6px">Led Context-Driven Services from concept to delivery - still on the price list</div>
       </div>
     </div>
 
-    <!-- 4 — Monkey Nuts -->
+    <!-- 4 - Monkey Nuts -->
     <div class="tile" onclick="openProject('monkeynuts')" style="cursor:pointer">
       <div class="tile-bg" style="background-image:url('https://carbon-media.accelerator.net/0000000mKt5/41QF6K4vAxGdwUXiRciApz;crop(348,0,778,778)/528x528.png');background-size:cover;background-position:center;"></div>
       <div class="tile-overlay">
         <div class="tile-cat">Founder · Art Direction</div>
         <div class="tile-name">Monkey Nuts Studio</div>
-        <div style="font-size:12px;color:#aaa;margin-top:6px">Playful interactive web games — SEIS-funded, built with community</div>
+        <div style="font-size:12px;color:#aaa;margin-top:6px">Playful interactive web games - SEIS-funded, built with community</div>
       </div>
     </div>
 
-    <!-- 5 — Candyspace / Rolls-Royce -->
+    <!-- 5 - Candyspace / Rolls-Royce -->
     <div class="tile" onclick="openProject('candyspace')" style="cursor:pointer">
       <div class="tile-bg" style="background-image:url('https://carbon-media.accelerator.net/0000000mKt5/lgZfzZLY0aBcI1t2xXMalu;crop(348,0,778,778)/528x528.png');background-size:cover;background-position:center;"></div>
       <div class="tile-overlay">
@@ -1061,7 +1074,7 @@
       </div>
     </div>
 
-    <!-- 6 — GGMR / Vodafone -->
+    <!-- 6 - GGMR / Vodafone -->
     <div class="tile" onclick="openProject('ggmr')" style="cursor:pointer">
       <div class="tile-bg" style="background-image:url('https://carbon-media.accelerator.net/0000000mKt5/b0tmGqNXMgGelGjtJpj6N8;crop(348,0,778,778)/528x528.png');background-size:cover;background-position:center;"></div>
       <div class="tile-overlay">
@@ -1079,15 +1092,15 @@
 <div class="section" id="interview">
   <div class="work-header">
     <div>
-      <div class="eyebrow g-up">// Interview Projects</div>
-      <h2 class="section-title g-up">Designed under<br>time pressure.</h2>
+      <div class="eyebrow">// Interview Projects</div>
+      <h2 class="section-title">Designed under<br>time pressure.</h2>
     </div>
-    <p class="section-body g-up" style="max-width:340px">
-      Take-home design challenges completed as part of interview processes — full brief and work shown.
+    <p class="section-body" style="max-width:340px">
+      Take-home design challenges completed as part of interview processes - full brief and work shown.
     </p>
   </div>
 
-  <div class="work-grid g-up">
+  <div class="work-grid">
 
     <!-- Global Relay -->
     <div class="tile" onclick="openProject('global-relay')" style="cursor:pointer">
@@ -1095,7 +1108,7 @@
       <div class="tile-overlay">
         <div class="tile-cat">Interview Task · Auth UX · Compliance SaaS</div>
         <div class="tile-name">Global Relay</div>
-        <div style="font-size:12px;color:#aaa;margin-top:6px">Unified login system for a financial-grade SaaS platform — 4-day brief, 30-page response</div>
+        <div style="font-size:12px;color:#aaa;margin-top:6px">Unified login system for a financial-grade SaaS platform - 4-day brief, 30-page response</div>
       </div>
     </div>
 
@@ -1105,7 +1118,7 @@
       <div class="tile-overlay">
         <div class="tile-cat">Interview Task · EdTech · Product Design</div>
         <div class="tile-name">Zen Educate</div>
-        <div style="font-size:12px;color:#aaa;margin-top:6px">Design challenge for a teacher supply platform — brief + prototype in progress</div>
+        <div style="font-size:12px;color:#aaa;margin-top:6px">Design challenge for a teacher supply platform - brief + prototype in progress</div>
       </div>
     </div>
 
@@ -1122,18 +1135,18 @@
 
 <!-- ═══════════════ STATS ═══════════════ -->
 <div class="section">
-  <div class="eyebrow g-up">// Impact</div>
-  <h2 class="section-title g-up">Design<br>by the numbers.</h2>
+  <div class="eyebrow">// Impact</div>
+  <h2 class="section-title">Design<br>by the numbers.</h2>
   <div class="stats-grid">
-    <div class="stat-box g-up">
+    <div class="stat-box">
       <div class="stat-num" style="font-size:52px">£3.5m</div>
       <div class="stat-desc">SAP acquisition driven by design remit at SeeWhy</div>
     </div>
-    <div class="stat-box g-up">
+    <div class="stat-box">
       <div class="stat-num" style="font-size:52px">£1.5m</div>
-      <div class="stat-desc">Per-licence SAP enterprise suite — still live on the price list</div>
+      <div class="stat-desc">Per-licence SAP enterprise suite - still live on the price list</div>
     </div>
-    <div class="stat-box g-up">
+    <div class="stat-box">
       <div class="stat-num" data-target="35" data-suffix="%">0</div>
       <div class="stat-desc">Drop-off reduction at Lloyds Banking Group</div>
     </div>
@@ -1146,13 +1159,13 @@
 <div class="section" id="about">
   <div class="about-grid">
     <div>
-      <div class="eyebrow g-up">// About</div>
-      <h2 class="section-title g-up">The first<br>designer in.</h2>
+      <div class="eyebrow">// About</div>
+      <h2 class="section-title">The first<br>designer in.</h2>
     </div>
-    <div class="about-body g-up">
+    <div class="about-body">
       <p>Senior product design leader with 20+ years' experience shaping AI-powered, data-rich platforms from zero to production across enterprise SaaS, financial services, pharmaceuticals, automotive, telco and consumer environments.</p>
       <p>I specialise in translating probabilistic ML outputs into governable, trust-led user journeys, embedding human-in-the-loop frameworks, and turning developer-built products into enterprise-grade software.</p>
-      <p>Track record of leading distributed design teams across UK, Poland and Germany — contributing to a £3.5M acquisition and an enterprise suite still live on SAP's price list at £1.5M per licence.</p>
+      <p>Track record of leading distributed design teams across UK, Poland and Germany - contributing to a £3.5M acquisition and an enterprise suite still live on SAP's price list at £1.5M per licence.</p>
       <div class="skills">
         <span class="skill">UX / Product Design</span>
         <span class="skill">SaaS</span>
@@ -1176,10 +1189,10 @@
 <!-- ═══════════════ CTA ═══════════════ -->
 <div class="cta-section" id="contact">
   <div class="cta-glow"></div>
-  <div class="eyebrow g-up" style="text-align:center">// Let's build</div>
-  <h2 class="section-title g-up" style="font-size:clamp(52px,8vw,108px);margin-bottom:28px">Got a project?</h2>
-  <p class="cta-sub g-up">Let's talk about building something great from the ground up.</p>
-  <button class="btn btn-fill g-up" onclick="openContactModal()" style="font-size:15px;padding:16px 36px;border:none;cursor:pointer">
+  <div class="eyebrow" style="text-align:center">// Let's build</div>
+  <h2 class="section-title" style="font-size:clamp(52px,8vw,108px);margin-bottom:28px">Got a project?</h2>
+  <p class="cta-sub">Let's talk about building something great from the ground up.</p>
+  <button class="btn btn-fill" onclick="openContactModal()" style="font-size:15px;padding:16px 36px;border:none;cursor:pointer">
     Get in touch →
   </button>
 </div>
@@ -1248,7 +1261,7 @@
     <div id="contact-success" style="display:none;padding:40px 32px 40px;text-align:center">
       <div style="width:52px;height:52px;border-radius:50%;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:22px">✓</div>
       <div style="font-size:20px;font-weight:700;margin-bottom:8px">Message sent</div>
-      <p style="color:#555;font-size:14px;margin-bottom:24px">Thanks — I'll get back to you within 24 hours.</p>
+      <p style="color:#555;font-size:14px;margin-bottom:24px">Thanks - I'll get back to you within 24 hours.</p>
       <button onclick="closeContactModal()" style="background:none;border:1px solid #2a2a2a;border-radius:8px;color:#888;padding:10px 24px;cursor:pointer;font-size:13px;font-family:var(--mono);transition:border-color 0.2s"
         onmouseover="this.style.borderColor='var(--orange)';this.style.color='var(--orange)'" onmouseout="this.style.borderColor='#2a2a2a';this.style.color='#888'">Close</button>
     </div>
@@ -1298,11 +1311,11 @@
 
     <div class="content-block">
       <div class="content-block-label">// Overview</div>
-      <p style="color:var(--muted);font-size:15px;line-height:1.8">Three concurrent AI workstreams for a global mobility software and consultancy. I designed AI Transcribe &amp; Build — compressing a multi-hour manual relocation-report process into a single AI-assisted interaction — alongside a conversational mobile interface replacing long brittle forms, and a human-in-the-loop AI Builder that kept domain experts in decision authority while AI handled data processing.</p>
+      <p style="color:var(--muted);font-size:15px;line-height:1.8">Three concurrent AI workstreams for a global mobility software and consultancy. I designed AI Transcribe &amp; Build - compressing a multi-hour manual relocation-report process into a single AI-assisted interaction - alongside a conversational mobile interface replacing long brittle forms, and a human-in-the-loop AI Builder that kept domain experts in decision authority while AI handled data processing.</p>
     </div>
 
     <div class="content-block">
-      <div class="content-block-label">// Interactive Prototype — AI Document Builder</div>
+      <div class="content-block-label">// Interactive Prototype - AI Document Builder</div>
       <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Live prototype built during the engagement. Click, drag blocks, and use the AI panel on the right.</p>
       </div></div>
   <!-- ECA prototype launch card -->
@@ -1779,7 +1792,7 @@
     <div class="content-block">
       <div class="content-block-label">// The Brief</div>
       <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:24px">
-        Global Relay — a financial SaaS archiving and compliance platform — asked candidates to design a unified login panel handling two distinct authentication flows: traditional ID/password, and SAML-based SSO redirected to a customer-hosted page.
+        Global Relay - a financial SaaS archiving and compliance platform - asked candidates to design a unified login panel handling two distinct authentication flows: traditional ID/password, and SAML-based SSO redirected to a customer-hosted page.
       </p>
 
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:24px">
@@ -1787,11 +1800,11 @@
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
           <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
             <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">01 · Determine Login Method</div>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">System detects whether a user is configured for password or SSO based on their Login ID — without users needing to know which they use.</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">System detects whether a user is configured for password or SSO based on their Login ID - without users needing to know which they use.</p>
           </div>
           <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
             <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">02 · Password Auth</div>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Standard ID/password flow with full error handling and security — malicious users must not be able to enumerate valid IDs.</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Standard ID/password flow with full error handling and security - malicious users must not be able to enumerate valid IDs.</p>
           </div>
           <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
             <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">03 · SSO / SAML Flow</div>
@@ -1799,7 +1812,7 @@
           </div>
           <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
             <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">04 · Scope</div>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Responsive — large monitors to mobile browsers. Single-login UX (log in once, in to everything). Localisation-ready. Async error states.</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Responsive - large monitors to mobile browsers. Single-login UX (log in once, in to everything). Localisation-ready. Async error states.</p>
           </div>
         </div>
       </div>
@@ -1813,12 +1826,12 @@
     </div>
   </div>
 
-  <!-- PDF Viewer — full bleed -->
+  <!-- PDF Viewer - full bleed -->
   <div style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 52px 16px;max-width:1280px;margin:0 auto;flex-wrap:wrap;gap:12px">
       <div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:4px">// The Work</div>
-        <div style="font-size:18px;font-weight:600;margin-bottom:4px">Design response — 30 pages</div>
+        <div style="font-size:18px;font-weight:600;margin-bottom:4px">Design response - 30 pages</div>
         <div style="font-size:13px;color:var(--muted)">Competitor analysis · Personas · Flows · Wireframes · Error states · Accessibility</div>
       </div>
       <a href="global-relay-work.pdf" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);text-decoration:none;font-family:var(--mono);border:1px solid var(--border);border-radius:6px;padding:8px 14px;transition:border-color 0.2s,color 0.2s;flex-shrink:0"
@@ -1837,7 +1850,7 @@
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
         <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
           <div style="font-size:11px;color:var(--orange);font-family:var(--mono);margin-bottom:6px">Research</div>
-          <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7">Competitor analysis across Miro, Amplitude, Zoom, Stripe, Adobe and Coinbase — studying login flow patterns and SSO handling.</p>
+          <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7">Competitor analysis across Miro, Amplitude, Zoom, Stripe, Adobe and Coinbase - studying login flow patterns and SSO handling.</p>
         </div>
         <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
           <div style="font-size:11px;color:var(--orange);font-family:var(--mono);margin-bottom:6px">Security</div>
@@ -1845,7 +1858,7 @@
         </div>
         <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
           <div style="font-size:11px;color:var(--orange);font-family:var(--mono);margin-bottom:6px">Flows</div>
-          <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7">Happy path, SSO path, error states, password reset, MFA, and account lockout — all documented with annotated wireframes.</p>
+          <p style="font-size:13px;color:var(--muted);margin:0;line-height:1.7">Happy path, SSO path, error states, password reset, MFA, and account lockout - all documented with annotated wireframes.</p>
         </div>
         <div style="padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
           <div style="font-size:11px;color:var(--orange);font-family:var(--mono);margin-bottom:6px">Accessibility</div>
@@ -1899,16 +1912,16 @@
       <div class="proj-meta-item"><div class="proj-meta-label">Status</div><div class="proj-meta-val">Prototype in progress</div></div>
     </div>
 
-    <!-- Brief — scraped & hosted -->
+    <!-- Brief - scraped & hosted -->
     <div class="content-block">
       <div class="content-block-label">// The Brief</div>
       <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:24px">
-        Zen Educate is a two-sided marketplace connecting schools with educators for short and long-term work. The June 2026 challenge set a hypothetical Edinburgh scenario — the marketplace looks healthy on the surface, but five signals suggest educators aren't being served across their full lifecycle.
+        Zen Educate is a two-sided marketplace connecting schools with educators for short and long-term work. The June 2026 challenge set a hypothetical Edinburgh scenario - the marketplace looks healthy on the surface, but five signals suggest educators aren't being served across their full lifecycle.
       </p>
 
       <!-- Scenario signals -->
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:24px">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:18px">// Edinburgh scenario — five signals</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:18px">// Edinburgh scenario - five signals</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
           <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
             <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">35% · Post-placement drop-off</div>
@@ -1924,7 +1937,7 @@
           </div>
           <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
             <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">4:1 · Marketplace imbalance</div>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Supply to demand ratio creates a "Hunger Games" dynamic — fatigue and disengagement.</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Supply to demand ratio creates a "Hunger Games" dynamic - fatigue and disengagement.</p>
           </div>
           <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
             <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">25% · Perceived utility ceiling</div>
@@ -1935,14 +1948,14 @@
 
       <!-- The two parts -->
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:24px">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:18px">// The task — two parts</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:18px">// The task - two parts</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px">
           <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
-            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">Part 1 · 30% — Discovery</div>
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">Part 1 · 30% - Discovery</div>
             <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Is there meaningful additional value to unlock? How would you structure discovery, prioritise signal, and decide whether this is a supply/demand constraint or a real product gap?</p>
           </div>
           <div style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
-            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">Part 2 · 70% — Design the system</div>
+            <div style="font-size:12px;color:var(--orange);font-family:var(--mono);margin-bottom:8px">Part 2 · 70% - Design the system</div>
             <p style="font-size:13px;color:var(--muted);line-height:1.7;margin:0">Pick a cohort, define the problem, choose a direction, and bring it to life. End-to-end journey, key screens, behaviour change, and how you'd measure it. High enough fidelity to assess design quality.</p>
           </div>
         </div>
@@ -1954,25 +1967,25 @@
 
   <div class="proj-body"><div>
     <div class="content-block-label">// Interactive Prototype</div>
-    <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Live prototype — The Nudge · Wrap Up · What's Next · One Tap · Lined Up</p>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:16px">Live prototype - The Nudge · Wrap Up · What's Next · One Tap · Lined Up</p>
   </div></div>
   <!-- Zen prototype launch card -->
   <div style="width:100%;padding:0;margin:0;">
     <div onclick="window.open('zen-prototype.html','_blank')" style="position:relative;cursor:pointer;overflow:hidden;background:#080d1c;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-      <!-- Phones row — no text overlap -->
+      <!-- Phones row - no text overlap -->
       <div style="background:radial-gradient(1200px 600px at 50% -10%, #16284d 0%, #0c1326 60%, #080d1c 100%);display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:48px 60px 0;overflow:hidden;min-height:360px;">
         <img src="zen-screen-1-the-nudge.png" style="height:320px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:rotate(-4deg) translateY(20px);opacity:0.7;flex-shrink:0">
         <img src="zen-screen-3-whats-next.png" style="height:360px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.7);transform:rotate(-1deg);opacity:0.95;flex-shrink:0;position:relative;z-index:2">
         <img src="zen-screen-5-lined-up.png" style="height:320px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:rotate(4deg) translateY(20px);opacity:0.7;flex-shrink:0">
       </div>
-      <!-- CTA below — clean, no overlap -->
+      <!-- CTA below - clean, no overlap -->
       <div style="background:#080d1c;padding:36px 24px 44px;text-align:center;">
         <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.3);border-radius:100px;padding:6px 16px;margin-bottom:20px;">
           <span style="width:7px;height:7px;border-radius:50%;background:#f97316;display:inline-block;animation:pulse 2s ease-in-out infinite"></span>
           <span style="color:#f97316;font-size:11px;letter-spacing:0.12em;font-family:monospace;text-transform:uppercase">Live Prototype</span>
         </div>
         <h3 style="color:#fff;font-size:clamp(20px,3vw,32px);font-weight:600;margin:0 0 12px;letter-spacing:-0.02em">Try the working prototype</h3>
-        <p style="color:#6b7280;font-size:14px;margin:0 0 28px;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.6">The full Zen Educate flow — 5 screens, animated transitions, interactive throughout.</p>
+        <p style="color:#6b7280;font-size:14px;margin:0 0 28px;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.6">The full Zen Educate flow - 5 screens, animated transitions, interactive throughout.</p>
         <div style="display:inline-flex;align-items:center;gap:10px;background:#f97316;color:#000;font-weight:700;font-size:14px;padding:14px 28px;border-radius:8px;letter-spacing:0.01em;transition:transform 0.2s,box-shadow 0.2s"
              onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 0 32px rgba(249,115,22,0.4)'"
              onmouseout="this.style.transform='scale(1)';this.style.boxShadow='none'">
@@ -1996,7 +2009,7 @@
     <button class="back-btn" onclick="goHome()">← Back to work</button>
     <div style="text-align:right">
       <div class="proj-nav-cat">First-person AI responses</div>
-      <div class="proj-nav-title">Jago_LLM</div>
+      <div class="proj-nav-title">Jago LLM</div>
     </div>
   </nav>
 
@@ -2017,12 +2030,12 @@
         <span style="width:12px;height:12px;border-radius:50%;background:#ff5f57;display:inline-block"></span>
         <span style="width:12px;height:12px;border-radius:50%;background:#febc2e;display:inline-block"></span>
         <span style="width:12px;height:12px;border-radius:50%;background:#28c840;display:inline-block"></span>
-        <span style="font-family:var(--mono);font-size:12px;color:#555;margin-left:8px">jago@portfolio — ask me anything</span>
+        <span style="font-family:var(--mono);font-size:12px;color:#555;margin-left:8px">jago@portfolio - ask me anything</span>
       </div>
 
       <!-- Chat output -->
       <div id="llm-output" style="min-height:320px;max-height:420px;overflow-y:auto;padding:24px 28px;font-family:var(--mono);font-size:13px;line-height:1.75;scrollbar-width:thin;scrollbar-color:#2a2a2a transparent">
-        <div class="llm-msg-sys"><span style="color:var(--orange);font-weight:700">sys</span> <span style="color:#ccc">Hi — I'm Jago. Ask me about my experience, the work I've shipped, my design process, or what I'm looking for next. I'll reply directly.</span></div>
+        <div class="llm-msg-sys"><span style="color:var(--orange);font-weight:700">sys</span> <span style="color:#ccc">Hi - I'm Jago. Ask me about my experience, the work I've shipped, my design process, or what I'm looking for next. I'll reply directly.</span></div>
       </div>
 
       <!-- Input bar -->
@@ -2057,10 +2070,10 @@
 <!-- ── CV Page ── -->
 <div id="project-cv" class="project-page">
   <nav class="proj-nav">
-    <button class="back-btn" onclick="goHome()">← Back</button>
+    <button class="back-btn" onclick="goHome()">← Back to work</button>
     <div style="text-align:right">
       <div class="proj-nav-cat">Lead Product Designer · UX · SaaS · AI · Chatbots</div>
-      <div class="proj-nav-title">Jago Livingstone — CV</div>
+      <div class="proj-nav-title">Jago Livingstone - CV</div>
     </div>
   </nav>
 
@@ -2082,7 +2095,7 @@
       <div class="cv-ach"><div class="cv-ach-num">£1.5m</div><div class="cv-ach-label">Per-licence SAP suite shipped</div></div>
       <div class="cv-ach"><div class="cv-ach-num">35%</div><div class="cv-ach-label">Lloyds drop-off reduction</div></div>
       <div class="cv-ach"><div class="cv-ach-num">20+</div><div class="cv-ach-label">Years product design leadership</div></div>
-      <div class="cv-ach"><div class="cv-ach-num">3</div><div class="cv-ach-label">Markets — UK, Poland, Germany</div></div>
+      <div class="cv-ach"><div class="cv-ach-num">3</div><div class="cv-ach-label">Markets - UK, Poland, Germany</div></div>
     </div>
 
     <!-- Professional Profile -->
@@ -2133,7 +2146,7 @@
       </div>
       <p class="cv-role-sub">Three concurrent AI workstreams for a global mobility software, data and consultancy business.</p>
       <ul class="cv-bullets">
-        <li>Designed AI Transcribe &amp; Build — a UX that compressed a multi-hour manual relocation-report process into a single AI-assisted interaction, lifting speed and consistency for consultants.</li>
+        <li>Designed AI Transcribe &amp; Build - a UX that compressed a multi-hour manual relocation-report process into a single AI-assisted interaction, lifting speed and consistency for consultants.</li>
         <li>Designed a mobile-first conversational interface that replaced long, brittle forms with adaptive question flows, enabling natural-language scenario changes mid-journey.</li>
         <li>Designed the AI Builder human-in-the-loop workflow: AI handled data processing while domain experts retained decision authority, with confidence levels, assumptions and edge-case boundaries surfaced to prevent over-trust.</li>
       </ul>
@@ -2210,11 +2223,11 @@
     <div class="cv-section-head">// Education &amp; Qualifications</div>
     <div class="cv-role" style="border-bottom:none;padding-bottom:0">
       <ul class="cv-bullets">
-        <li><strong style="color:var(--text)">BA Graphic Design</strong> — Reading College of Art and Design, 2003</li>
-        <li><strong style="color:var(--text)">Generative AI</strong> — LinkedIn Learning</li>
-        <li><strong style="color:var(--text)">SAP Design Thinking &amp; Challenge Management</strong> — SAP</li>
-        <li><strong style="color:var(--text)">UX Foundations</strong>: Accessibility, Research &amp; Content Strategy — LinkedIn Learning</li>
-        <li><strong style="color:var(--text)">Interaction Design</strong>: Interface &amp; Design Thinking — LinkedIn Learning</li>
+        <li><strong style="color:var(--text)">BA Graphic Design</strong> - Reading College of Art and Design, 2003</li>
+        <li><strong style="color:var(--text)">Generative AI</strong> - LinkedIn Learning</li>
+        <li><strong style="color:var(--text)">SAP Design Thinking &amp; Challenge Management</strong> - SAP</li>
+        <li><strong style="color:var(--text)">UX Foundations</strong>: Accessibility, Research &amp; Content Strategy - LinkedIn Learning</li>
+        <li><strong style="color:var(--text)">Interaction Design</strong>: Interface &amp; Design Thinking - LinkedIn Learning</li>
       </ul>
     </div>
 
@@ -2311,7 +2324,7 @@
     nav.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
 
-  /* initial states — must be set before timeline is created */
+  /* initial states - must be set before timeline is created */
   gsap.set(['#h-title','#h-sub','#h-ctas','#hero-right'], { y: 35 });
   gsap.set('#hero-right', { opacity: 0 });
 
@@ -2336,16 +2349,6 @@
     scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 }
   });
 
-  /* ── Scroll reveals ── */
-  gsap.utils.toArray('.g-up').forEach(el => {
-    gsap.to(el, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 87%', toggleActions: 'play none none none' }
-    });
-  });
 
   /* ── Count-up ── */
   document.querySelectorAll('[data-target]').forEach(el => {
@@ -2389,6 +2392,36 @@
   });
 
 
+  /* ══ Hero-right height: align bottom with #h-ctas ══ */
+  function syncHeroRightHeight() {
+    const ctas     = document.getElementById('h-ctas');
+    const heroRight = document.getElementById('hero-right');
+    if (!ctas || !heroRight) return;
+    const ctasBottom    = ctas.getBoundingClientRect().bottom + window.scrollY;
+    const panelTop      = heroRight.getBoundingClientRect().top  + window.scrollY;
+    heroRight.style.height = (ctasBottom - panelTop) + 'px';
+  }
+  window.addEventListener('load',   syncHeroRightHeight);
+  window.addEventListener('resize', syncHeroRightHeight);
+  syncHeroRightHeight();
+
+  /* ── Scroll-driven animation support check ── */
+  if (!CSS.supports('animation-timeline', 'view()')) {
+    console.warn('animation-timeline not supported — falling back to IntersectionObserver');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        e.target.style.opacity = e.isIntersecting ? '1' : '0';
+        e.target.style.transform = e.isIntersecting ? 'translateY(0)' : 'translateY(60px)';
+        e.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.tile,.section-title,.section-body,.stat-box,.panel-card,.about-grid').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(60px)';
+      io.observe(el);
+    });
+  }
+
   /* ══ SPA Navigation ══ */
   const homeView = document.getElementById('home-view');
   const homeNav  = document.getElementById('nav');
@@ -2414,11 +2447,11 @@
   const llmKB = [
     {
       keys: ['skill','strong','best at','speciali','strength'],
-      answer: `My strongest skills are translating complex, probabilistic systems into clear human interfaces — specifically AI-powered products where trust, transparency and human oversight matter. I'm equally comfortable at the whiteboard setting strategy as I am in Figma sweating the details. On the craft side: information architecture, interaction design, and design systems are where I'm most confident. I also write production-ready component specs that engineers can pick up without a handoff meeting.`
+      answer: `My strongest skills are translating complex, probabilistic systems into clear human interfaces - specifically AI-powered products where trust, transparency and human oversight matter. I'm equally comfortable at the whiteboard setting strategy as I am in Figma sweating the details. On the craft side: information architecture, interaction design, and design systems are where I'm most confident. I also write production-ready component specs that engineers can pick up without a handoff meeting.`
     },
     {
       keys: ['open to work','available','looking','hire','job','role','opportunity','position'],
-      answer: `Yes — actively looking. I'm interested in Lead or Principal Product Designer roles, ideally at a company building something genuinely hard: AI-native products, enterprise SaaS, or anything where design has to wrestle with real complexity. I'm based in the UK and happy to work hybrid or remote. If you're building something interesting, let's talk — jagojames@gmail.com.`
+      answer: `Yes - actively looking. I'm interested in Lead or Principal Product Designer roles, ideally at a company building something genuinely hard: AI-native products, enterprise SaaS, or anything where design has to wrestle with real complexity. I'm based in the UK and happy to work hybrid or remote. If you're building something interesting, let's talk - jagojames@gmail.com.`
     },
     {
       keys: ['experience','background','career','history','worked','years'],
@@ -2426,31 +2459,31 @@
     },
     {
       keys: ['ai','machine learning','llm','gpt','artificial intelligence','claude','cursor','lovable'],
-      answer: `AI is central to most of what I do now. I design AI-powered products — building the trust frameworks, human-in-the-loop controls, and uncertainty communication that makes probabilistic outputs usable. On the tooling side I use Cursor, Claude, Lovable and v0 daily — I vibe-coded the BoSH prototype in Lovable as part of an SAP engagement. I think the most valuable design skill right now is knowing when to hand off to a model and when to keep a human in the loop.`
+      answer: `AI is central to most of what I do now. I design AI-powered products - building the trust frameworks, human-in-the-loop controls, and uncertainty communication that makes probabilistic outputs usable. On the tooling side I use Cursor, Claude, Lovable and v0 daily - I vibe-coded the BoSH prototype in Lovable as part of an SAP engagement. I think the most valuable design skill right now is knowing when to hand off to a model and when to keep a human in the loop.`
     },
     {
       keys: ['next','looking for','want','future','ideal'],
-      answer: `I want to work somewhere that gives design a real seat at the table — where I can set the vision, not just execute someone else's wireframes. Ideally a product with genuine technical depth: AI, data-heavy systems, or enterprise tools that need humanising. I'm excited by the 0→1 phase but I've also scaled mature products, so either works. Most importantly: a team that argues well and ships.`
+      answer: `I want to work somewhere that gives design a real seat at the table - where I can set the vision, not just execute someone else's wireframes. Ideally a product with genuine technical depth: AI, data-heavy systems, or enterprise tools that need humanising. I'm excited by the 0→1 phase but I've also scaled mature products, so either works. Most importantly: a team that argues well and ships.`
     },
     {
       keys: ['london','uk','market','location','where','remote','hybrid'],
-      answer: `Based in the UK. I've worked across London, Warsaw and Munich — leading distributed teams and flying in for sprints when it mattered. Happy with hybrid; fully remote works too if the async culture is strong. I'm not tied to a specific city.`
+      answer: `Based in the UK. I've worked across London, Warsaw and Munich - leading distributed teams and flying in for sprints when it mattered. Happy with hybrid; fully remote works too if the async culture is strong. I'm not tied to a specific city.`
     },
     {
       keys: ['achievement','proud','impact','metric','number','result','outcome'],
-      answer: `A few that stand out: the design work I led at SAP contributed to a £3.5m acquisition — the suite I shipped is still live on their price list at £1.5m per licence. At Lloyds I reduced drop-off on a critical form flow by 35%. At Silverstream I took a product from zero to ship in 6 months — web platform and iOS. And the ECA AI document builder I prototyped compressed a multi-hour expert process into a single AI-assisted interaction.`
+      answer: `A few that stand out: the design work I led at SAP contributed to a £3.5m acquisition - the suite I shipped is still live on their price list at £1.5m per licence. At Lloyds I reduced drop-off on a critical form flow by 35%. At Silverstream I took a product from zero to ship in 6 months - web platform and iOS. And the ECA AI document builder I prototyped compressed a multi-hour expert process into a single AI-assisted interaction.`
     },
     {
       keys: ['engineer','dev','developer','technical','handoff','collaborate','team'],
-      answer: `I try to make handoff a non-event. I write component specs in Figma that include states, edge cases, error conditions and accessibility notes — so engineers aren't guessing. I also understand enough about architecture to have honest conversations about build cost. At Silverstream I worked daily with the engineering lead; at SAP I was embedded in an agile squad. I prefer working closer to the build than a typical "design then throw over the wall" setup.`
+      answer: `I try to make handoff a non-event. I write component specs in Figma that include states, edge cases, error conditions and accessibility notes - so engineers aren't guessing. I also understand enough about architecture to have honest conversations about build cost. At Silverstream I worked daily with the engineering lead; at SAP I was embedded in an agile squad. I prefer working closer to the build than a typical "design then throw over the wall" setup.`
     },
     {
       keys: ['process','design process','approach','how do you','methodology'],
-      answer: `I start with the problem, not the UI. Discovery first — user research, competitive analysis, data review. Then I move fast through concepts, testing assumptions early with low-fidelity flows before committing to high-fidelity. I use a lot of annotated flows rather than pixel-perfect mocks at the early stage — they communicate intent better and invite better feedback. I also believe strongly in UX writing as a core design tool, not an afterthought.`
+      answer: `I start with the problem, not the UI. Discovery first - user research, competitive analysis, data review. Then I move fast through concepts, testing assumptions early with low-fidelity flows before committing to high-fidelity. I use a lot of annotated flows rather than pixel-perfect mocks at the early stage - they communicate intent better and invite better feedback. I also believe strongly in UX writing as a core design tool, not an afterthought.`
     },
     {
       keys: ['tool','figma','software','use','stack'],
-      answer: `Primary: Figma (deep — variables, auto layout, design systems, component specs). For prototyping: Framer, Principle, and increasingly Lovable/v0 for high-fidelity coded prototypes. For research: Maze, Hotjar, Dovetail. For AI assistance: Claude, Cursor, ChatGPT. I also run this entire portfolio myself — hand-coded HTML/CSS/JS, deployed via GitHub Actions.`
+      answer: `Primary: Figma (deep - variables, auto layout, design systems, component specs). For prototyping: Framer, Principle, and increasingly Lovable/v0 for high-fidelity coded prototypes. For research: Maze, Hotjar, Dovetail. For AI assistance: Claude, Cursor, ChatGPT. I also run this entire portfolio myself - hand-coded HTML/CSS/JS, deployed via GitHub Actions.`
     },
     {
       keys: ['rate','salary','day rate','compensation','pay','cost'],
@@ -2458,11 +2491,11 @@
     },
     {
       keys: ['contact','email','reach','get in touch','talk','call','meet'],
-      answer: `Best way: jagojames@gmail.com — I check it daily. If you'd prefer to see the full CV first, there's a download link in the CV section of this portfolio. Happy to do an intro call at short notice.`
+      answer: `Best way: jagojames@gmail.com - I check it daily. If you'd prefer to see the full CV first, there's a download link in the CV section of this portfolio. Happy to do an intro call at short notice.`
     },
     {
       keys: ['hello','hi','hey','who are you','introduce','about you'],
-      answer: `Hi — I'm Jago Livingstone, Founding Designer with 20+ years shipping enterprise SaaS, AI products, and consumer experiences. I'm currently looking for my next role. You can ask me anything about my background, the work I've done, my process, or what I'm looking for — I'll answer directly.`
+      answer: `Hi - I'm Jago Livingstone, Founding Designer with 20+ years shipping enterprise SaaS, AI products, and consumer experiences. I'm currently looking for my next role. You can ask me anything about my background, the work I've done, my process, or what I'm looking for - I'll answer directly.`
     },
   ];
 
@@ -2471,7 +2504,7 @@
     for (const entry of llmKB) {
       if (entry.keys.some(k => lower.includes(k))) return entry.answer;
     }
-    return `That's a great question — it's not one I've pre-loaded a specific answer for yet. The best way to dig into it is to reach out directly: jagojames@gmail.com. I'll get back to you fast.`;
+    return `That's a great question - it's not one I've pre-loaded a specific answer for yet. The best way to dig into it is to reach out directly: jagojames@gmail.com. I'll get back to you fast.`;
   }
 
   function llmAppend(html) {
@@ -2541,11 +2574,11 @@
           const oc = new THREE.OrbitControls(window._galaxyCamera, window._galaxyCanvas);
           oc.enableDamping = true; oc.dampingFactor = 0.05;
           oc.minDistance = 4; oc.maxDistance = 16;
-          oc.maxPolarAngle = Math.PI * 0.58;  // ~104° max — keeps galaxy always in 3D view
+          oc.maxPolarAngle = Math.PI * 0.58;  // ~104° max - keeps galaxy always in 3D view
           window._galaxyControls = oc;
         }
       });
-      // Load bloom chain after — enhance visuals if it works
+      // Load bloom chain after - enhance visuals if it works
       loadScript(CDN + 'examples/js/shaders/LuminosityHighPassShader.js', function() {
       loadScript(CDN + 'examples/js/shaders/CopyShader.js', function() {
       loadScript(CDN + 'examples/js/postprocessing/EffectComposer.js', function() {
@@ -2586,7 +2619,7 @@
       const scene  = new THREE.Scene();
       window._galaxyScene = scene;
       const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
-      camera.position.set(0, 3.0, 7.5);   // low angle (~22°) — matches reference's 3D side view
+      camera.position.set(0, 3.0, 7.5);   // low angle (~22°) - matches reference's 3D side view
       camera.lookAt(0, 0, 0);
       window._galaxyCamera = camera;
       window._galaxyCanvas = canvas;
@@ -2611,7 +2644,7 @@
       const TIGHTN = 2.5;
       const ARM_W  = 1.1;
       const RAND   = 1.0;
-      const THICK  = 1.8;   // real 3D depth — ratio ~4.4:1 width:height like reference
+      const THICK  = 1.8;   // real 3D depth - ratio ~4.4:1 width:height like reference
       const denseC  = new THREE.Color('#88bbff');  // blue-white inner arms (matches reference)
       const sparseC = new THREE.Color('#ffaa44');  // warm amber outer arms (matches reference)
 
@@ -2800,11 +2833,11 @@
         form.style.display = 'none';
         document.getElementById('contact-success').style.display = 'block';
       } else {
-        btn.textContent = 'Error — try again';
+        btn.textContent = 'Error - try again';
         btn.disabled = false;
       }
     } catch {
-      btn.textContent = 'Error — try again';
+      btn.textContent = 'Error - try again';
       btn.disabled = false;
     }
   }
