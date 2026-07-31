@@ -2405,22 +2405,21 @@
   window.addEventListener('resize', syncHeroRightHeight);
   syncHeroRightHeight();
 
-  /* ── Scroll-driven animation support check ── */
-  if (!CSS.supports('animation-timeline', 'view()')) {
-    console.warn('animation-timeline not supported — falling back to IntersectionObserver');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        e.target.style.opacity = e.isIntersecting ? '1' : '0';
-        e.target.style.transform = e.isIntersecting ? 'translateY(0)' : 'translateY(60px)';
-        e.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.tile,.section-title,.section-body,.stat-box,.panel-card,.about-grid').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(60px)';
-      io.observe(el);
+  /* ── Fade in elements already visible at page load ── */
+  const scrollFadeEls = '.tile,.section-title,.section-body,.stat-box,.panel-card,.about-grid';
+  window.addEventListener('load', () => {
+    document.querySelectorAll(scrollFadeEls).forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.style.animation = 'none';
+        el.style.opacity = '0';
+        requestAnimationFrame(() => {
+          el.style.transition = 'opacity 0.7s ease';
+          el.style.opacity = '1';
+        });
+      }
     });
-  }
+  });
 
   /* ══ SPA Navigation ══ */
   const homeView = document.getElementById('home-view');
