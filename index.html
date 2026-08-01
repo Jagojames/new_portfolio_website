@@ -160,6 +160,7 @@
       letter-spacing: 0.04em;
     }
     .nav-links a:hover { color: var(--text); }
+    .nav-links a.nav-active { color: var(--orange); }
     .nav-cta {
       border: 1px solid var(--border);
       color: var(--text) !important;
@@ -301,7 +302,12 @@
 
     /* Designer Setup tile */
     #avatar-card { padding: 28px 20px 20px; overflow: hidden; min-width: 0; box-sizing: border-box; }
-    #avatar-card .panel-row { font-size: 12.5px; margin: 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #avatar-card .panel-row { font-size: 14px; margin: 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #avatar-card .panel-row .val { letter-spacing: -0.03em; }
+    #spec-row { display: flex; overflow: visible; text-overflow: clip; }
+    #spec-row .spec-label { flex-shrink: 0; }
+    #spec-clip { overflow: hidden; flex: 1; display: block; }
+    #spec-val { display: inline-block; white-space: nowrap; }
 
     /* Connector between cards */
     .connector {
@@ -955,21 +961,21 @@
   </head>
 <body>
 
-<!-- ═══════════════ HOME VIEW ═══════════════ -->
-<div id="home-view">
-
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav id="nav">
   <div class="nav-logo" style="cursor:pointer" onclick="goHome()">Jago</div>
   <div class="nav-links">
-    <a href="#work" onmousedown="this.style.color='#f97316';var s=this;setTimeout(function(){s.style.color=''},400)">Work</a>
-    <a href="#about" onmousedown="this.style.color='#f97316';var s=this;setTimeout(function(){s.style.color=''},400)">About</a>
-    <a href="#" onmousedown="var s=this;s.style.color='#f97316';setTimeout(function(){s.style.color=''},400)" onclick="event.preventDefault();setTimeout(function(){openProject('cv')},300)">CV</a>
-    <a href="#" onmousedown="var s=this;s.style.color='#f97316';setTimeout(function(){s.style.color=''},400)" onclick="event.preventDefault();setTimeout(function(){openProject('jago-llm')},300)">Jago LLM</a>
+    <a href="#work" onmousedown="this.style.color='#f97316';var s=this;setTimeout(function(){s.style.color=''},400)" onclick="if(document.querySelector('.project-page.active')){event.preventDefault();goHome();setTimeout(function(){document.getElementById('work').scrollIntoView({behavior:'smooth'})},400)}">Work</a>
+    <a href="#about" onmousedown="this.style.color='#f97316';var s=this;setTimeout(function(){s.style.color=''},400)" onclick="if(document.querySelector('.project-page.active')){event.preventDefault();goHome();setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},400)}">About</a>
+    <a href="#" data-project="cv" onmousedown="var s=this;s.style.color='#f97316';setTimeout(function(){s.style.color=''},400)" onclick="event.preventDefault();setTimeout(function(){openProject('cv')},300)">CV</a>
+    <a href="#" data-project="jago-llm" onmousedown="var s=this;s.style.color='#f97316';setTimeout(function(){s.style.color=''},400)" onclick="event.preventDefault();setTimeout(function(){openProject('jago-llm')},300)">Jago LLM</a>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">☀</button>
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
 </nav>
+
+<!-- ═══════════════ HOME VIEW ═══════════════ -->
+<div id="home-view">
 
 <!-- ═══════════════ HERO ═══════════════ -->
 <div class="hero" id="hero">
@@ -1001,7 +1007,7 @@
         <div class="panel-badge badge-orange">Designer Setup</div>
         <div class="panel-row">Agent: <span class="val typewriter" data-type="Jago Livingstone"></span></div>
         <div class="panel-row">Role: <span class="val typewriter" data-type="Founding Designer / Former Head of Design"></span></div>
-        <div class="panel-row">Speciality: <span class="val typewriter" data-type="UX · UI · SaaS · Agentic AI · Conversation AI · Chat bots"></span></div>
+        <div class="panel-row" id="spec-row"><span class="spec-label">Speciality:&nbsp;</span><span id="spec-clip"><span class="val typewriter" id="spec-val" data-type="UX/UI · SaaS · Agentic AI · Conversation AI · Chat bots"></span></span></div>
         <div class="panel-row">Experience: <span class="val typewriter" data-type="22 Years"></span></div>
       </div>
 
@@ -2005,15 +2011,8 @@
 
 <!-- ── Jago LLM ── -->
 <div id="project-jago-llm" class="project-page">
-  <nav class="proj-nav">
-    <button class="back-btn" onclick="goHome()">← Back to work</button>
-    <div style="text-align:right">
-      <div class="proj-nav-cat">First-person AI responses</div>
-      <div class="proj-nav-title">Jago LLM</div>
-    </div>
-  </nav>
 
-  <div style="min-height:calc(100vh - 65px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;background:var(--bg)">
+  <div style="min-height:calc(100vh - 65px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 24px 60px;background:var(--bg)">
 
     <!-- Header -->
     <div style="text-align:center;margin-bottom:48px;max-width:620px">
@@ -2069,13 +2068,6 @@
 
 <!-- ── CV Page ── -->
 <div id="project-cv" class="project-page">
-  <nav class="proj-nav">
-    <button class="back-btn" onclick="goHome()">← Back to work</button>
-    <div style="text-align:right">
-      <div class="proj-nav-cat">Lead Product Designer · UX · SaaS · AI · Chatbots</div>
-      <div class="proj-nav-title">Jago Livingstone - CV</div>
-    </div>
-  </nav>
 
   <!-- CV Header -->
   <div class="cv-header">
@@ -2421,6 +2413,36 @@
     });
   });
 
+  /* ══ Speciality row bounce scroll ══ */
+  (function() {
+    const val = document.getElementById('spec-val');
+    const row = document.getElementById('spec-row');
+    if (!val || !row) return;
+
+    function startBounce() {
+      const clip = document.getElementById('spec-clip');
+      const overflow = val.scrollWidth - (clip ? clip.offsetWidth : row.offsetWidth);
+      if (overflow <= 0) return;
+      const style = document.createElement('style');
+      style.textContent =
+        '@keyframes spec-bounce{' +
+        '0%,15%{transform:translateX(0)}' +
+        '50%,65%{transform:translateX(-' + overflow + 'px)}' +
+        '100%{transform:translateX(0)}}';
+      document.head.appendChild(style);
+      val.style.animation = 'spec-bounce 5.5s ease-in-out infinite';
+    }
+
+    /* Wait for typewriter to add 'done' class to spec-val */
+    const obs = new MutationObserver(function(mutations) {
+      if (val.classList.contains('done')) {
+        obs.disconnect();
+        setTimeout(startBounce, 600);
+      }
+    });
+    obs.observe(val, { attributes: true, attributeFilter: ['class'] });
+  })();
+
   /* ══ SPA Navigation ══ */
   const homeView = document.getElementById('home-view');
   const homeNav  = document.getElementById('nav');
@@ -2429,18 +2451,6 @@
     window.open('eca-prototype.html', '_blank');
   }
 
-  function goHome() {
-    // Hide all projects
-    document.querySelectorAll('.project-page').forEach(p => {
-      p.classList.remove('active');
-      p.style.display = 'none';
-    });
-    // Show home
-    homeView.style.display = 'block';
-    homeNav.style.display  = 'flex';
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
-  }
 
   /* ══ Jago LLM ══ */
   const llmKB = [
@@ -2842,9 +2852,8 @@
   }
 
   function openProject(id) {
-    // Hide home
+    // Hide home view but keep main nav
     homeView.style.display = 'none';
-    homeNav.style.display  = 'none';
     // Hide all projects
     document.querySelectorAll('.project-page').forEach(p => {
       p.classList.remove('active');
@@ -2857,6 +2866,21 @@
     page.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'instant' });
     gsap.fromTo(page, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+    // Highlight active nav link
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
+    const activeLink = document.querySelector('.nav-links a[data-project="' + id + '"]');
+    if (activeLink) activeLink.classList.add('nav-active');
+  }
+
+  function goHome() {
+    document.querySelectorAll('.project-page').forEach(p => {
+      p.classList.remove('active');
+      p.style.display = 'none';
+    });
+    homeView.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
   }
 
 
