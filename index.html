@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jago - Founding Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&display=swap" rel="stylesheet">
   <style>
 
     /* ─── ECA Prototype Isolation ─── */
@@ -170,18 +173,96 @@
     }
     .nav-cta:hover { border-color: var(--orange) !important; color: var(--orange) !important; }
 
-    /* ─── Hero ─── */
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: start;
-      padding: 130px 52px 80px;
+    /* ─── Galaxy Intro ─── */
+    #galaxy-intro {
+      position: relative;
+      width: 100%;
+      height: 200vh; /* 100vh view + 100vh scroll room for explosion */
+    }
+    #galaxy-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    #galaxy-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,8,8,0.22) 0%,
+        transparent 22%,
+        transparent 68%,
+        rgba(8,8,8,0.75) 100%
+      );
+    }
+    #galaxy-content {
+      position: absolute;
+      top: 108px; /* just below the fixed nav */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      max-width: 700px;
+      padding: 0 28px;
+    }
+    #galaxy-content .tag {
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    #galaxy-content .tag::before { display: none; }
+    #galaxy-content .hero-title {
+      margin-bottom: 0;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      font-size: clamp(32px, 5vw, 72px);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+
+    /* ─── Hero text block (below galaxy) ─── */
+    #hero-text-block {
+      padding: 48px 52px 64px;
       max-width: 1280px;
       margin: 0 auto;
     }
+    #hero-text-block .hero-title {
+      font-size: clamp(52px, 7vw, 90px);
+      margin-bottom: 32px;
+    }
+    #hero-text-block .hero-sub { margin-bottom: 40px; }
+    @media (max-width: 900px) {
+      #hero-text-block { padding: 60px 24px 48px; }
+    }
+    #scroll-hint {
+      position: absolute;
+      bottom: 92px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: scroll-float 2.6s ease-in-out infinite;
+    }
+    @keyframes scroll-float {
+      0%,100% { transform: translateX(-50%) translateY(0);   opacity: 0.45; }
+      50%      { transform: translateX(-50%) translateY(7px); opacity: 0.9;  }
+    }
 
-    .hero-left { display: flex; flex-direction: column; }
+    .hero-left  { display: none; }
 
     .tag {
       display: inline-flex;
@@ -238,36 +319,7 @@
     .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
     .btn-outline:hover { border-color: var(--muted); }
 
-    /* ─── Avatar Panel (right side) ─── */
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      position: relative;
-    }
-
-    /* Dot-grid background layer */
-    .dot-bg {
-      position: absolute;
-      inset: -40px -40px;
-      background-image: radial-gradient(circle, #1e1e1e 1px, transparent 1px);
-      background-size: 22px 22px;
-      border-radius: 20px;
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    .panel-stack {
-      position: relative;
-      display: grid;
-      overflow: hidden;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      min-width: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .panel-stack > * { grid-area: 1 / 1; }
+    .hero-right { display: none; }
 
     .panel-card {
       background: var(--surface);
@@ -923,31 +975,35 @@
     }
 
     /* ─── Responsive ─── */
-    /* Galaxy canvas */
-    #galaxy-canvas {
-      display: block;
-      width: 100%;
-      aspect-ratio: 100 / 62;
-      align-self: center;
-      transform: translateY(-18%);
-      border-radius: 0;
+    /* Galaxy container */
+    #galaxy-container {
+      position: absolute;
+      inset: 0;
       z-index: 0;
     }
+    #galaxy-container canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
     #avatar-card {
-      align-self: end; /* pin to bottom of shared grid cell */
-      z-index: 1;
-      background: rgba(8,8,8,0.85) !important;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      display: block;
+      width: 100%;
+      background: var(--surface) !important;
       border-radius: 0 !important;
       border: none !important;
       border-top: 1px solid var(--border) !important;
-      overflow: visible !important; /* let badge poke above the card edge */
+      border-bottom: 1px solid var(--border) !important;
+      overflow: visible !important;
+      padding: 28px 52px 20px !important;
+    }
+    @media (max-width: 900px) {
+      #avatar-card { padding: 28px 24px 20px !important; }
     }
 
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; }
-      .hero-right { display: flex; }
+      #galaxy-content { max-width: 100%; padding: 0 20px; }
+      #galaxy-content .hero-title { font-size: clamp(40px, 10vw, 72px); }
       .work-grid { grid-template-columns: repeat(2, 1fr); }
       .stats-grid { grid-template-columns: 1fr; }
       .about-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -958,6 +1014,16 @@
   </style>
 
   <!-- ECA Prototype dependencies -->
+
+  <!-- Three.js ES module imports for new galaxy -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://esm.sh/three@0.170.0",
+      "three/addons/": "https://esm.sh/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
 
   </head>
 <body>
@@ -978,42 +1044,48 @@
 <!-- ═══════════════ HOME VIEW ═══════════════ -->
 <div id="home-view">
 
-<!-- ═══════════════ HERO ═══════════════ -->
-<div class="hero" id="hero">
-  <div class="hero-left" id="hero-left">
-    <div class="tag g-hidden" id="h-tag">Founding Designer</div>
-    <h1 class="hero-title g-hidden" id="h-title">
-      Design<br>
-      that<br>
-      <span class="accent">ships.</span>
-    </h1>
-    <p class="hero-sub g-hidden" id="h-sub">
-      20+ years shaping AI-powered, data-rich platforms from zero to production. Enterprise SaaS, fintech, pharma, maritime, telco - and a £3.5M acquisition.
-    </p>
-    <div class="ctas g-hidden" id="h-ctas">
-      <a href="#work" class="btn btn-fill">View work →</a>
-      <a href="#contact" class="btn btn-outline">Say hello</a>
+<!-- ═══════════════ GALAXY INTRO ═══════════════ -->
+<section id="galaxy-intro">
+  <div id="galaxy-sticky">
+
+    <!-- Full-screen galaxy canvas -->
+    <div id="galaxy-container" aria-hidden="true"></div>
+
+    <!-- Depth vignette -->
+    <div id="galaxy-vignette" aria-hidden="true"></div>
+
+    <!-- Centred hero content -->
+    <div id="galaxy-content">
+      <div class="tag" id="h-tag">Founding Designer</div>
+      <h1 class="hero-title" id="h-title">Jago Livingstone</h1>
     </div>
+
+    <!-- Scroll indicator -->
+    <div id="scroll-hint">↓ &nbsp;scroll</div>
+
   </div>
+</section>
 
-  <div class="hero-right" id="hero-right">
-    <div class="dot-bg"></div>
-    <div class="panel-stack">
+<!-- ═══════════════ DESIGNER SETUP ═══════════════ -->
+<div class="panel-card" id="avatar-card">
+  <div class="panel-badge badge-orange">Designer Setup</div>
+  <div class="panel-row">Agent: <span class="val typewriter" data-type="Jago Livingstone"></span></div>
+  <div class="panel-row">Role: <span class="val typewriter" data-type="Founding Designer / Former Head of Design"></span></div>
+  <div class="panel-row" id="spec-row"><span class="spec-label">Speciality:&nbsp;</span><span id="spec-clip"><span class="val typewriter" id="spec-val" data-type="UX/UI · SaaS · Agentic AI · Conversation AI · Chat bots"></span></span></div>
+  <div class="panel-row">Experience: <span class="val typewriter" data-type="22 Years"></span></div>
+</div>
 
-      <!-- Galaxy canvas -->
-      <canvas id="galaxy-canvas"></canvas>
-
-      <!-- Card 1 - Designer Setup -->
-      <div class="panel-card" id="avatar-card">
-        <div class="panel-badge badge-orange">Designer Setup</div>
-        <div class="panel-row">Agent: <span class="val typewriter" data-type="Jago Livingstone"></span></div>
-        <div class="panel-row">Role: <span class="val typewriter" data-type="Founding Designer / Former Head of Design"></span></div>
-        <div class="panel-row" id="spec-row"><span class="spec-label">Speciality:&nbsp;</span><span id="spec-clip"><span class="val typewriter" id="spec-val" data-type="UX/UI · SaaS · Agentic AI · Conversation AI · Chat bots"></span></span></div>
-        <div class="panel-row">Experience: <span class="val typewriter" data-type="22 Years"></span></div>
-      </div>
-
-
-    </div>
+<!-- ═══════════════ HERO TEXT ═══════════════ -->
+<div id="hero-text-block">
+  <h2 class="hero-title" id="h-title-below">
+    Design<br>that<br><span class="accent">ships.</span>
+  </h2>
+  <p class="hero-sub" id="h-sub">
+    20+ years shaping AI-powered, data-rich platforms from zero to production. Enterprise SaaS, fintech, pharma, maritime, telco - and a £3.5M acquisition.
+  </p>
+  <div class="ctas" id="h-ctas">
+    <a href="#work" class="btn btn-fill">View work →</a>
+    <a href="#contact" class="btn btn-outline">Say hello</a>
   </div>
 </div>
 
@@ -2317,29 +2389,30 @@
     nav.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
 
-  /* initial states - must be set before timeline is created */
-  gsap.set(['#h-title','#h-sub','#h-ctas','#hero-right'], { y: 35 });
-  gsap.set('#hero-right', { opacity: 0 });
+  /* ── Hero content: fade in after galaxy forms (~2.5s delay) ── */
+  /* Galaxy overlay: tag + name fade in after formation */
+  gsap.set(['#h-tag','#h-title','#scroll-hint'], { opacity: 0 });
+  gsap.timeline({ delay: 2.5 })
+    .to('#h-tag',       { opacity: 1, duration: 0.6, ease: 'power2.out' })
+    .to('#h-title',     { opacity: 1, duration: 0.8, ease: 'power2.out' }, '-=0.2')
+    .to('#scroll-hint', { opacity: 1, duration: 0.8, ease: 'power2.out' }, '+=0.3');
 
-  /* ── Hero entrance ── */
-  gsap.timeline({ delay: 0.1 })
-    .to('#h-tag',      { opacity: 1,       duration: 0.5,  ease: 'power2.out' })
-    .to('#h-title',    { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' }, '-=0.2')
-    .to('#h-sub',      { opacity: 1, y: 0, duration: 0.6,  ease: 'power2.out' }, '-=0.45')
-    .to('#h-ctas',     { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, '-=0.35')
-    .to('#hero-right', { opacity: 1, y: 0, duration: 0.9,  ease: 'power2.out' }, '-=0.55');
-
-  /* ── Hero parallax ── */
-  gsap.to('#hero-left', {
-    y: -80,
-    ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 }
-  });
-  gsap.to('#hero-right', {
-    y: -40,
-    ease: 'none',
-    immediateRender: false,
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 }
+  /* ── Galaxy intro: scroll-driven explosion ── */
+  ScrollTrigger.create({
+    trigger: '#galaxy-intro',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1.2,
+    onUpdate(self) {
+      if (window.__galaxyScroll) window.__galaxyScroll(self.progress);
+      // Fade the sticky panel as explosion completes
+      const fadeStart = 0.72;
+      const opacity = self.progress < fadeStart ? 1 : 1 - (self.progress - fadeStart) / (1 - fadeStart);
+      gsap.set('#galaxy-sticky', { opacity: Math.max(0, opacity) });
+      // Fade hero content out early so it doesn't compete with explosion
+      const contentFade = self.progress < 0.25 ? 1 : 1 - Math.min(1, (self.progress - 0.25) / 0.2);
+      gsap.set('#galaxy-content', { opacity: Math.max(0, contentFade) });
+    }
   });
 
 
@@ -2385,18 +2458,7 @@
   });
 
 
-  /* ══ Hero-right height: align bottom with #h-ctas ══ */
-  function syncHeroRightHeight() {
-    const ctas     = document.getElementById('h-ctas');
-    const heroRight = document.getElementById('hero-right');
-    if (!ctas || !heroRight) return;
-    const ctasBottom    = ctas.getBoundingClientRect().bottom + window.scrollY;
-    const panelTop      = heroRight.getBoundingClientRect().top  + window.scrollY;
-    heroRight.style.height = (ctasBottom - panelTop) + 'px';
-  }
-  window.addEventListener('load',   syncHeroRightHeight);
-  window.addEventListener('resize', syncHeroRightHeight);
-  syncHeroRightHeight();
+  /* hero-right height sync removed – layout now uses full-screen sticky */
 
   /* ── Fade in elements already visible at page load ── */
   const scrollFadeEls = '.tile,.section-title,.section-body,.stat-box,.panel-card,.about-grid';
@@ -2560,263 +2622,7 @@
     setTimeout(() => llmTypeAnswer(llmMatch(q)), 320);
   }
 
-  /* ══ Galaxy Canvas (Three.js WebGL – port of dgreenheck/webgpu-galaxy) ══ */
-  (function() {
-    const canvas = document.getElementById('galaxy-canvas');
-    if (!canvas) return;
-
-    function loadScript(src, cb, errCb) {
-      const s = document.createElement('script');
-      s.src = src;
-      s.onload = cb;
-      s.onerror = errCb || cb; // always continue
-      document.head.appendChild(s);
-    }
-
-    const CDN = 'https://cdn.jsdelivr.net/npm/three@0.128.0/';
-    // Load Three.js first (required), then layer on extras
-    loadScript(CDN + 'build/three.min.js', function() {
-      if (!window.THREE) { console.error('Galaxy: THREE failed to load'); return; }
-      bootGalaxy();
-      // Load OrbitControls after galaxy is already running
-      loadScript(CDN + 'examples/js/controls/OrbitControls.js', function() {
-        if (window.THREE && window.THREE.OrbitControls && window._galaxyCamera && window._galaxyCanvas) {
-          const oc = new THREE.OrbitControls(window._galaxyCamera, window._galaxyCanvas);
-          oc.enableDamping = true; oc.dampingFactor = 0.05;
-          oc.minDistance = 4; oc.maxDistance = 16;
-          oc.maxPolarAngle = Math.PI * 0.58;  // ~104° max - keeps galaxy always in 3D view
-          window._galaxyControls = oc;
-        }
-      });
-      // Load bloom chain after - enhance visuals if it works
-      loadScript(CDN + 'examples/js/shaders/LuminosityHighPassShader.js', function() {
-      loadScript(CDN + 'examples/js/shaders/CopyShader.js', function() {
-      loadScript(CDN + 'examples/js/postprocessing/EffectComposer.js', function() {
-      loadScript(CDN + 'examples/js/postprocessing/RenderPass.js', function() {
-      loadScript(CDN + 'examples/js/postprocessing/UnrealBloomPass.js', function() {
-        if (window.THREE.EffectComposer && window._galaxyRenderer && window._galaxyScene && window._galaxyCamera) {
-          const R = window._galaxyRenderer, S = window._galaxyScene, C = window._galaxyCamera;
-          const composer = new THREE.EffectComposer(R);
-          composer.addPass(new THREE.RenderPass(S, C));
-          composer.addPass(new THREE.UnrealBloomPass(
-            new THREE.Vector2(canvas.width, canvas.height), 1.4, 0.5, 0.0
-          ));
-          window._galaxyComposer = composer;
-          console.log('Galaxy: bloom enabled');
-        }
-      }); }); }); }); });
-    });
-
-    function bootGalaxy() {
-      const THREE = window.THREE;
-      const container = canvas.parentElement;
-
-      function getSize() {
-        const w = container.offsetWidth || 520;
-        const h = Math.round(w * 0.62);
-        return [w, h];
-      }
-      let [W, H] = getSize();
-
-      // ── Renderer ──
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(W, H);
-      renderer.setClearColor(0x000000, 1);
-
-      // Expose for post-load upgrades (bloom, orbit controls)
-      window._galaxyRenderer = renderer;
-      const scene  = new THREE.Scene();
-      window._galaxyScene = scene;
-      const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
-      camera.position.set(0, 3.0, 7.5);   // low angle (~22°) - matches reference's 3D side view
-      camera.lookAt(0, 0, 0);
-      window._galaxyCamera = camera;
-      window._galaxyCanvas = canvas;
-
-      // ── Sprite texture (soft glow circle) ──
-      const spriteCv = document.createElement('canvas');
-      spriteCv.width = spriteCv.height = 64;
-      const sctx = spriteCv.getContext('2d');
-      const grd  = sctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-      grd.addColorStop(0,    'rgba(255,255,255,1)');
-      grd.addColorStop(0.15, 'rgba(255,255,255,0.85)');
-      grd.addColorStop(0.4,  'rgba(255,255,255,0.3)');
-      grd.addColorStop(1,    'rgba(255,255,255,0)');
-      sctx.fillStyle = grd;
-      sctx.fillRect(0, 0, 64, 64);
-      const starTex = new THREE.CanvasTexture(spriteCv);
-
-      // ── Galaxy parameters (galaxy.js defaults) ──
-      const N      = 100000;
-      const ARMS   = 2;
-      const R      = 4.0;
-      const TIGHTN = 2.5;
-      const ARM_W  = 1.1;
-      const RAND   = 1.0;
-      const THICK  = 1.8;   // real 3D depth - ratio ~4.4:1 width:height like reference
-      const denseC  = new THREE.Color('#88bbff');  // blue-white inner arms (matches reference)
-      const sparseC = new THREE.Color('#ffaa44');  // warm amber outer arms (matches reference)
-
-      function hash(n) {
-        const x = Math.sin(n * 127.1 + 311.7) * 43758.5453123;
-        return x - Math.floor(x);
-      }
-
-      // ── Generate geometry (CPU port of computeInit TSL shader) ──
-      const pos = new Float32Array(N * 3);
-      const col = new Float32Array(N * 3);
-      for (let i = 0; i < N; i++) {
-        const radius = Math.pow(hash(i + 1), 0.5) * R;
-        const nr  = radius / R;
-        const arm = Math.floor(hash(i + 2) * ARMS);
-        const ao  = (hash(i + 3) - 0.5) * RAND;
-        const ro  = (hash(i + 4) - 0.5) * ARM_W;
-        const ang = (arm / ARMS) * Math.PI * 2 + nr * TIGHTN * Math.PI * 2 + ao;
-        const or  = radius + ro;
-        pos[i*3]   = Math.cos(ang) * or;
-        pos[i*3+1] = (hash(i+5) - 0.5) * THICK * ((1 - nr) + 0.2);
-        pos[i*3+2] = Math.sin(ang) * or;
-        const sp = Math.min(((Math.abs(ro)/(ARM_W*0.5+0.01))+(Math.abs(ao)/(RAND*0.5+0.01)))*0.5, 1.0);
-        const c  = denseC.clone().lerp(sparseC, sp);
-        col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
-      }
-
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      geo.setAttribute('aColor',   new THREE.BufferAttribute(col, 3));
-
-      // ── Shaders: GPU build-in animation + mouse repulsion ──
-      const uniforms = {
-        uTex:         { value: starTex },
-        uHalfH:       { value: H * 0.5 },
-        uStarSize:    { value: 0.055 },  // visible individual stars like reference
-        uBuildT:      { value: 0.0 },
-        uMousePos:    { value: new THREE.Vector3() },
-        uMouseActive: { value: 0.0 },
-        uMouseRadius: { value: 1.2 },
-        uMouseForce:  { value: 0.65 },
-      };
-
-      const vert = `
-        attribute vec3 aColor;
-        varying   vec3 vColor;
-        uniform float uHalfH, uStarSize, uBuildT;
-        uniform vec3  uMousePos;
-        uniform float uMouseActive, uMouseRadius, uMouseForce;
-        void main() {
-          vColor = aColor;
-          vec3 p = position;
-          float sc = 1.8 - 0.8 * uBuildT;
-          p.xz *= sc;
-          if (uMouseActive > 0.5) {
-            vec3 diff = p - uMousePos; diff.y = 0.0;
-            float d = length(diff);
-            if (d < uMouseRadius && d > 0.001)
-              p += normalize(diff) * pow(1.0 - d/uMouseRadius, 2.0) * uMouseForce;
-          }
-          vec4 mv = modelViewMatrix * vec4(p, 1.0);
-          gl_PointSize = uStarSize * (uHalfH / -mv.z);
-          gl_Position  = projectionMatrix * mv;
-        }
-      `;
-      const frag = `
-        uniform sampler2D uTex;
-        varying vec3 vColor;
-        void main() {
-          vec4 t = texture2D(uTex, gl_PointCoord);
-          if (t.a < 0.01) discard;
-          gl_FragColor = vec4(vColor * t.r * 1.6, t.a);
-        }
-      `;
-
-      const mat  = new THREE.ShaderMaterial({ uniforms, vertexShader: vert, fragmentShader: frag, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false });
-      const stars = new THREE.Points(geo, mat);
-      scene.add(stars);
-
-      // ── Core cluster ──
-      const CN = 5000;
-      const cpos = new Float32Array(CN * 3), ccol = new Float32Array(CN * 3);
-      for (let i = 0; i < CN; i++) {
-        const sd = i + 500000, r = Math.pow(hash(sd), 1.8) * R * 0.22, a = hash(sd+1)*Math.PI*2;
-        cpos[i*3]=Math.cos(a)*r; cpos[i*3+1]=(hash(sd+2)-0.5)*THICK*0.6; cpos[i*3+2]=Math.sin(a)*r;
-        ccol[i*3]=1; ccol[i*3+1]=0.92; ccol[i*3+2]=0.75;
-      }
-      const cgeo = new THREE.BufferGeometry();
-      cgeo.setAttribute('position', new THREE.BufferAttribute(cpos, 3));
-      cgeo.setAttribute('aColor',   new THREE.BufferAttribute(ccol, 3));
-      const cUniforms = {
-        uTex:{value:starTex}, uHalfH:{value:H*0.5}, uStarSize:{value:0.18},
-        uBuildT:{value:0.0}, uMousePos:{value:new THREE.Vector3()},
-        uMouseActive:{value:0.0}, uMouseRadius:{value:1.2}, uMouseForce:{value:0.65}
-      };
-      const core = new THREE.Points(cgeo, new THREE.ShaderMaterial({ uniforms:cUniforms, vertexShader:vert, fragmentShader:frag, blending:THREE.AdditiveBlending, transparent:true, depthWrite:false }));
-      scene.add(core);
-
-      // ── Mouse repulsion ──
-      const ray = new THREE.Raycaster();
-      const galaxyPlane = new THREE.Plane(new THREE.Vector3(0,1,0), 0);
-      const mWorld = new THREE.Vector3();
-      let mouseActive = false;
-
-      function trackMouse(cx, cy) {
-        const rect = canvas.getBoundingClientRect();
-        ray.setFromCamera({ x:((cx-rect.left)/rect.width)*2-1, y:-((cy-rect.top)/rect.height)*2+1 }, camera);
-        if (ray.ray.intersectPlane(galaxyPlane, mWorld)) {
-          uniforms.uMousePos.value.copy(mWorld);
-          cUniforms.uMousePos.value.copy(mWorld);
-        }
-      }
-      canvas.addEventListener('mousedown',  e => { mouseActive=true;  trackMouse(e.clientX,e.clientY); });
-      canvas.addEventListener('mousemove',  e => { if(mouseActive) trackMouse(e.clientX,e.clientY); });
-      canvas.addEventListener('mouseup',    () => mouseActive=false);
-      canvas.addEventListener('mouseleave', () => mouseActive=false);
-      canvas.addEventListener('touchstart', e => { mouseActive=true; trackMouse(e.touches[0].clientX,e.touches[0].clientY); }, {passive:true});
-      canvas.addEventListener('touchmove',  e => { trackMouse(e.touches[0].clientX,e.touches[0].clientY); }, {passive:true});
-      canvas.addEventListener('touchend',   () => mouseActive=false);
-
-      // ── Animation loop ──
-      const BUILD_MS = 2200;
-      let elapsed = 0, lastT = performance.now(), rotY = 0;
-
-      // Fade in on first rendered frame
-      canvas.style.opacity = '0';
-      canvas.style.transition = 'opacity 1s ease';
-      requestAnimationFrame(() => requestAnimationFrame(() => { canvas.style.opacity = '1'; }));
-
-      function animate() {
-        requestAnimationFrame(animate);
-        const now = performance.now(), dt = now-lastT; lastT=now; elapsed+=dt;
-        const et = 1 - Math.pow(1 - Math.min(1, elapsed/BUILD_MS), 3);
-        uniforms.uBuildT.value = cUniforms.uBuildT.value = et;
-        uniforms.uMouseActive.value = cUniforms.uMouseActive.value = mouseActive ? 1.0 : 0.0;
-        rotY += 0.00015 * dt;
-        stars.rotation.y = core.rotation.y = rotY;
-        if (window._galaxyControls) window._galaxyControls.update();
-        // Use composer if bloom loaded, else plain render
-        if (window._galaxyComposer) window._galaxyComposer.render();
-        else renderer.render(scene, camera);
-      }
-
-      animate();
-      console.log('Galaxy: rendering started');
-
-      // ── Responsive resize ──
-      let resizeTimer;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          [W, H] = getSize();
-          renderer.setSize(W, H);
-          if (window._galaxyComposer) window._galaxyComposer.setSize(W, H);
-          camera.aspect = W / H;
-          camera.updateProjectionMatrix();
-          uniforms.uHalfH.value  = H * 0.5;
-          cUniforms.uHalfH.value = H * 0.5;
-        }, 200);
-      });
-    }
-  })();
+  /* ══ Galaxy Canvas – loaded via ES module below ══ */
 
   /* ══ Contact Modal ══ */
   function openContactModal() {
@@ -3071,6 +2877,331 @@
   window.__initECA=init;
 })();
 
+</script>
+
+<script type="module">
+/* ══ Galaxy Canvas – ported from galaxy-canvas.tsx ══ */
+import * as THREE from 'three'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js'
+
+/* --- Galaxy constants --- */
+const GALAXY_RADIUS      = 13
+const ARM_COUNT          = 2
+const SPIRAL_TIGHTNESS   = 1.75
+const ARM_WIDTH          = 2.25
+const RANDOMNESS         = 1.8
+const THICKNESS          = 3
+const DENSE_COLOR        = '#1885ff'
+const SPARSE_COLOR       = '#ffb28a'
+const DUST_COLOR         = '#ffdace'
+const FORMATION_DURATION = 5.5
+
+/* --- Vertex shader --- */
+const vertexShader = /* glsl */`
+  uniform float uTime;
+  uniform float uProgress;
+  uniform float uSize;
+  uniform float uPixelRatio;
+  uniform float uBrightness;
+  uniform float uGalaxyRadius;
+  uniform float uExplode;
+  uniform vec3  uDenseColor;
+  uniform vec3  uSparseColor;
+
+  attribute float aRadius;
+  attribute float aAngle;
+  attribute float aHeight;
+  attribute float aSize;
+  attribute float aSeed;
+  attribute float aStartRadius;
+
+  varying vec3  vColor;
+  varying float vAlpha;
+
+  float easeInOutCubic(float x) {
+    return x < 0.5 ? 4.0*x*x*x : 1.0 - pow(-2.0*x+2.0, 3.0)/2.0;
+  }
+
+  void main() {
+    float rn = clamp(aRadius / uGalaxyRadius, 0.0, 1.0);
+
+    float appear = smoothstep(0.02, 0.3, uProgress);
+    float delay  = 0.12 + rn * 0.42 + aSeed * 0.14;
+    float t      = clamp((uProgress - delay) / max(0.1, 0.96 - delay), 0.0, 1.0);
+    float e      = easeInOutCubic(t);
+
+    float radius = mix(aStartRadius, aRadius, e);
+
+    float swirl = (2.4 + aSeed * 2.2) * (1.0 - rn * 0.35);
+    float spin  = -uTime * 0.1 * (1.0 + (1.0 - rn) * 0.6);
+    float angle = aAngle + swirl * (1.0 - e) + spin;
+
+    float height = aHeight * e;
+
+    vec3 pos = vec3(cos(angle)*radius, height, sin(angle)*radius);
+
+    /* --- Explosion effect (driven by scroll) ---
+       Each star flies outward from its galactic position.
+       uExplode 0=settled, 1=fully scattered. */
+    float ex = smoothstep(0.0, 1.0, uExplode);
+    float explodeFactor = 1.0 + ex * 16.0;
+    float explodeY      = height + ex * (aSeed - 0.4) * 28.0;
+    vec3 explodedPos    = vec3(pos.x * explodeFactor, explodeY, pos.z * explodeFactor);
+    pos = mix(pos, explodedPos, ex);
+
+    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+    gl_Position = projectionMatrix * mvPosition;
+
+    float travel = 1.0 - e;
+    gl_PointSize = uSize * aSize * uPixelRatio * (300.0 / max(0.001, -mvPosition.z)) * (1.0 + travel * 0.7);
+
+    vec3 col = mix(uDenseColor, uSparseColor, smoothstep(0.12, 0.62, rn));
+    col = mix(col, vec3(1.0), pow(1.0 - rn, 4.0) * 0.35);
+
+    vColor = col * uBrightness * (0.55 + aSeed * 0.9);
+    vAlpha = appear * (0.75 + e * 0.25) * (1.0 - ex * 0.75);
+  }
+`
+
+/* --- Fragment shader --- */
+const fragmentShader = /* glsl */`
+  varying vec3  vColor;
+  varying float vAlpha;
+
+  void main() {
+    float d = length(gl_PointCoord - vec2(0.5));
+    if (d > 0.5) discard;
+    float falloff = smoothstep(0.5, 0.0, d);
+    gl_FragColor = vec4(vColor, pow(falloff, 2.4) * vAlpha);
+  }
+`
+
+/* --- Gaussian helper --- */
+function gaussian() {
+  let u = 0, v = 0
+  while (u === 0) u = Math.random()
+  while (v === 0) v = Math.random()
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v)
+}
+
+/* --- Create a particle layer --- */
+function createLayer({ count, size, brightness, dense, sparse, sizeVariance }) {
+  const positions   = new Float32Array(count * 3)
+  const radii       = new Float32Array(count)
+  const angles      = new Float32Array(count)
+  const heights     = new Float32Array(count)
+  const sizes       = new Float32Array(count)
+  const seeds       = new Float32Array(count)
+  const startRadii  = new Float32Array(count)
+
+  for (let i = 0; i < count; i++) {
+    const rand       = Math.random()
+    const radiusNorm = Math.pow(rand, 2.6)
+    let   radius     = radiusNorm * GALAXY_RADIUS
+    const isHalo     = i % 4 === 0
+
+    let angle
+    if (isHalo) {
+      angle  = Math.random() * Math.PI * 2
+      radius = Math.pow(Math.random(), 3.4) * GALAXY_RADIUS
+    } else {
+      const armIndex  = i % ARM_COUNT
+      const armOffset = (armIndex / ARM_COUNT) * Math.PI * 2
+      const wind      = (radius / GALAXY_RADIUS) * SPIRAL_TIGHTNESS * Math.PI
+      const spread    = ARM_WIDTH * 0.1 * (0.3 + radiusNorm)
+      angle  = armOffset + wind + gaussian() * spread
+      radius += gaussian() * RANDOMNESS * 0.35 * (0.25 + radiusNorm)
+    }
+
+    radius = Math.max(0.05, radius)
+    const rn = Math.min(1, radius / GALAXY_RADIUS)
+
+    radii[i]      = radius
+    angles[i]     = angle
+    heights[i]    = gaussian() * THICKNESS * 0.1 * (1 - rn * 0.75) * (isHalo ? 2.4 : 1)
+    sizes[i]      = 0.55 + Math.pow(Math.random(), 3) * sizeVariance
+    seeds[i]      = Math.random()
+    startRadii[i] = 55 + Math.random() * 45
+
+    positions[i * 3]     = Math.cos(angle) * startRadii[i]
+    positions[i * 3 + 1] = 0
+    positions[i * 3 + 2] = Math.sin(angle) * startRadii[i]
+  }
+
+  const geometry = new THREE.BufferGeometry()
+  geometry.setAttribute('position',    new THREE.BufferAttribute(positions,  3))
+  geometry.setAttribute('aRadius',     new THREE.BufferAttribute(radii,      1))
+  geometry.setAttribute('aAngle',      new THREE.BufferAttribute(angles,     1))
+  geometry.setAttribute('aHeight',     new THREE.BufferAttribute(heights,    1))
+  geometry.setAttribute('aSize',       new THREE.BufferAttribute(sizes,      1))
+  geometry.setAttribute('aSeed',       new THREE.BufferAttribute(seeds,      1))
+  geometry.setAttribute('aStartRadius',new THREE.BufferAttribute(startRadii, 1))
+  geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 120)
+
+  const material = new THREE.ShaderMaterial({
+    vertexShader,
+    fragmentShader,
+    uniforms: {
+      uTime:        { value: 0 },
+      uProgress:    { value: 0 },
+      uSize:        { value: size },
+      uPixelRatio:  { value: 1 },
+      uBrightness:  { value: brightness },
+      uGalaxyRadius:{ value: GALAXY_RADIUS },
+      uExplode:     { value: 0 },
+      uDenseColor:  { value: new THREE.Color(dense) },
+      uSparseColor: { value: new THREE.Color(sparse) },
+    },
+    transparent: true,
+    depthWrite:  false,
+    depthTest:   false,
+    blending:    THREE.AdditiveBlending,
+  })
+
+  const points = new THREE.Points(geometry, material)
+  points.frustumCulled = false
+  return { points, material, geometry }
+}
+
+/* --- Boot --- */
+function bootGalaxy() {
+  const container = document.getElementById('galaxy-container')
+  if (!container) return
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const isSmall  = window.innerWidth < 768
+  const starCount = isSmall ? 70000 : 220000
+  const dustCount = isSmall ? 2500  : 6000
+
+  let renderer
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'high-performance' })
+  } catch {
+    return
+  }
+
+  const pixelRatio = Math.min(window.devicePixelRatio, 2)
+  renderer.setPixelRatio(pixelRatio)
+  renderer.setSize(container.clientWidth, container.clientHeight)
+  renderer.setClearColor(0x000000, 0)
+  renderer.domElement.style.display = 'block'
+  container.appendChild(renderer.domElement)
+
+  const scene  = new THREE.Scene()
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 400)
+
+  const galaxy = new THREE.Group()
+  scene.add(galaxy)
+
+  const stars = createLayer({ count: starCount, size: 0.2,  brightness: 0.26,  dense: DENSE_COLOR, sparse: SPARSE_COLOR, sizeVariance: 2.2 })
+  const dust  = createLayer({ count: dustCount,  size: 1.6,  brightness: 0.012, dense: DUST_COLOR,  sparse: DUST_COLOR,  sizeVariance: 1.4 })
+  stars.material.uniforms.uPixelRatio.value = pixelRatio
+  dust.material.uniforms.uPixelRatio.value  = pixelRatio
+  galaxy.add(stars.points, dust.points)
+
+  const composer = new EffectComposer(renderer)
+  composer.setPixelRatio(pixelRatio)
+  composer.setSize(container.clientWidth, container.clientHeight)
+  composer.addPass(new RenderPass(scene, camera))
+  const bloom = new UnrealBloomPass(
+    new THREE.Vector2(container.clientWidth, container.clientHeight),
+    0.2, 0.2, 0.1
+  )
+  composer.addPass(bloom)
+  composer.addPass(new OutputPass())
+
+  /* pointer parallax */
+  const pointer  = { x: 0, y: 0 }
+  const smoothed = { x: 0, y: 0 }
+  const onPointerMove = e => {
+    pointer.x = (e.clientX / window.innerWidth)  * 2 - 1
+    pointer.y = (e.clientY / window.innerHeight) * 2 - 1
+  }
+  window.addEventListener('pointermove', onPointerMove, { passive: true })
+
+  /* scroll-driven state (updated by window.__galaxyScroll) */
+  const scrollState = { active: false, camZ: 28, camY: 11, lookY: 1, explode: 0 }
+  window.__galaxyScroll = (p) => {
+    scrollState.active = p > 0.01
+    const camT = Math.min(1, p / 0.6)
+    const camEase = 1 - Math.pow(1 - camT, 3)
+    scrollState.camZ  = THREE.MathUtils.lerp(28, 5, camEase)
+    scrollState.camY  = THREE.MathUtils.lerp(11, 0, camEase)
+    scrollState.lookY = THREE.MathUtils.lerp(1, 0, camEase)
+    scrollState.explode = Math.max(0, Math.min(1, (p - 0.3) / 0.7))
+  }
+
+  /* resize */
+  const onResize = () => {
+    const w = container.clientWidth
+    const h = container.clientHeight
+    camera.aspect = w / h
+    camera.updateProjectionMatrix()
+    renderer.setSize(w, h)
+    composer.setSize(w, h)
+    bloom.setSize(w, h)
+  }
+  const resizeObserver = new ResizeObserver(onResize)
+  resizeObserver.observe(container)
+
+  /* render loop */
+  const clock = new THREE.Clock()
+  let frame = 0
+
+  const tick = () => {
+    const elapsed  = clock.getElapsedTime()
+    const progress = reducedMotion ? 1 : Math.min(elapsed / FORMATION_DURATION, 1)
+    const eased    = 1 - Math.pow(1 - progress, 3)
+
+    stars.material.uniforms.uTime.value     = elapsed
+    stars.material.uniforms.uProgress.value = Math.max(progress, scrollState.active ? 1 : 0)
+    dust.material.uniforms.uTime.value      = elapsed
+    dust.material.uniforms.uProgress.value  = Math.max(progress, scrollState.active ? 1 : 0)
+
+    // Explosion uniforms
+    stars.material.uniforms.uExplode.value = scrollState.explode
+    dust.material.uniforms.uExplode.value  = scrollState.explode
+
+    // Camera: formation easing when idle, scroll override when scrolling
+    const baseY = scrollState.active ? scrollState.camY  : THREE.MathUtils.lerp(20, 11, eased)
+    const baseZ = scrollState.active ? scrollState.camZ  : THREE.MathUtils.lerp(52, 28, eased)
+    const lookY = scrollState.active ? scrollState.lookY : THREE.MathUtils.lerp(0, 1, eased)
+
+    smoothed.x += (pointer.x - smoothed.x) * 0.04
+    smoothed.y += (pointer.y - smoothed.y) * 0.04
+
+    // Dampen pointer parallax during explosion so it doesn't fight the effect
+    const parallaxScale = 1 - scrollState.explode * 0.9
+    camera.position.set(smoothed.x * 2.4 * parallaxScale, baseY + smoothed.y * 1.6 * parallaxScale, baseZ)
+    camera.lookAt(0, lookY, 0)
+
+    // Rotation speeds up during explosion for added drama
+    galaxy.rotation.y = elapsed * (0.012 + scrollState.explode * 0.06)
+
+    composer.render()
+    frame = requestAnimationFrame(tick)
+  }
+  frame = requestAnimationFrame(tick)
+
+  /* cleanup on page hide (best-effort) */
+  window.addEventListener('pagehide', () => {
+    cancelAnimationFrame(frame)
+    resizeObserver.disconnect()
+    window.removeEventListener('pointermove', onPointerMove)
+    stars.geometry.dispose(); stars.material.dispose()
+    dust.geometry.dispose();  dust.material.dispose()
+    composer.dispose(); renderer.dispose()
+  }, { once: true })
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootGalaxy)
+} else {
+  bootGalaxy()
+}
 </script>
 </body>
 </html>
