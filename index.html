@@ -6,7 +6,7 @@
   <title>Jago - Founding Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Oi&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
   <style>
 
     /* ─── ECA Prototype Isolation ─── */
@@ -38,6 +38,9 @@
     /* ─── Reset ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ─── Background: html holds the colour, body is transparent so #dot-grid sits between them ─── */
+    html { background: var(--bg); }
+
     /* ─── Tokens ─── */
     :root {
       --orange: #F97316;
@@ -61,6 +64,24 @@
       --muted: #4A4A4A;
       --orange-glow: rgba(249,115,22,0.12);
     }
+    /* ─── Dot grid ─── */
+    #dot-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.13) 1px, transparent 1px);
+      background-size: 24px 24px;
+      animation: dot-breathe 8s ease-in-out infinite;
+    }
+    @keyframes dot-breathe {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    [data-theme="light"] #dot-grid {
+      background-image: radial-gradient(circle, rgba(0,0,0,0.1) 1px, transparent 1px);
+    }
+
     [data-theme="light"] body { -webkit-font-smoothing: auto; }
     [data-theme="light"] nav.scrolled {
       background: rgba(245,244,240,0.92);
@@ -124,12 +145,16 @@
     /* ─── Base ─── */
     html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
+      background: transparent;
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
+
+
     ::selection { background: var(--orange); color: #000; }
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
@@ -173,19 +198,50 @@
     }
     .nav-cta:hover { border-color: var(--orange) !important; color: var(--orange) !important; }
 
-    /* ─── Galaxy Intro ─── */
-    #galaxy-intro {
-      position: relative;
-      width: 100%;
-      height: 200vh; /* 100vh view + 100vh scroll room for explosion */
-    }
-    #galaxy-sticky {
+    /* ─── Hero wrapper: sticky + spacer live inside here ─── */
+    /* Total height = 100vh (sticky panel) + 300vh (spacer) = 400vh                */
+    /* Sticky releases at scroll 300vh — panels then scroll up naturally.           */
+    /* Work section (at 400vh) rises from below, pushing panels out. Natural flow.  */
+    #hero-wrapper { position: relative; }
+
+    /* ─── Galaxy scroll spacer: empty, drives animation timing ─── */
+    #galaxy-scroll-spacer { height: 300vh; }
+
+    /* ─── Panels: sticky so they stay in viewport during galaxy animation ─── */
+    /* When hero-wrapper ends (scroll 300vh), sticky releases and panels scroll up  */
+    #below-galaxy {
       position: sticky;
       top: 0;
       height: 100vh;
-      width: 100%;
-      overflow: hidden;
       background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; /* clips the x-translate slide-in at the edges */
+    }
+    /* Inner row matches site-wide column width */
+    #below-galaxy-inner {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      width: 100%;
+      max-width: 1280px;
+      padding: 0 52px;
+    }
+    #below-galaxy-inner > * { flex: 1; min-width: 0; }
+
+    /* ─── Galaxy Intro — fixed overlay on top of everything ─── */
+    #galaxy-intro {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: var(--bg);
+      pointer-events: none;
+    }
+    #galaxy-sticky {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
     }
     #galaxy-vignette {
       position: absolute;
@@ -221,19 +277,18 @@
     #galaxy-content .tag::before { display: none; }
     #galaxy-content .hero-title {
       margin-bottom: 0;
-      font-family: 'Oi', serif;
+      font-family: 'Michroma', sans-serif;
       font-weight: 400;
-      font-size: clamp(42px, 6.5vw, 90px);
-      letter-spacing: 0.03em;
+      font-size: clamp(32px, 5vw, 68px);
+      letter-spacing: 0.08em;
       white-space: nowrap;
       text-transform: none;
     }
 
+
     /* ─── Hero text block (below galaxy) ─── */
     #hero-text-block {
-      padding: 48px 52px 64px;
-      max-width: 1280px;
-      margin: 0 auto;
+      padding: 0;
     }
     #hero-text-block .hero-title {
       font-size: clamp(52px, 7vw, 90px);
@@ -967,12 +1022,14 @@
     .section-body,
     .stat-box,
     .stats-grid,
-    .panel-card,
+    .panel-card:not(#avatar-card),
     .about-grid {
       animation: reveal-in linear both, reveal-out linear both;
       animation-timeline: view(), view();
       animation-range: cover 0% cover 40%, cover 60% cover 100%;
     }
+    /* Panels start invisible — JS sets opacity:0 + translateX immediately on load */
+    #hero-text-block, #avatar-card { opacity: 0; }
 
     /* ─── Responsive ─── */
     /* Galaxy container */
@@ -988,17 +1045,16 @@
     }
     #avatar-card {
       display: block;
-      width: 100%;
       background: var(--surface) !important;
-      border-radius: 0 !important;
-      border: none !important;
-      border-top: 1px solid var(--border) !important;
-      border-bottom: 1px solid var(--border) !important;
+      border-radius: 14px !important;
+      border: 1px solid var(--border) !important;
+      padding: 36px 28px 28px !important;
       overflow: visible !important;
-      padding: 28px 52px 20px !important;
+      margin: 0 !important;
     }
     @media (max-width: 900px) {
-      #avatar-card { padding: 28px 24px 20px !important; }
+      #below-galaxy-inner { flex-direction: column; padding: 0 24px; gap: 24px; }
+      #avatar-card { padding: 36px 20px 24px !important; }
     }
 
     @media (max-width: 900px) {
@@ -1028,6 +1084,8 @@
   </head>
 <body>
 
+<div id="dot-grid" aria-hidden="true"></div>
+
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav id="nav">
   <div class="nav-logo" style="cursor:pointer" onclick="goHome()">Jago</div>
@@ -1044,50 +1102,60 @@
 <!-- ═══════════════ HOME VIEW ═══════════════ -->
 <div id="home-view">
 
-<!-- ═══════════════ GALAXY INTRO ═══════════════ -->
+<!-- ═══════════════ HERO WRAPPER ═══════════════ -->
+<!-- Total: 100vh (sticky panel) + 300vh (spacer) = 400vh                    -->
+<!-- Sticky releases at scroll 300vh — panels then scroll up as normal flow  -->
+<!-- Work section follows and naturally pushes panels out of view             -->
+<div id="hero-wrapper">
+
+  <!-- ═══════════════ BELOW GALAXY (sticky inside wrapper) ═══════════════ -->
+  <div id="below-galaxy">
+  <div id="below-galaxy-inner">
+
+    <!-- Hero text (left) — slides in from left -->
+    <div id="hero-text-block">
+      <h2 class="hero-title" id="h-title-below">
+        Design<br>that<br><span class="accent">ships.</span>
+      </h2>
+      <p class="hero-sub" id="h-sub">
+        20+ years designing AI-powered, data-rich products from zero to production. From startups to enterprise across SaaS, fintech, pharma, maritime and telecoms including work that contributed to a £3.5M acquisition.
+      </p>
+      <div class="ctas" id="h-ctas">
+        <a href="#work" class="btn btn-fill">View work →</a>
+        <a href="#contact" class="btn btn-outline">Say hello</a>
+      </div>
+    </div>
+
+    <!-- Designer Setup (right) — slides in from right -->
+    <div class="panel-card" id="avatar-card">
+      <div class="panel-badge badge-orange">Designer Setup</div>
+      <div class="panel-row">Agent: <span class="val typewriter" data-type="Jago Livingstone"></span></div>
+      <div class="panel-row">Role: <span class="val typewriter" data-type="Founding Designer / Former Head of Design"></span></div>
+      <div class="panel-row" id="spec-row"><span class="spec-label">Speciality:&nbsp;</span><span id="spec-clip"><span class="val typewriter" id="spec-val" data-type="UX/UI · SaaS · Agentic AI · Conversation AI · Chat bots"></span></span></div>
+      <div class="panel-row">Experience: <span class="val typewriter" data-type="22 Years"></span></div>
+    </div>
+
+  </div><!-- /below-galaxy-inner -->
+  </div><!-- /below-galaxy -->
+
+  <!-- ═══════════════ GALAXY SCROLL SPACER ═══════════════ -->
+  <!-- 300vh of scroll room for the galaxy animation (inside hero-wrapper, after sticky) -->
+  <div id="galaxy-scroll-spacer"></div>
+
+</div><!-- /hero-wrapper -->
+
+<!-- ═══════════════ GALAXY INTRO (fixed overlay) ═══════════════ -->
 <section id="galaxy-intro">
   <div id="galaxy-sticky">
-
-    <!-- Full-screen galaxy canvas -->
     <div id="galaxy-container" aria-hidden="true"></div>
-
-    <!-- Depth vignette -->
     <div id="galaxy-vignette" aria-hidden="true"></div>
-
-    <!-- Centred hero content -->
     <div id="galaxy-content">
       <div class="tag" id="h-tag">Founding Designer</div>
       <h1 class="hero-title" id="h-title">Jago Livingstone</h1>
     </div>
-
-    <!-- Scroll indicator -->
     <div id="scroll-hint">↓ &nbsp;scroll</div>
-
   </div>
 </section>
-
-<!-- ═══════════════ DESIGNER SETUP ═══════════════ -->
-<div class="panel-card" id="avatar-card">
-  <div class="panel-badge badge-orange">Designer Setup</div>
-  <div class="panel-row">Agent: <span class="val typewriter" data-type="Jago Livingstone"></span></div>
-  <div class="panel-row">Role: <span class="val typewriter" data-type="Founding Designer / Former Head of Design"></span></div>
-  <div class="panel-row" id="spec-row"><span class="spec-label">Speciality:&nbsp;</span><span id="spec-clip"><span class="val typewriter" id="spec-val" data-type="UX/UI · SaaS · Agentic AI · Conversation AI · Chat bots"></span></span></div>
-  <div class="panel-row">Experience: <span class="val typewriter" data-type="22 Years"></span></div>
-</div>
-
-<!-- ═══════════════ HERO TEXT ═══════════════ -->
-<div id="hero-text-block">
-  <h2 class="hero-title" id="h-title-below">
-    Design<br>that<br><span class="accent">ships.</span>
-  </h2>
-  <p class="hero-sub" id="h-sub">
-    20+ years shaping AI-powered, data-rich platforms from zero to production. Enterprise SaaS, fintech, pharma, maritime, telco - and a £3.5M acquisition.
-  </p>
-  <div class="ctas" id="h-ctas">
-    <a href="#work" class="btn btn-fill">View work →</a>
-    <a href="#contact" class="btn btn-outline">Say hello</a>
-  </div>
-</div>
 
 <!-- ═══════════════ WORK ═══════════════ -->
 <div class="section" id="work">
@@ -2389,6 +2457,12 @@
     nav.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
 
+  /* ── Dot grid scroll parallax ── */
+  const dotGrid = document.getElementById('dot-grid');
+  window.addEventListener('scroll', () => {
+    dotGrid.style.backgroundPositionY = (-window.scrollY * 0.3) + 'px';
+  }, { passive: true });
+
   /* ── Hero content: fade in after galaxy forms (~2.5s delay) ── */
   /* Galaxy overlay: tag + name fade in after formation */
   gsap.set(['#h-tag','#h-title','#scroll-hint'], { opacity: 0 });
@@ -2397,24 +2471,52 @@
     .to('#h-title',     { opacity: 1, duration: 0.8, ease: 'power2.out' }, '-=0.2')
     .to('#scroll-hint', { opacity: 1, duration: 0.8, ease: 'power2.out' }, '+=0.3');
 
-  /* ── Galaxy intro: scroll-driven explosion ── */
+  /* ── Galaxy: one unified scroll trigger — fully reversible ── */
+  const galaxyEl  = document.getElementById('galaxy-intro');
+  const heroEl    = document.getElementById('hero-text-block');
+  const avatarEl  = document.getElementById('avatar-card');
+  const contentEl = document.getElementById('galaxy-content');
+  const hintEl    = document.getElementById('scroll-hint');
+
+  // Panels sticky — start off-screen left/right, slide in as galaxy fades
+  heroEl.style.cssText   += '; opacity:0; transform:translateX(-140px);';
+  avatarEl.style.cssText += '; opacity:0; transform:translateX(140px);';
+
   ScrollTrigger.create({
-    trigger: '#galaxy-intro',
+    trigger: '#galaxy-scroll-spacer',
     start: 'top top',
     end: 'bottom bottom',
     scrub: 1.2,
     onUpdate(self) {
-      if (window.__galaxyScroll) window.__galaxyScroll(self.progress);
-      // Fade the sticky panel as explosion completes
-      const fadeStart = 0.72;
-      const opacity = self.progress < fadeStart ? 1 : 1 - (self.progress - fadeStart) / (1 - fadeStart);
-      gsap.set('#galaxy-sticky', { opacity: Math.max(0, opacity) });
-      // Fade hero content out early so it doesn't compete with explosion
-      const contentFade = self.progress < 0.25 ? 1 : 1 - Math.min(1, (self.progress - 0.25) / 0.2);
-      gsap.set('#galaxy-content', { opacity: Math.max(0, contentFade) });
+      const p = self.progress;
+
+      // 1. Drive the 3D galaxy
+      if (window.__galaxyScroll) window.__galaxyScroll(p);
+
+      // 2. Fade name/tag out as user starts scrolling
+      contentEl.style.opacity = Math.max(0, p < 0.18 ? 1 : 1 - (p - 0.18) / 0.12);
+      hintEl.style.opacity    = Math.max(0, 1 - p / 0.06);
+
+      // 3. Galaxy overlay: fade 55% → 75% of scroll
+      const gFadeStart = 0.55, gFadeEnd = 0.75;
+      galaxyEl.style.opacity = p <= gFadeStart ? 1
+        : p >= gFadeEnd ? 0
+        : 1 - (p - gFadeStart) / (gFadeEnd - gFadeStart);
+
+      // 4. Panels slide in at 58% → 100%.
+      //    Sticky keeps them in the viewport — they enter from the sides, not the bottom.
+      //    After the spacer ends (scroll 300vh), sticky releases and work section pushes them up.
+      const pStart = 0.58;
+      const panelP = Math.max(0, Math.min(1, (p - pStart) / (1 - pStart)));
+      const ease   = 1 - Math.pow(1 - panelP, 3); // cubic ease-out
+
+      heroEl.style.opacity     = String(panelP);
+      avatarEl.style.opacity   = String(panelP);
+      heroEl.style.transform   = `translateX(${-140 * (1 - ease)}px)`;
+      avatarEl.style.transform = `translateX(${140 * (1 - ease)}px)`;
     }
   });
-
+  // No second trigger needed — when hero-wrapper ends, sticky releases naturally.
 
   /* ── Count-up ── */
   document.querySelectorAll('[data-target]').forEach(el => {
@@ -3123,14 +3225,14 @@ function bootGalaxy() {
   window.addEventListener('pointermove', onPointerMove, { passive: true })
 
   /* scroll-driven state (updated by window.__galaxyScroll) */
-  const scrollState = { active: false, camZ: 28, camY: 11, lookY: 1, explode: 0 }
+  const scrollState = { active: false, camZ: 26, camY: 9, lookY: -1.5, explode: 0 }
   window.__galaxyScroll = (p) => {
     scrollState.active = p > 0.01
     const camT = Math.min(1, p / 0.6)
     const camEase = 1 - Math.pow(1 - camT, 3)
-    scrollState.camZ  = THREE.MathUtils.lerp(28, 5, camEase)
-    scrollState.camY  = THREE.MathUtils.lerp(11, 0, camEase)
-    scrollState.lookY = THREE.MathUtils.lerp(1, 0, camEase)
+    scrollState.camZ  = THREE.MathUtils.lerp(26, 5, camEase)
+    scrollState.camY  = THREE.MathUtils.lerp(9, 0, camEase)
+    scrollState.lookY = THREE.MathUtils.lerp(-1.5, 0, camEase)
     scrollState.explode = Math.max(0, Math.min(1, (p - 0.3) / 0.7))
   }
 
@@ -3166,9 +3268,9 @@ function bootGalaxy() {
     dust.material.uniforms.uExplode.value  = scrollState.explode
 
     // Camera: formation easing when idle, scroll override when scrolling
-    const baseY = scrollState.active ? scrollState.camY  : THREE.MathUtils.lerp(20, 11, eased)
-    const baseZ = scrollState.active ? scrollState.camZ  : THREE.MathUtils.lerp(52, 28, eased)
-    const lookY = scrollState.active ? scrollState.lookY : THREE.MathUtils.lerp(0, 1, eased)
+    const baseY = scrollState.active ? scrollState.camY  : THREE.MathUtils.lerp(18, 9, eased)
+    const baseZ = scrollState.active ? scrollState.camZ  : THREE.MathUtils.lerp(52, 26, eased)
+    const lookY = scrollState.active ? scrollState.lookY : THREE.MathUtils.lerp(0, -1.5, eased)
 
     smoothed.x += (pointer.x - smoothed.x) * 0.04
     smoothed.y += (pointer.y - smoothed.y) * 0.04
