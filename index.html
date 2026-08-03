@@ -1055,18 +1055,35 @@
     }
     @media (max-width: 900px) {
       #below-galaxy-inner { flex-direction: column; padding: 0 24px; gap: 24px; }
-      #avatar-card { padding: 36px 20px 24px !important; }
+      #avatar-card {
+        padding: 36px 20px 24px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+      #avatar-card .panel-row {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+      }
+      #spec-row { overflow: hidden !important; }
     }
 
     @media (max-width: 900px) {
       #galaxy-content { max-width: 100%; padding: 0 20px; }
-      #galaxy-content .hero-title { font-size: clamp(40px, 10vw, 72px); }
+      #galaxy-content .hero-title { font-size: clamp(32px, 8.5vw, 60px); }
       .work-grid { grid-template-columns: repeat(2, 1fr); }
       .stats-grid { grid-template-columns: 1fr; }
       .about-grid { grid-template-columns: 1fr; gap: 48px; }
       .section { padding: 80px 24px; }
       nav { padding: 20px 24px; }
       footer { flex-direction: column; gap: 20px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      /* Galaxy title — must always fit one line on small phones */
+      #galaxy-content .hero-title { font-size: clamp(18px, 7.8vw, 32px); letter-spacing: 0.03em; }
     }
 
     /* ─── Mobile nav: burger + overlay ─── */
