@@ -727,8 +727,9 @@
     footer .f-logo { font-family: var(--mono); font-size: 13px; color: var(--orange); letter-spacing: 0.18em; }
     footer .f-copy { font-size: 13px; color: var(--muted); }
     footer .f-links { display: flex; gap: 24px; }
-    footer .f-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    footer .f-links a:hover { color: var(--text); }
+    footer .f-links a { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    footer .f-links a:hover { color: var(--orange); }
+    footer .f-links a svg { width: 15px; height: 15px; flex-shrink: 0; transition: color 0.2s; }
 
 
     /* ─── Custom Video Player ─── */
@@ -1067,6 +1068,112 @@
       nav { padding: 20px 24px; }
       footer { flex-direction: column; gap: 20px; text-align: center; }
     }
+
+    /* ─── Mobile nav: burger + overlay ─── */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 210;
+      flex-shrink: 0;
+    }
+    .nav-burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 1px;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+      transform-origin: center;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    #mobile-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      inset: 0;
+      z-index: 190;
+      background: rgba(8,8,8,0.97);
+      backdrop-filter: blur(28px);
+      gap: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #mobile-menu.open { opacity: 1; pointer-events: auto; }
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+    .mobile-menu-links a {
+      font-size: clamp(28px, 8vw, 42px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.2;
+      padding: 6px 0;
+    }
+    .mobile-menu-links a:hover,
+    .mobile-menu-links a:active { color: var(--orange); }
+    .mobile-menu-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      width: 100%;
+      max-width: 260px;
+      justify-content: center;
+    }
+    .mobile-menu-footer a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mobile-menu-footer a:hover { color: var(--orange); }
+    .mobile-theme-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .mobile-theme-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none !important; }
+      .nav-burger { display: flex; }
+    }
+
+    /* ─── Small phone: single-column grid ─── */
+    @media (max-width: 480px) {
+      .work-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 100px 24px; }
+      footer { padding: 28px 24px; }
+      .section { padding: 64px 20px; }
+    }
   </style>
 
   <!-- ECA Prototype dependencies -->
@@ -1097,7 +1204,25 @@
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">☀</button>
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
+  <!-- Mobile only: hamburger (hidden on desktop via CSS) -->
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- ═══════════════ MOBILE MENU ═══════════════ -->
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Site navigation">
+  <nav class="mobile-menu-links">
+    <a href="#work"    onclick="closeMobileMenu();setTimeout(function(){document.getElementById('work').scrollIntoView({behavior:'smooth'})},320)">Work</a>
+    <a href="#about"   onclick="closeMobileMenu();setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},320)">About</a>
+    <a href="#"        onclick="event.preventDefault();closeMobileMenu();setTimeout(function(){openProject('cv')},340)">CV</a>
+    <a href="#"        onclick="event.preventDefault();closeMobileMenu();setTimeout(function(){openProject('jago-llm')},340)">Jago LLM</a>
+    <a href="#contact" onclick="closeMobileMenu();setTimeout(function(){document.getElementById('contact').scrollIntoView({behavior:'smooth'})},320)">Get in touch</a>
+  </nav>
+  <div class="mobile-menu-footer">
+    <button class="mobile-theme-btn" onclick="window.toggleTheme()" aria-label="Toggle colour mode">Toggle theme</button>
+  </div>
+</div>
 
 <!-- ═══════════════ HOME VIEW ═══════════════ -->
 <div id="home-view">
@@ -1421,8 +1546,20 @@
   <div class="f-logo">JAGO</div>
   <div class="f-copy">© 2026 Jago. Founding Designer.</div>
   <div class="f-links">
-    <a href="https://www.linkedin.com/in/jagojames" target="_blank">LinkedIn</a>
-    <a href="mailto:jagojames@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/jagojames" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="20" rx="3"/>
+        <path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>
+      </svg>
+      LinkedIn
+    </a>
+    <a href="mailto:jagojames@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="M2 7l10 7 10-7"/>
+      </svg>
+      Email
+    </a>
   </div>
 </footer>
 
@@ -2438,6 +2575,40 @@
       const current = document.documentElement.getAttribute('data-theme') || 'dark';
       applyTheme(current === 'dark' ? 'light' : 'dark');
     });
+    // Expose globally so mobile menu can also trigger it
+    window.toggleTheme = () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    };
+  })();
+
+  /* ── Mobile menu ── */
+  (function() {
+    const burger     = document.getElementById('navBurger');
+    const menu       = document.getElementById('mobile-menu');
+    if (!burger || !menu) return;
+
+    function openMobileMenu() {
+      menu.classList.add('open');
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    window.closeMobileMenu = function() {
+      menu.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+
+    burger.addEventListener('click', () => {
+      menu.classList.contains('open') ? window.closeMobileMenu() : openMobileMenu();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') window.closeMobileMenu();
+    });
   })();
 
   /* ── Typewriter ── */
@@ -2525,15 +2696,14 @@
   // Different pStart values and x-distances create genuine depth (not everything moving together).
   // Galaxy fades to black at gFadeEnd = 0.75.
   // Panels begin entering only after the screen is dark — content emerges from nothing.
+  // On mobile, travel distances are reduced to avoid horizontal overflow (elements still
+  // clip behind #below-galaxy overflow:hidden, but smaller values feel better on touch).
+  const mob = window.innerWidth < 768;
   const LAYERS = [
-    // Headline: first to arrive after blackout
-    { id: 'h-title-below', x: -340, pStart: 0.76 },
-    // Body copy: slight lag — mid-distance layer
-    { id: 'h-sub',         x: -270, pStart: 0.79 },
-    // Buttons: last to arrive, heaviest lag
-    { id: 'h-ctas',        x: -200, pStart: 0.83 },
-    // Designer Setup panel: its own timing — slightly after headline
-    { id: 'avatar-card',   x:  400, pStart: 0.77 },
+    { id: 'h-title-below', x: mob ? -120 : -340, pStart: 0.76 },
+    { id: 'h-sub',         x: mob ?  -90 : -270, pStart: 0.79 },
+    { id: 'h-ctas',        x: mob ?  -60 : -200, pStart: 0.83 },
+    { id: 'avatar-card',   x: mob ?  140 :  400, pStart: 0.77 },
   ].map(layer => ({ ...layer, el: document.getElementById(layer.id) }))
    .filter(layer => layer.el);
 
