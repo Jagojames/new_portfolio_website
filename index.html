@@ -1056,11 +1056,18 @@
     @media (max-width: 900px) {
       #below-galaxy-inner { flex-direction: column; padding: 0 24px; gap: 24px; }
       #avatar-card {
-        padding: 36px 20px 24px !important;
+        padding: 24px 20px 24px !important;
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
+      }
+      #avatar-card .panel-badge {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        display: inline-block;
+        margin-bottom: 12px;
       }
       #avatar-card .panel-row {
         white-space: nowrap;
