@@ -3940,8 +3940,11 @@ function bootGalaxy() {
   /* render loop */
   const clock = new THREE.Clock()
   let frame = 0
+  let galaxyPaused = false
 
   const tick = () => {
+    if (galaxyPaused) return   // ← gate: don't re-queue if paused
+
     const elapsed  = clock.getElapsedTime()
     const progress = reducedMotion ? 1 : Math.min(elapsed / FORMATION_DURATION, 1)
     const eased    = 1 - Math.pow(1 - progress, 3)
@@ -3979,26 +3982,28 @@ function bootGalaxy() {
   /* ── Smart RAF pause: stop rendering when user is idle below the galaxy ── */
   ;(function() {
     const heroWrapper = document.getElementById('hero-wrapper')
-    let pauseTimer   = null
-    let paused       = false
-    let lastY        = window.scrollY
+    let pauseTimer = null
+    let lastY      = window.scrollY
 
     function pauseGalaxy() {
-      if (!paused) { cancelAnimationFrame(frame); paused = true }
+      galaxyPaused = true
+      cancelAnimationFrame(frame)
     }
     function resumeGalaxy() {
-      if (paused) { paused = false; frame = requestAnimationFrame(tick) }
+      if (!galaxyPaused) return
+      galaxyPaused = false
+      frame = requestAnimationFrame(tick)
     }
 
     window.addEventListener('scroll', () => {
-      const y          = window.scrollY
+      const y           = window.scrollY
       const scrollingUp = y < lastY
       lastY = y
 
-      // Scrolling up toward galaxy — resume immediately
+      // Any upward scroll — resume immediately
       if (scrollingUp) { clearTimeout(pauseTimer); resumeGalaxy(); return }
 
-      // Scrolling down and past the galaxy section — schedule pause after 2s idle
+      // Scrolled past the galaxy section — schedule pause after 2s of idle
       const heroBottom = heroWrapper
         ? heroWrapper.offsetTop + heroWrapper.offsetHeight
         : Infinity
