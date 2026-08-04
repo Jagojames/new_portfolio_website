@@ -3861,8 +3861,10 @@ function bootGalaxy() {
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const isSmall  = window.innerWidth < 768
-  const starCount = isSmall ? 70000 : 220000
-  const dustCount = isSmall ? 2500  : 6000
+  const cores    = navigator.hardwareConcurrency || 4
+  const lowEnd   = !isSmall && cores <= 4
+  const starCount = isSmall ? 70000  : (lowEnd ? 130000 : 220000)
+  const dustCount = isSmall ? 2500   : (lowEnd ? 3500   : 6000)
 
   let renderer
   try {
@@ -3973,6 +3975,39 @@ function bootGalaxy() {
     frame = requestAnimationFrame(tick)
   }
   frame = requestAnimationFrame(tick)
+
+  /* ── Smart RAF pause: stop rendering when user is idle below the galaxy ── */
+  ;(function() {
+    const heroWrapper = document.getElementById('hero-wrapper')
+    let pauseTimer   = null
+    let paused       = false
+    let lastY        = window.scrollY
+
+    function pauseGalaxy() {
+      if (!paused) { cancelAnimationFrame(frame); paused = true }
+    }
+    function resumeGalaxy() {
+      if (paused) { paused = false; frame = requestAnimationFrame(tick) }
+    }
+
+    window.addEventListener('scroll', () => {
+      const y          = window.scrollY
+      const scrollingUp = y < lastY
+      lastY = y
+
+      // Scrolling up toward galaxy — resume immediately
+      if (scrollingUp) { clearTimeout(pauseTimer); resumeGalaxy(); return }
+
+      // Scrolling down and past the galaxy section — schedule pause after 2s idle
+      const heroBottom = heroWrapper
+        ? heroWrapper.offsetTop + heroWrapper.offsetHeight
+        : Infinity
+      if (y > heroBottom) {
+        clearTimeout(pauseTimer)
+        pauseTimer = setTimeout(pauseGalaxy, 2000)
+      }
+    }, { passive: true })
+  })()
 
   /* cleanup on page hide (best-effort) */
   window.addEventListener('pagehide', () => {
