@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Viewer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    :root {
+      --bg:      #111111;
+      --surface: #1a1a1a;
+      --border:  #2a2a2a;
+      --text:    #e0e0e0;
+      --muted:   #666666;
+      --orange:  #F97316;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; overflow-x: hidden; }
+
+    /* ── Toolbar ── */
+    #toolbar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 16px; height: 44px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      user-select: none;
+    }
+    #doc-title { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tb-btn {
+      background: none; border: 1px solid var(--border); color: var(--text);
+      border-radius: 5px; padding: 4px 10px; cursor: pointer; font-size: 12px;
+      transition: border-color 0.15s, color 0.15s; line-height: 1.4;
+      font-family: inherit;
+    }
+    .tb-btn:hover { border-color: var(--orange); color: var(--orange); }
+    #zoom-label { font-size: 12px; color: var(--muted); min-width: 40px; text-align: center; }
+    #page-info  { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .tb-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
+
+    /* ── Viewer ── */
+    #viewer {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 24px 0 40px; gap: 12px; min-height: calc(100% - 44px);
+    }
+
+    /* ── Pages ── */
+    .page-wrapper {
+      position: relative;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.6);
+      border-radius: 1px; overflow: hidden;
+      background: #fff; /* PDF background — don't change */
+    }
+    canvas { display: block; }
+
+    /* ── States ── */
+    #status {
+      padding: 60px 24px; color: var(--muted); font-size: 14px;
+      text-align: center; letter-spacing: 0.04em;
+    }
+    .page-num-badge {
+      position: absolute; bottom: 8px; right: 10px;
+      font-size: 10px; color: rgba(0,0,0,0.3);
+      font-family: monospace; pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toolbar">
+    <span id="doc-title">Loading…</span>
+    <div class="tb-sep"></div>
+    <button class="tb-btn" id="btn-minus" title="Zoom out">−</button>
+    <span id="zoom-label">—</span>
+    <button class="tb-btn" id="btn-plus"  title="Zoom in">+</button>
+    <button class="tb-btn" id="btn-fit"   title="Fit to width">Fit</button>
+    <div class="tb-sep"></div>
+    <span id="page-info"></span>
+  </div>
+
+  <div id="viewer"><div id="status">Loading PDF…</div></div>
+
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    // ── Resolve the file URL from ?file= param ──
+    const params  = new URLSearchParams(window.location.search);
+    const fileUrl = params.get('file') || '';
+
+    let pdfDoc   = null;
+    let scale    = 1.5;
+    let fitScale = 1.5;
+    let rendering = false;
+
+    const viewer   = document.getElementById('viewer');
+    const status   = document.getElementById('status');
+    const zoomLbl  = document.getElementById('zoom-label');
+    const pageInfo = document.getElementById('page-info');
+    const title    = document.getElementById('doc-title');
+
+    // ── Compute fit-to-width scale from first page ──
+    async function computeFitScale(page) {
+      const vpRaw  = page.getViewport({ scale: 1 });
+      const avail  = viewer.clientWidth - 48; // 24px padding each side
+      return Math.max(0.5, avail / vpRaw.width);
+    }
+
+    // ── Render all pages ──
+    async function renderAll() {
+      if (rendering) return;
+      rendering = true;
+      viewer.innerHTML = '';
+
+      for (let i = 1; i <= pdfDoc.numPages; i++) {
+        const page     = await pdfDoc.getPage(i);
+        const viewport = page.getViewport({ scale });
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'page-wrapper';
+        wrapper.style.width  = viewport.width  + 'px';
+        wrapper.style.height = viewport.height + 'px';
+
+        const canvas = document.createElement('canvas');
+        canvas.width  = viewport.width;
+        canvas.height = viewport.height;
+        wrapper.appendChild(canvas);
+
+        const badge = document.createElement('div');
+        badge.className = 'page-num-badge';
+        badge.textContent = i + ' / ' + pdfDoc.numPages;
+        wrapper.appendChild(badge);
+
+        viewer.appendChild(wrapper);
+
+        await page.render({
+          canvasContext: canvas.getContext('2d'),
+          viewport,
+          background: 'transparent'
+        }).promise;
+      }
+
+      pageInfo.textContent = pdfDoc.numPages + ' pages';
+      rendering = false;
+    }
+
+    // ── Zoom controls ──
+    function applyZoom(newScale) {
+      scale = Math.max(0.4, Math.min(4, newScale));
+      zoomLbl.textContent = Math.round(scale * 100) + '%';
+      renderAll();
+    }
+
+    document.getElementById('btn-minus').addEventListener('click', () => applyZoom(scale - 0.2));
+    document.getElementById('btn-plus' ).addEventListener('click', () => applyZoom(scale + 0.2));
+    document.getElementById('btn-fit'  ).addEventListener('click', () => applyZoom(fitScale));
+
+    // ── Load PDF ──
+    async function loadPDF() {
+      if (!fileUrl) {
+        status.textContent = 'No file specified.';
+        return;
+      }
+      try {
+        pdfDoc = await pdfjsLib.getDocument(fileUrl).promise;
+
+        // Compute fit scale from page 1
+        const page1 = await pdfDoc.getPage(1);
+        fitScale = await computeFitScale(page1);
+        scale    = fitScale;
+        zoomLbl.textContent = Math.round(scale * 100) + '%';
+
+        // Set title
+        const name = decodeURIComponent(fileUrl.split('/').pop().replace(/\.pdf$/i, '').replace(/[-_]/g, ' '));
+        title.textContent = name;
+        document.title = name;
+
+        await renderAll();
+      } catch (e) {
+        status.textContent = 'Could not load PDF. (' + e.message + ')';
+        console.error(e);
+      }
+    }
+
+    loadPDF();
+
+    // Recompute fit on resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(async () => {
+        if (!pdfDoc) return;
+        const page1 = await pdfDoc.getPage(1);
+        fitScale = await computeFitScale(page1);
+        applyZoom(fitScale);
+      }, 250);
+    });
+  </script>
+</body>
+</html>
