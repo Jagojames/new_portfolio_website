@@ -3346,8 +3346,8 @@
     });
 
     // ── Initial states ──
-    gsap.set(glow,    { scale: 0.025, opacity: 1, transformOrigin: '50% 50%' });
-    gsap.set(beacon,  { scale: 0.04,  transformOrigin: '50% 50%' });
+    gsap.set(glow,    { scale: 0.08,  opacity: 1, transformOrigin: '50% 50%' });
+    gsap.set(beacon,  { scale: 0.14,  transformOrigin: '50% 50%' });
     gsap.set(eyebrow, { opacity: 0, filter: 'blur(12px)' });
     gsap.set(title,   { opacity: 0, filter: 'blur(18px)' });
     gsap.set(sub,     { opacity: 0, filter: 'blur(14px)' });
@@ -3372,7 +3372,7 @@
     // even when the CTA is the last section before the footer.
     ScrollTrigger.create({
       trigger: cta,
-      start: 'top 85%',      // begins just before section is fully in view
+      start: 'top 88%',      // begins as soon as section enters view
       end:   'center center', // completes when section centre hits viewport centre — always reachable
       scrub: 2.0,
       onUpdate(self) {
@@ -3391,7 +3391,7 @@
         gsap.set(star, { opacity: Math.max(0, 1 - p * 4) });
 
         // Beacon: full composition approaches as one object
-        gsap.set(beacon, { scale: 0.04 + 0.96 * e });
+        gsap.set(beacon, { scale: 0.14 + 0.86 * e });
 
         // ── Telescope focus: layers resolve sequentially ──
         // Each resolves over 30% of scroll range — fast enough to complete before end.
@@ -3461,11 +3461,11 @@
       gsap.to(wordEls, {
         yPercent: 0,
         ease: 'power4.out',
-        stagger: 0.14,
+        stagger: 0.18,
         scrollTrigger: {
           trigger: title,
-          start: 'top 82%',
-          end:   'top 18%',
+          start: 'top 90%',
+          end:   'top -20%',
           scrub: 2.0,
         }
       });
@@ -3529,7 +3529,7 @@
       ScrollTrigger.create({
         trigger: skillsEl,
         start: 'top 88%',
-        end:   'bottom 35%',
+        end:   'bottom 60%',
         scrub: 1.8,
         onUpdate(self) {
           const p  = self.progress;
