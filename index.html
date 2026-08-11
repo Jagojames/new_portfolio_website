@@ -2767,110 +2767,151 @@
       <div>
         <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:12px">Seven problems.<br>Seven solutions.</h2>
         <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:32px">Each element of the redesign responded to a specific piece of user feedback — translating frustration into a clear design brief.</p>
-        <!-- Bill pages carousel -->
-        <div style="position:relative;background:#0d0d0d;border-radius:12px;overflow:hidden;user-select:none;border:1px solid var(--border);margin-bottom:40px">
-          <img id="ggmr-bill-img" src="images/ggmr-bill-01.jpg" style="display:block;width:100%;max-height:680px;object-fit:contain;padding:24px 80px;box-sizing:border-box;transition:opacity 0.2s" alt="Vodafone bill redesign">
-          <button onclick="ggmrNav(-1)" style="position:absolute;left:0;top:0;bottom:0;width:72px;background:linear-gradient(to right,rgba(13,13,13,0.9),transparent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button onclick="ggmrNav(1)" style="position:absolute;right:0;top:0;bottom:0;width:72px;background:linear-gradient(to left,rgba(13,13,13,0.9),transparent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-          <div id="ggmr-bill-counter" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:#555;background:rgba(0,0,0,0.6);padding:4px 12px;border-radius:100px">1 / 4</div>
+        <!-- Interactive annotated bill viewer -->
+        <div style="display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;margin-bottom:0">
+
+          <!-- Bill image + spotlight highlight -->
+          <div style="position:relative;border-radius:10px;overflow:hidden;background:#f5f5f0;line-height:0">
+            <img id="ggmr-img" src="images/ggmr-bill-01.jpg" style="width:100%;display:block;transition:opacity 0.2s" alt="Vodafone bill redesign">
+            <!-- orange highlight box -->
+            <div id="ggmr-hl" style="position:absolute;border:2px solid #F97316;border-radius:3px;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1),opacity 0.2s;box-shadow:0 0 0 9999px rgba(0,0,0,0.55);opacity:0;background:transparent"></div>
+          </div>
+
+          <!-- Points list -->
+          <div style="display:flex;flex-direction:column;gap:6px;position:sticky;top:80px">
+            <div id="ggmr-pt-0" onclick="ggmrSelect(0)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
+              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">01</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text)">Date Information</div>
+            </div>
+            <div id="ggmr-pt-1" onclick="ggmrSelect(1)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
+              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">02</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text)">Bill Total</div>
+            </div>
+            <div id="ggmr-pt-2" onclick="ggmrSelect(2)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
+              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">03</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text)">QR Code</div>
+            </div>
+            <div id="ggmr-pt-3" onclick="ggmrSelect(3)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
+              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">04</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text)">Plan Summary</div>
+            </div>
+            <div id="ggmr-pt-4" onclick="ggmrSelect(4)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
+              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">05</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text)">Positive Pay-Off</div>
+            </div>
+            <div id="ggmr-pt-5" onclick="ggmrSelect(5)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
+              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">06</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text)">Monthly Charges</div>
+            </div>
+            <div id="ggmr-pt-6" onclick="ggmrSelect(6)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
+              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">07</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text)">Usage Charts</div>
+            </div>
+            <!-- prev / next -->
+            <div style="display:flex;gap:8px;margin-top:4px">
+              <button onclick="ggmrPrev()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;transition:color 0.2s,border-color 0.2s" onmouseover="this.style.color='#fff';this.style.borderColor='#555'" onmouseout="this.style.color='';this.style.borderColor=''">← Prev</button>
+              <button onclick="ggmrNext()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;transition:color 0.2s,border-color 0.2s" onmouseover="this.style.color='#fff';this.style.borderColor='#555'" onmouseout="this.style.color='';this.style.borderColor=''">Next →</button>
+            </div>
+          </div>
         </div>
+
+        <!-- Description panel -->
+        <div id="ggmr-desc" style="margin-top:16px;background:var(--surface);border:1px solid var(--orange);border-radius:10px;padding:24px 28px;min-height:120px;transition:opacity 0.2s;opacity:0">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+            <div>
+              <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:8px">Challenge</p>
+              <p id="ggmr-challenge" style="font-size:14px;color:var(--muted);line-height:1.65"></p>
+            </div>
+            <div>
+              <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Solution</p>
+              <p id="ggmr-solution" style="font-size:14px;color:var(--muted);line-height:1.65"></p>
+            </div>
+          </div>
+        </div>
+
         <script>
-          (function(){
-            var imgs = ['images/ggmr-bill-01.jpg','images/ggmr-bill-02.jpg','images/ggmr-bill-03.jpg','images/ggmr-bill-04.jpg'];
-            var idx = 0;
-            var el = document.getElementById('ggmr-bill-img');
-            var counter = document.getElementById('ggmr-bill-counter');
-            window.ggmrNav = function(dir) {
-              idx = (idx + dir + imgs.length) % imgs.length;
-              el.style.opacity = '0';
-              setTimeout(function(){ el.src = imgs[idx]; el.style.opacity = '1'; counter.textContent = (idx+1)+' / '+imgs.length; }, 150);
-            };
-          })();
+        (function(){
+          var points = [
+            { page:'images/ggmr-bill-01.jpg', l:1,  t:1,  w:22, h:8,  title:'Date Information',
+              challenge:'Users referenced their bills by month and year, but the date information was not easily accessible within the existing layout.',
+              solution:'Restructured the date hierarchy — increasing the prominence of the month and ensuring it was easy to locate within a filing system. Font size increased, colour adjusted to balance with other key elements.' },
+            { page:'images/ggmr-bill-01.jpg', l:1,  t:36, w:20, h:9,  title:'Bill Total',
+              challenge:'The large, red font used to display the total amount due was causing unnecessary alarm and negative emotional responses before customers had read anything else.',
+              solution:'Reduced the font size of the total while keeping it the most prominent figure on the page. Removed the red colour, replacing it with a neutral tone to reduce urgency and financial anxiety.' },
+            { page:'images/ggmr-bill-01.jpg', l:63, t:17, w:30, h:22, title:'QR Code Introduction',
+              challenge:'In 2012, customers were still reliant on physical bills. Vodafone wanted to encourage digital adoption without forcing a sudden, jarring change to customer behaviour.',
+              solution:'Introduced a QR code as a soft nudge toward digital engagement — allowing customers to access their bill online instantly, bridging physical and digital without friction.' },
+            { page:'images/ggmr-bill-01.jpg', l:63, t:41, w:34, h:44, title:'Plan Summary',
+              challenge:'Customers had to dig through multiple pages to find details about their plans — causing confusion, especially for those managing multiple plans simultaneously.',
+              solution:'Added a summary of all active plans on the first page. Consistently placed to enhance scan-ability and allow customers to immediately understand what they were being charged for.' },
+            { page:'images/ggmr-bill-01.jpg', l:1,  t:82, w:65, h:15, title:'Positive Pay-Off',
+              challenge:'Customers felt a negative emotional impact throughout — exacerbated by heavy use of red, which carries associations with warnings, urgency and debt.',
+              solution:'Introduced a positive closing message using a friendlier colour palette including green — deliberately designed to leave customers with a more positive feeling after reviewing their bill.' },
+            { page:'images/ggmr-bill-02.jpg', l:1,  t:11, w:65, h:41, title:'Monthly Charge Summary',
+              challenge:'Important chargeable and discount information was scattered throughout the bill, making it difficult to build a clear picture of total charges.',
+              solution:'Created a consolidated summary table of all chargeable items and discounts in a single, easy-to-read layout. Each item condensed to one line — keeping the layout clear and digestible.' },
+            { page:'images/ggmr-bill-02.jpg', l:1,  t:53, w:65, h:43, title:'Usage Charts',
+              challenge:'In 2012, exceeding data, text or minute limits often resulted in substantial additional charges — but customers had no easy visual way to understand whether they were over their limits.',
+              solution:'Designed usage charts clearly showing whether customers were within or over their plan limits. Green for within limits, red for overages — an immediate visual cue of potential extra charges.' }
+          ];
+
+          var current = -1;
+          var img = document.getElementById('ggmr-img');
+          var hl  = document.getElementById('ggmr-hl');
+          var desc = document.getElementById('ggmr-desc');
+          var chal = document.getElementById('ggmr-challenge');
+          var sol  = document.getElementById('ggmr-solution');
+
+          function setActive(i) {
+            // deactivate old
+            if (current >= 0) {
+              var old = document.getElementById('ggmr-pt-'+current);
+              old.style.borderColor = ''; old.style.background = '';
+            }
+            current = i;
+            var p = points[i];
+            // highlight list item
+            var el = document.getElementById('ggmr-pt-'+i);
+            el.style.borderColor = 'var(--orange)';
+            el.style.background  = 'rgba(249,115,22,0.06)';
+            // switch page if needed
+            if (img.src.indexOf(p.page) === -1) {
+              img.style.opacity = '0';
+              hl.style.opacity  = '0';
+              setTimeout(function(){
+                img.src = p.page;
+                img.onload = function(){ placeHighlight(p); img.style.opacity='1'; };
+              }, 200);
+            } else {
+              placeHighlight(p);
+            }
+            // update description
+            desc.style.opacity = '0';
+            setTimeout(function(){
+              chal.textContent = p.challenge;
+              sol.textContent  = p.solution;
+              desc.style.opacity = '1';
+            }, 150);
+          }
+
+          function placeHighlight(p) {
+            var iw = img.offsetWidth;
+            var ih = img.offsetHeight;
+            hl.style.left   = (p.l / 100 * iw) + 'px';
+            hl.style.top    = (p.t / 100 * ih) + 'px';
+            hl.style.width  = (p.w / 100 * iw) + 'px';
+            hl.style.height = (p.h / 100 * ih) + 'px';
+            hl.style.opacity = '1';
+          }
+
+          window.ggmrSelect = function(i){ setActive(i); };
+          window.ggmrNext   = function(){ setActive((current + 1) % points.length); };
+          window.ggmrPrev   = function(){ setActive((current - 1 + points.length) % points.length); };
+
+          // start on first point after a short delay
+          setTimeout(function(){ setActive(0); }, 400);
+        })();
         </script>
-        <div style="display:flex;flex-direction:column;gap:2px">
-
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
-            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">01</div>
-            <div>
-              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px">Date Information</h3>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--orange);text-transform:uppercase;margin-bottom:10px">Challenge</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:14px">Users referenced their bills by month and year, but the date information was not easily accessible within the existing layout.</p>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Solution</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65">Restructured the date hierarchy — increasing the prominence of the month and ensuring it was easy to locate within a filing system. Font size increased, colour adjusted to balance with other key elements like the account number.</p>
-            </div>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
-            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">02</div>
-            <div>
-              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px">Bill Total</h3>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--orange);text-transform:uppercase;margin-bottom:10px">Challenge</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:14px">The large, red font used to display the total amount due was causing unnecessary alarm and negative emotional responses before customers had read anything else.</p>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Solution</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65">Reduced the font size of the total while keeping it the most prominent figure on the page. Removed the red colour, replacing it with a neutral tone to reduce the sense of urgency and financial anxiety.</p>
-            </div>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
-            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">03</div>
-            <div>
-              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px">QR Code Introduction</h3>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--orange);text-transform:uppercase;margin-bottom:10px">Challenge</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:14px">In 2012, customers were still reliant on physical bills. Vodafone wanted to encourage digital adoption without forcing a sudden, jarring change to customer behaviour.</p>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Solution</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65">Introduced a QR code as a soft nudge toward digital engagement — allowing customers to access their bill online instantly, bridging physical and digital without friction.</p>
-            </div>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
-            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">04</div>
-            <div>
-              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px">Plan Summary</h3>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--orange);text-transform:uppercase;margin-bottom:10px">Challenge</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:14px">Customers had to dig through multiple pages to find details about their plans — causing significant confusion, especially for those managing multiple plans simultaneously.</p>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Solution</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65">Added a summary of all active plans on the first page of the bill. Consistently placed across the document to enhance scan-ability and allow customers to immediately understand what they were being charged for.</p>
-            </div>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
-            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">05</div>
-            <div>
-              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px">Positive Pay-Off</h3>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--orange);text-transform:uppercase;margin-bottom:10px">Challenge</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:14px">Customers felt a negative emotional impact throughout the bill — exacerbated by the heavy use of Vodafone's brand colour, red, which carries associations with warnings, urgency and debt.</p>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Solution</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65">Introduced a positive closing message at the end of the bill using a friendlier colour palette including green — deliberately designed to leave customers with a more positive feeling after completing their review.</p>
-            </div>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
-            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">06</div>
-            <div>
-              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px">Monthly Charge Summary</h3>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--orange);text-transform:uppercase;margin-bottom:10px">Challenge</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:14px">Important chargeable and discount information was scattered throughout the bill, making it difficult for customers to build a clear picture of their total charges.</p>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Solution</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65">Created a consolidated summary table of all chargeable items and discounts in a single, easy-to-read layout. Each item condensed to one line — keeping the layout clear and digestible without losing detail.</p>
-            </div>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
-            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">07</div>
-            <div>
-              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px">Usage Charts</h3>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--orange);text-transform:uppercase;margin-bottom:10px">Challenge</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:14px">In 2012, exceeding data, text or minute limits often resulted in substantial additional charges — but customers had no easy visual way to understand whether they were over or within their limits.</p>
-              <p style="font-size:13px;font-family:var(--mono);letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Solution</p>
-              <p style="font-size:14px;color:var(--muted);line-height:1.65">Designed usage charts showing clearly whether customers were within or over their plan limits. Green for within limits, red for overages — providing an immediate visual cue of potential extra charges with no ambiguity.</p>
-            </div>
-          </div>
-
-        </div>
       </div>
     </div>
   </div>
