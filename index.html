@@ -2321,127 +2321,387 @@
 
 <!-- ── 4. Monkey Nuts ── -->
 <div id="project-monkeynuts" class="project-page">
+
   <nav class="proj-nav">
     <button class="back-btn" onclick="goHome()">← Back to work</button>
   </nav>
 
-  <div class="proj-hero" style="background-image:url('https://carbon-media.accelerator.net/0000000mKt5/41QF6K4vAxGdwUXiRciApz;crop(348,0,778,778)/528x528.png')"></div>
-
-  <div class="proj-body">
-    <div class="proj-eyebrow">// Founder · Art Direction</div>
-    <h1 class="proj-title">Monkey Nuts Studio</h1>
-
-    <div class="proj-meta">
-      <div class="proj-meta-item"><div class="proj-meta-label">Role</div><div class="proj-meta-val">Founder & Designer</div></div>
-      <div class="proj-meta-item"><div class="proj-meta-label">Studio</div><div class="proj-meta-val">Monkey Nuts</div></div>
-      <div class="proj-meta-item"><div class="proj-meta-label">Year</div><div class="proj-meta-val">2022–present</div></div>
-      <div class="proj-meta-item"><div class="proj-meta-label">Disciplines</div><div class="proj-meta-val">Product · Art Direction · Dev</div></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Overview</div>
-      <div class="drop-zone drop-zone-lg"><span>Add your project overview text here</span></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Get2Know Demo Video</div>
-      <div class="vid-player">
-        <video id="vid-get2know" src="https://carbon-media.accelerator.net/0000000mKt5/7xZlDTreJsOf164Axytdlh;audio,video(1920x1330,1280x886,960x664,768x532)/master.m3u8" autoplay muted loop playsinline style="width:100%;max-height:480px;object-fit:contain;background:#000"></video>
-        <div class="vid-controls">
-          <button class="vid-btn" data-vid="vid-get2know" data-action="playpause"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></button>
-          <div class="vid-progress" data-vid="vid-get2know" data-action="seek"><div class="vid-progress-fill" id="vid-get2know-fill"></div></div>
-          <span class="vid-time" id="vid-get2know-time">0:00</span>
-          <span class="vid-muted-badge" id="vid-get2know-badge">🔇 Muted</span>
-          <div class="vid-volume">
-            <button class="vid-btn" data-vid="vid-get2know" data-action="mute"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-            <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-get2know" data-action="volume">
-          </div>
-        </div>
+  <!-- ── HERO ── -->
+  <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:80px 52px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--border)">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(249,115,22,0.06) 0%,transparent 65%);pointer-events:none"></div>
+    <div style="max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:1">
+      <p style="font-family:var(--mono);font-size:11px;letter-spacing:0.22em;color:var(--orange);text-transform:uppercase;margin-bottom:32px">Monkey Nuts Studio</p>
+      <h1 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(32px,4vw,60px);line-height:1.05;letter-spacing:-0.01em;margin-bottom:28px">Designing games people<br>actually want to play.</h1>
+      <p style="font-size:clamp(15px,1.5vw,18px);color:var(--muted);line-height:1.65;max-width:600px;margin-bottom:40px">A creative studio building playful, interactive experiences — shaped by real player insight, rapid prototyping, and a belief that the best design feels effortless.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">Founder & Designer</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">Product Design</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">Art Direction</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">Dev</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">0→1</span>
       </div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Process & Approach</div>
-      <div class="drop-zone drop-zone-lg"><span>Add your process write-up here</span></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Work Images</div>
-      <div class="img-grid-2">
-        <div class="img-slot">IMAGE 01</div>
-        <div class="img-slot">IMAGE 02</div>
-        <div class="img-slot">IMAGE 03</div>
-        <div class="img-slot">IMAGE 04</div>
-      </div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Outcome</div>
-      <div class="drop-zone"><span>Add results, metrics, or outcome here</span></div>
     </div>
   </div>
 
+  <!-- ── META ── -->
+  <div style="padding:48px 52px 0">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="proj-meta" style="margin-bottom:0">
+        <div class="proj-meta-item"><div class="proj-meta-label">Role</div><div class="proj-meta-val">Founder & Designer</div></div>
+        <div class="proj-meta-item"><div class="proj-meta-label">Studio</div><div class="proj-meta-val">Monkey Nuts</div></div>
+        <div class="proj-meta-item"><div class="proj-meta-label">Years</div><div class="proj-meta-val">2022–present</div></div>
+        <div class="proj-meta-item"><div class="proj-meta-label">Disciplines</div><div class="proj-meta-val">Product · Art Direction · Dev</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTEXT ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// Context</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px">Play by design.</h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">Monkey Nuts is a creative studio built around one idea: games should feel like something worth coming back to. Not because they trap you — but because they genuinely connect people.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">Every project is shaped closely with its community — brainstorming, testing, and refining ideas with real players before anything ships. The result is experiences that feel authored, not assembled.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px">From social bonding games to AR accessibility tools to long-form prediction platforms, Monkey Nuts spans a wide range of formats — united by a commitment to craft and a low tolerance for filler.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BIG STATEMENT ── -->
+  <div style="padding:120px 52px;border-bottom:1px solid var(--border)">
+    <div style="max-width:1100px;margin:0 auto">
+      <p style="font-family:'Michroma',sans-serif;font-size:clamp(22px,3vw,40px);font-weight:400;line-height:1.25;letter-spacing:-0.01em;color:var(--text);max-width:780px">"Every game is shaped by real player insight — because the best experiences are co-created, not handed down."</p>
+    </div>
+  </div>
+
+  <!-- ── PROJECTS ── -->
+  <div style="padding:80px 52px;border-bottom:1px solid var(--border)">
+    <div style="max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;margin-bottom:40px">// Projects</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <!-- 01 Get2Know -->
+        <div class="mn-exp" id="mn-exp-01" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+          <div onclick="mnToggle('mn-exp-01')" style="display:grid;grid-template-columns:72px 1fr auto;align-items:start;gap:28px;padding:32px 36px;cursor:pointer">
+            <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:var(--orange);opacity:0.8;padding-top:4px">01</span>
+            <div>
+              <h3 style="font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:5px">Get2Know</h3>
+              <p style="font-size:14px;color:var(--muted);margin-bottom:14px">A social quiz game built to help people build deeper connections.</p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">Product Design</span>
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">UX Research</span>
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">Vibe Coding</span>
+              </div>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#4F9EFF">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                Video
+              </span>
+            </div>
+            <div class="mn-chevron" style="width:30px;height:30px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform 0.3s,border-color 0.2s,color 0.2s;flex-shrink:0;margin-top:2px">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l4 4 4-4"/></svg>
+            </div>
+          </div>
+          <div class="mn-body" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);border-top:0px solid var(--border)">
+            <div style="padding:36px">
+              <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:28px">Get2Know was inspired by my autistic wife, who can find social bonding difficult at times. The game lets people create and share personalised quiz questions in seconds — friends jump in via link or QR code with no sign-up, and receive instant, playful feedback. By writing and answering their own questions, players naturally learn more about each other.</p>
+              <div class="vid-player" style="margin-bottom:28px">
+                <video id="vid-get2know" src="https://carbon-media.accelerator.net/0000000mKt5/7xZlDTreJsOf164Axytdlh;audio,video(1920x1330,1280x886,960x664,768x532)/master.m3u8" muted loop playsinline style="width:100%;max-height:520px;object-fit:contain;background:#000"></video>
+                <div class="vid-controls">
+                  <button class="vid-btn" data-vid="vid-get2know" data-action="playpause"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
+                  <div class="vid-progress" data-vid="vid-get2know" data-action="seek"><div class="vid-progress-fill" id="vid-get2know-fill"></div></div>
+                  <span class="vid-time" id="vid-get2know-time">0:00</span>
+                  <div class="vid-volume">
+                    <button class="vid-btn" data-vid="vid-get2know" data-action="mute"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+                    <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-get2know" data-action="volume">
+                  </div>
+                </div>
+              </div>
+              <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:24px">
+                <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:12px">// Approach</div>
+                <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:12px">I designed and built a prototype using vibe coding, ensuring it works seamlessly across mobile and desktop. AI tools are highly effective for gaining early stakeholder engagement before investing time in detailed Figma prototypes.</p>
+                <p style="font-size:15px;color:var(--muted);line-height:1.7">That said, vibe coding tools are not designed for large-scale applications. As projects grow, the lack of IDE-level structure can make it harder to maintain consistency and manage dependencies.</p>
+              </div>
+              <a href="https://get2know.org/" target="_blank" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);border-radius:6px;padding:12px 20px;text-decoration:none;transition:background 0.2s" onmouseover="this.style.background='rgba(249,115,22,0.08)'" onmouseout="this.style.background='transparent'">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Test the MVP → get2know.org
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 EyeFx -->
+        <div class="mn-exp" id="mn-exp-02" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+          <div onclick="mnToggle('mn-exp-02')" style="display:grid;grid-template-columns:72px 1fr auto;align-items:start;gap:28px;padding:32px 36px;cursor:pointer">
+            <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:var(--orange);opacity:0.8;padding-top:4px">02</span>
+            <div>
+              <h3 style="font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:5px">EyeFx</h3>
+              <p style="font-size:14px;color:var(--muted);margin-bottom:14px">An AR tool that simulates visual impairments to make accessibility challenges tangible.</p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">AR</span>
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">Accessibility</span>
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">Product Design</span>
+              </div>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#4F9EFF">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Live Demo
+              </span>
+            </div>
+            <div class="mn-chevron" style="width:30px;height:30px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform 0.3s,border-color 0.2s,color 0.2s;flex-shrink:0;margin-top:2px">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l4 4 4-4"/></svg>
+            </div>
+          </div>
+          <div class="mn-body" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);border-top:0px solid var(--border)">
+            <div style="padding:36px">
+              <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:28px">I built EyeFx as a visual tool to assist with accessibility presentations. Using AR, it simulates a range of visual impairments and conditions — making accessibility challenges easier to see and understand for audiences who have never experienced them.</p>
+              <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:28px 32px;margin-bottom:28px">
+                <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:12px">// Purpose</div>
+                <p style="font-size:15px;color:var(--muted);line-height:1.7">Accessibility is often discussed in abstract terms. EyeFx makes it visceral — putting the experience of visual impairment directly in front of anyone with a camera and a browser. No app install required.</p>
+              </div>
+              <a href="https://monkeynutsstudio.com/eyefx" target="_blank" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);border-radius:6px;padding:12px 20px;text-decoration:none;transition:background 0.2s" onmouseover="this.style.background='rgba(249,115,22,0.08)'" onmouseout="this.style.background='transparent'">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Try EyeFx live →
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 Long Dark Quiz -->
+        <div class="mn-exp" id="mn-exp-03" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+          <div onclick="mnToggle('mn-exp-03')" style="display:grid;grid-template-columns:72px 1fr auto;align-items:start;gap:28px;padding:32px 36px;cursor:pointer">
+            <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:var(--orange);opacity:0.8;padding-top:4px">03</span>
+            <div>
+              <h3 style="font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:5px">Long Dark Quiz</h3>
+              <p style="font-size:14px;color:var(--muted);margin-bottom:14px">A long-form prediction game with real stakes — SEIS funded, built on AWS.</p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">Product Design</span>
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">Start-up</span>
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">AWS</span>
+                <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">SEIS</span>
+              </div>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#4F9EFF">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                Images
+              </span>
+            </div>
+            <div class="mn-chevron" style="width:30px;height:30px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform 0.3s,border-color 0.2s,color 0.2s;flex-shrink:0;margin-top:2px">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l4 4 4-4"/></svg>
+            </div>
+          </div>
+          <div class="mn-body" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);border-top:0px solid var(--border)">
+            <div style="padding:36px">
+              <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:18px">I founded and led a budget-friendly start-up, managing a team of two developers to create a scalable web-app on Amazon's AWS platform. Long Dark Quiz connects users by allowing them to sign up with up to six friends and place a monetary stake into the game.</p>
+              <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:28px">Over 6–12 months, players predict the outcomes of questions unfolding in real-time. The player with the most correct answers wins the pot. LDQ has been awarded SEIS Funding approval by HMRC.</p>
+              <!-- Image carousel -->
+              <div style="position:relative;background:#0d0d0d;border-radius:12px;overflow:hidden;user-select:none;border:1px solid var(--border);margin-bottom:24px">
+                <img id="mn-ldq-img" src="https://carbon-media.accelerator.net/0000000mKt5/cTe4qiZBbxVfAXuJIjhG8p;960x540.png?auto=webp" style="display:block;width:100%;max-height:600px;object-fit:contain;padding:32px 80px;box-sizing:border-box;transition:opacity 0.2s" alt="Long Dark Quiz">
+                <button onclick="mnLdqNav(-1)" style="position:absolute;left:0;top:0;bottom:0;width:72px;background:linear-gradient(to right,rgba(13,13,13,0.9),transparent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <button onclick="mnLdqNav(1)" style="position:absolute;right:0;top:0;bottom:0;width:72px;background:linear-gradient(to left,rgba(13,13,13,0.9),transparent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+                <div id="mn-ldq-counter" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:#555;background:rgba(0,0,0,0.6);padding:4px 12px;border-radius:100px">1 / 13</div>
+              </div>
+              <a href="https://longdarkquiz.com" target="_blank" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);border-radius:6px;padding:12px 20px;text-decoration:none;transition:background 0.2s" onmouseover="this.style.background='rgba(249,115,22,0.08)'" onmouseout="this.style.background='transparent'">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Visit longdarkquiz.com →
+              </a>
+            </div>
+          </div>
+        </div>
+        <script>
+          (function(){
+            var imgs = [
+              'https://carbon-media.accelerator.net/0000000mKt5/cTe4qiZBbxVfAXuJIjhG8p;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/i7tXcm7aRvbfMw3VKGUpdr;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/596ERk6BZKMgftxVJaXNW6;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/162AYrf7F1hcQQ9uKJpIZX;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/fmw6eKOsnEVeq3apmcZYn9;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/c8D5xrfMoBxcR2tGcX924E;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/cUK76OoL81EfHWpDz2o3Md;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/1mnRCEKAf1gfUfDIx5tt0R;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/fZrTLJkVL5Ucmq40JXdQP9;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/3dj3Ws5FVMSdEJBGwYvndx;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/8P8AcztX7U7f4A6c0pUwjA;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/hSI8EQABPZrdUG6tmBwdqj;960x540.png?auto=webp',
+              'https://carbon-media.accelerator.net/0000000mKt5/193kn4lv7PZccdl4WZ9Rdh;960x540.png?auto=webp'
+            ];
+            var idx = 0;
+            var el = document.getElementById('mn-ldq-img');
+            var counter = document.getElementById('mn-ldq-counter');
+            window.mnLdqNav = function(dir) {
+              idx = (idx + dir + imgs.length) % imgs.length;
+              el.style.opacity = '0';
+              setTimeout(function(){ el.src = imgs[idx]; el.style.opacity = '1'; counter.textContent = (idx+1)+' / '+imgs.length; }, 150);
+            };
+          })();
+        </script>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAKEAWAY ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// Takeaway</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px">Building things that matter.</h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">Monkey Nuts isn't a commercial studio in the traditional sense — it's a personal commitment to making things that are genuinely worth someone's time. Each project starts with a real problem, is shaped by real users, and ships as something real.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px">The through-line across all three projects: design as empathy in action. Whether that's helping someone connect with another person, see the world through different eyes, or just enjoy a long evening of competitive predicting.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NEXT PROJECT ── -->
   <div class="proj-next" onclick="openProject('candyspace')">
     <div><div class="proj-next-label">Next Project</div><div class="proj-next-name">Candyspace</div></div>
     <div class="proj-next-arrow">→</div>
   </div>
+
 </div>
 
 
 <!-- ── 5. Candyspace ── -->
 <div id="project-candyspace" class="project-page">
+
   <nav class="proj-nav">
     <button class="back-btn" onclick="goHome()">← Back to work</button>
   </nav>
 
-  <div class="proj-hero" style="background-image:url('https://carbon-media.accelerator.net/0000000mKt5/lgZfzZLY0aBcI1t2xXMalu;crop(348,0,778,778)/528x528.png')"></div>
-
-  <div class="proj-body">
-    <div class="proj-eyebrow">// AI Voice UX · Rolls-Royce</div>
-    <h1 class="proj-title">Candyspace</h1>
-
-    <div class="proj-meta">
-      <div class="proj-meta-item"><div class="proj-meta-label">Role</div><div class="proj-meta-val">Lead Product Designer</div></div>
-      <div class="proj-meta-item"><div class="proj-meta-label">Client</div><div class="proj-meta-val">Rolls-Royce / mtuGo</div></div>
-      <div class="proj-meta-item"><div class="proj-meta-label">Year</div><div class="proj-meta-val">2024</div></div>
-      <div class="proj-meta-item"><div class="proj-meta-label">Disciplines</div><div class="proj-meta-val">Voice UX · AI · Consultancy</div></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Overview</div>
-      <div class="drop-zone drop-zone-lg"><span>Add your project overview text here</span></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Hero Image or Video</div>
-      <div class="drop-zone drop-zone-lg"><span>Add hero image or embed video here</span></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Process & Approach</div>
-      <div class="drop-zone drop-zone-lg"><span>Add your process write-up here</span></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Work Images</div>
-      <div class="img-grid-2">
-        <div class="img-slot">IMAGE 01</div>
-        <div class="img-slot">IMAGE 02</div>
-        <div class="img-slot">IMAGE 03</div>
-        <div class="img-slot">IMAGE 04</div>
+  <!-- ── HERO ── -->
+  <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:80px 52px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--border)">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(249,115,22,0.05) 0%,transparent 60%);pointer-events:none"></div>
+    <div style="max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:1">
+      <p style="font-family:var(--mono);font-size:11px;letter-spacing:0.22em;color:var(--orange);text-transform:uppercase;margin-bottom:32px">Candyspace · Rolls-Royce</p>
+      <h1 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(32px,4vw,60px);line-height:1.05;letter-spacing:-0.01em;margin-bottom:28px">AI voice intelligence<br>for the engine room.</h1>
+      <p style="font-size:clamp(15px,1.5vw,18px);color:var(--muted);line-height:1.65;max-width:600px;margin-bottom:40px">Designing a proof-of-concept conversational AI assistant for Rolls-Royce's mtuGo application — enabling real-time diagnostics, fault identification and engineer support through voice and text.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">Lead Product Designer</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">Voice UX</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">AI</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">Consultancy</span>
       </div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Outcome</div>
-      <div class="drop-zone"><span>Add results, metrics, or outcome here</span></div>
     </div>
   </div>
 
+  <!-- ── META ── -->
+  <div style="padding:48px 52px 0">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="proj-meta" style="margin-bottom:0">
+        <div class="proj-meta-item"><div class="proj-meta-label">Role</div><div class="proj-meta-val">Lead Product Designer</div></div>
+        <div class="proj-meta-item"><div class="proj-meta-label">Client</div><div class="proj-meta-val">Rolls-Royce · mtuGo</div></div>
+        <div class="proj-meta-item"><div class="proj-meta-label">Year</div><div class="proj-meta-val">2024</div></div>
+        <div class="proj-meta-item"><div class="proj-meta-label">Disciplines</div><div class="proj-meta-val">Voice UX · AI · Consultancy</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTEXT ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// Context</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px">The machine speaks back.</h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">Candyspace is a London-based digital agency specialising in user-centred digital products for global brands. Through Candyspace, I was brought in as Lead Product Designer on a proof-of-concept for Rolls-Royce's mtuGo application — a mission-critical tool used by engineers to monitor and maintain MTU engines.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">The goal: integrate generative AI and natural language processing into the application to create a voice-first assistant capable of real-time diagnostics, fault identification and engineer support — reducing the dependency on manual troubleshooting and dense technical manuals.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px">Due to the confidential nature of this engagement, specific design artefacts cannot be shared. The work presented here reflects the process, contributions and outcomes of the project.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MY ROLE ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// My Role</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px">Bridging AI capability<br>and human need.</h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:40px">Engineers using mtuGo relied on manual troubleshooting and dense technical manuals — a process that was slow, inconsistent, and demanding across varying levels of technical expertise. My role was to design an AI system that felt like a trusted expert, not a chatbot.</p>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
+            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">01</div>
+            <div>
+              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:10px">UX Research & User Needs Analysis</h3>
+              <p style="font-size:14px;color:var(--muted);line-height:1.65">Conducted user interviews with Rolls-Royce engineers to understand workflows and challenges. Mapped the customer journey, identifying key pain points in engine diagnostics and the moments where AI could reduce friction most meaningfully.</p>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
+            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">02</div>
+            <div>
+              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:10px">Conversational AI System Design</h3>
+              <p style="font-size:14px;color:var(--muted);line-height:1.65">Designed interaction flows for the AI assistant enabling natural conversation for troubleshooting. Developed a voice-first and text-based UI for usability in demanding environments, with structured responses engineered to reduce cognitive load and surface solutions clearly.</p>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
+            <div style="font-family:var(--mono);font-size:11px;color:var(--orange);opacity:0.8;padding-top:2px">03</div>
+            <div>
+              <h3 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:10px">AI-Powered Fault Diagnosis & Testing</h3>
+              <p style="font-size:14px;color:var(--muted);line-height:1.65">Integrated NLP logic to interpret user queries and deliver precise solutions. Developed cross-referencing of real-time sensor data with historical fault logs. Led usability testing sessions with Rolls-Royce engineers, collaborating with the AI dev team to refine NLP accuracy for industry-specific terminology.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BIG STATEMENT ── -->
+  <div style="padding:120px 52px;border-bottom:1px solid var(--border)">
+    <div style="max-width:1100px;margin:0 auto">
+      <p style="font-family:'Michroma',sans-serif;font-size:clamp(22px,3vw,40px);font-weight:400;line-height:1.25;letter-spacing:-0.01em;color:var(--text);max-width:820px">"AI-driven real-time monitoring, NLP-driven assistance, and intuitive UI design — the foundation for next-generation predictive maintenance."</p>
+    </div>
+  </div>
+
+  <!-- ── IMPACT ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// Impact</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:40px">Measurable outcomes<br>for complex systems.</h2>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 24px">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px"><span style="width:20px;height:1px;background:var(--orange);display:block"></span>Speed</div>
+            <h3 style="font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.02em">Faster diagnostics</h3>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65">Engineers could resolve issues more efficiently without extensive manual searches through technical documentation.</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 24px">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px"><span style="width:20px;height:1px;background:var(--orange);display:block"></span>Reliability</div>
+            <h3 style="font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.02em">Reduced downtime</h3>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65">AI-driven insights enabled preventative maintenance and early fault detection, reducing unplanned outages.</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 24px">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px"><span style="width:20px;height:1px;background:var(--orange);display:block"></span>Usability</div>
+            <h3 style="font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.02em">Improved accessibility</h3>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65">Voice and text interfaces made troubleshooting intuitive for engineers of varying technical expertise.</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 24px">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px"><span style="width:20px;height:1px;background:var(--orange);display:block"></span>Longevity</div>
+            <h3 style="font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.02em">Scalable solution</h3>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65">Designed for future integration across Rolls-Royce's AI-driven systems and next-generation maintenance platforms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAKEAWAY ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// Takeaway</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px">Designing at the frontier.</h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">Working on a project this technically complex — and this confidential — required a high level of trust from the client and a high level of discipline from me. Every design decision had to be grounded in real engineer need, not technology novelty.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px">The most important lesson: voice UX is not a UI that happens to accept speech. It is a fundamentally different design medium — one where flow, pacing, and error handling matter as much as layout. Getting that right for an audience of Rolls-Royce engineers is a challenge I'm genuinely proud to have taken on.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NEXT PROJECT ── -->
   <div class="proj-next" onclick="openProject('ggmr')">
     <div><div class="proj-next-label">Next Project</div><div class="proj-next-name">GGMR · Vodafone</div></div>
     <div class="proj-next-arrow">→</div>
   </div>
+
 </div>
 
 
@@ -3480,6 +3740,54 @@
     if (!isOpen) {
       el.dataset.open = '1';
       body.style.maxHeight = '1200px';
+      body.style.borderTopWidth = '1px';
+      body.style.borderTopColor = 'var(--border)';
+      chevron.style.transform = 'rotate(180deg)';
+      chevron.style.borderColor = 'var(--orange)';
+      chevron.style.color = 'var(--orange)';
+    }
+  }
+
+  /* ── Candyspace accordion ── */
+  function csToggle(id) {
+    const el = document.getElementById(id);
+    const body = el.querySelector('.cs-body');
+    const chevron = el.querySelector('.cs-chevron');
+    const isOpen = el.dataset.open === '1';
+    document.querySelectorAll('.cs-exp').forEach(exp => {
+      exp.dataset.open = '0';
+      exp.querySelector('.cs-body').style.maxHeight = '0';
+      exp.querySelector('.cs-body').style.borderTopWidth = '0';
+      const ch = exp.querySelector('.cs-chevron');
+      ch.style.transform = ''; ch.style.borderColor = ''; ch.style.color = '';
+    });
+    if (!isOpen) {
+      el.dataset.open = '1';
+      body.style.maxHeight = '2400px';
+      body.style.borderTopWidth = '1px';
+      body.style.borderTopColor = 'var(--border)';
+      chevron.style.transform = 'rotate(180deg)';
+      chevron.style.borderColor = 'var(--orange)';
+      chevron.style.color = 'var(--orange)';
+    }
+  }
+
+  /* ── Monkey Nuts accordion ── */
+  function mnToggle(id) {
+    const el = document.getElementById(id);
+    const body = el.querySelector('.mn-body');
+    const chevron = el.querySelector('.mn-chevron');
+    const isOpen = el.dataset.open === '1';
+    document.querySelectorAll('.mn-exp').forEach(exp => {
+      exp.dataset.open = '0';
+      exp.querySelector('.mn-body').style.maxHeight = '0';
+      exp.querySelector('.mn-body').style.borderTopWidth = '0';
+      const ch = exp.querySelector('.mn-chevron');
+      ch.style.transform = ''; ch.style.borderColor = ''; ch.style.color = '';
+    });
+    if (!isOpen) {
+      el.dataset.open = '1';
+      body.style.maxHeight = '2400px';
       body.style.borderTopWidth = '1px';
       body.style.borderTopColor = 'var(--border)';
       chevron.style.transform = 'rotate(180deg)';
