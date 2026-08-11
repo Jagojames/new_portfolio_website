@@ -1994,16 +1994,71 @@
         <div class="ss-body" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);border-top:0px solid var(--border)">
           <div style="padding:36px">
             <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:36px">Alongside the Hub, the CEO requested an iOS version within the same six-month timeframe. Despite the challenge of designing wireframes for multiple applications concurrently, the iOS MVP was delivered on time — demonstrating the team's ability to manage complex parallel workstreams without sacrificing quality.</p>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/ikMCs04BgF2bfBqqc4Tn1s;1100x814.png?auto=webp" alt="iOS screen 1" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/1D9UziXW7QVehfQxytugvj;1100x814.png?auto=webp" alt="iOS screen 2" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/cUFDUBq4uL6czhLllkXYq9;1100x814.png?auto=webp" alt="iOS screen 3" style="width:100%;border-radius:8px;display:block">
+            <!-- iOS Carousel -->
+            <div style="position:relative;background:#0d0d0d;border-radius:12px;overflow:hidden;user-select:none">
+              <img id="ss-ios-img" src="https://carbon-media.accelerator.net/0000000mKt5/ikMCs04BgF2bfBqqc4Tn1s;1100x814.png?auto=webp" alt="iOS screen" style="display:block;width:100%;max-height:640px;object-fit:contain;padding:40px 80px;box-sizing:border-box;transition:opacity 0.2s">
+              <!-- Prev -->
+              <button onclick="ssIosNav(-1)" style="position:absolute;left:0;top:0;bottom:0;width:72px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.45);transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <!-- Next -->
+              <button onclick="ssIosNav(1)" style="position:absolute;right:0;top:0;bottom:0;width:72px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.45);transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <!-- Counter -->
+              <div id="ss-ios-counter" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:rgba(255,255,255,0.35)">1 / 33</div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/8bL5ZdguROAeqQShTrxQC5;1100x814.png?auto=webp" alt="iOS screen 4" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/bivmnGYyXlpcCTiNKEbTMB;1100x814.png?auto=webp" alt="iOS screen 5" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/ig8QerXxj0Pc13jgjpaYhW;1100x814.png?auto=webp" alt="iOS screen 6" style="width:100%;border-radius:8px;display:block">
-            </div>
+            <script>
+              (function(){
+                var imgs = [
+                  'https://carbon-media.accelerator.net/0000000mKt5/ikMCs04BgF2bfBqqc4Tn1s;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/1D9UziXW7QVehfQxytugvj;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/cUFDUBq4uL6czhLllkXYq9;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/8bL5ZdguROAeqQShTrxQC5;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/bivmnGYyXlpcCTiNKEbTMB;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/ig8QerXxj0Pc13jgjpaYhW;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/gwjrt82T8gob8b3dcTmclz;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/6H7rJEUtLdgcl0O6yiMuGx;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/fcuM31ReGBFby7dzbS5386;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/1uVx98FxhnKd5RIfA9h9qP;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/8HUSX1ZbFvdg27UazVqmGI;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/aeW8badzuaGfGx47SLwpRg;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/gXiU1cRx354eoJLYpYiV0w;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/dORDERLk3BfbBdjJXE7LxM;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/h29vVg5VtzebOXVhhznVmB;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/41YhPkaKm01grVnbLXBh7A;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/dnVVLGUj95de97R2UhL6vS;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/9TNtJEItkTaezOl59gcI9N;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/crNHfzapxcyeQLDGv8dtiG;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/9DP4FKLbkshfqqyfqrwZ5y;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/dSjSEYn2wAKgdWPDMTfN6d;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/0pjpOUJQewwgdHCo0BDcqs;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/8abUVIxFhHhdE4j8H2MidU;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/lGLgKhfSeTpbX7irN1VizZ;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/jaBDlUGCDuNfCqn6DOZNL3;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/ajdos2aQup1ddGmLTlFbJl;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/3imayKpgRrvcMjoRhdzvZG;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/bSLP4OWZSD7fuCeUgMPR0Z;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/bUSBvbzNVoceWliOyHG8lM;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/lBqOVMhMCsubvTh53jJsIp;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/lwPAVMKnHOhe9ZbzQIahsL;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/iVfCirSYoGzbIshA7KXk1T;1100x814.png?auto=webp',
+                  'https://carbon-media.accelerator.net/0000000mKt5/k9mST2vJxfxcSP4WkjoJy2;1100x814.png?auto=webp'
+                ];
+                var idx = 0;
+                var el = document.getElementById('ss-ios-img');
+                var counter = document.getElementById('ss-ios-counter');
+                window.ssIosNav = function(dir) {
+                  idx = (idx + dir + imgs.length) % imgs.length;
+                  el.style.opacity = '0';
+                  setTimeout(function(){ el.src = imgs[idx]; el.style.opacity = '1'; counter.textContent = (idx+1) + ' / ' + imgs.length; }, 150);
+                };
+                // Preload next/prev on hover
+                el.addEventListener('load', function(){
+                  var pre = new Image(); pre.src = imgs[(idx+1) % imgs.length];
+                });
+              })();
+            </script>
           </div>
         </div>
       </div>
