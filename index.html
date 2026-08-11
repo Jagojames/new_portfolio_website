@@ -1666,7 +1666,7 @@
 
   <!-- ── EXPERIMENTS ── -->
   <div style="padding:80px 52px;border-bottom:1px solid var(--border)">
-    <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:2px">
+    <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:12px">
 
       <!-- 01 -->
       <div class="eca-exp" id="eca-exp-01" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
@@ -4016,7 +4016,7 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
     gsap.fromTo(page, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
     // Auto-open first ECA experiment
-    if (id === 'eca') setTimeout(() => ecaToggle('eca-exp-01'), 300);
+    // (no auto-open)
     // Highlight active nav link
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
     const activeLink = document.querySelector('.nav-links a[data-project="' + id + '"]');
