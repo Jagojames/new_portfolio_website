@@ -1669,7 +1669,7 @@
     <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:12px">
 
       <!-- 01 -->
-      <div class="eca-exp" id="eca-exp-01" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+      <div class="eca-exp" id="eca-exp-01" data-open="0" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
         <div onclick="ecaToggle('eca-exp-01')" style="display:grid;grid-template-columns:72px 1fr auto;align-items:center;gap:28px;padding:32px 36px;cursor:pointer">
           <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:var(--orange);opacity:0.8">01</span>
           <div>
@@ -4015,8 +4015,16 @@
     page.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'instant' });
     gsap.fromTo(page, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
-    // Auto-open first ECA experiment
-    // (no auto-open)
+    // Force all accordions closed on page open
+    ['eca-exp','ss-exp','mn-exp','cs-exp'].forEach(cls => {
+      document.querySelectorAll('.'+cls).forEach(el => {
+        el.dataset.open = '0';
+        const b = el.querySelector('[class$="-body"]');
+        if (b) b.style.maxHeight = '0';
+        const ch = el.querySelector('[class$="-chevron"]');
+        if (ch) { ch.style.transform=''; ch.style.borderColor=''; ch.style.color=''; }
+      });
+    });
     // Highlight active nav link
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
     const activeLink = document.querySelector('.nav-links a[data-project="' + id + '"]');
