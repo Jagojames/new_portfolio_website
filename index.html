@@ -2099,20 +2099,56 @@
         </div>
         <div class="ss-body" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);border-top:0px solid var(--border)">
           <div style="padding:36px">
-            <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:36px">The full design case study documents the research, ideation, execution and results of the Silverstream work — providing insight into the design decisions, collaboration process and outcomes that shaped the final products.</p>
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/kIbnnQE5mADcAnDIpgpElJ;1100x777.png?auto=webp" alt="Case study 1" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/bI7x9ZlgTmFblBpdWpKAaT;1100x777.png?auto=webp" alt="Case study 2" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/c3d8DmzqdQwdaFExSaKzGX;1100x777.png?auto=webp" alt="Case study 3" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/3gT9Xf6dUgQg0tqer8hG6v;1100x777.png?auto=webp" alt="Case study 4" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/lqGOSLvVUzFc3yVLFzLRQk;1100x777.png?auto=webp" alt="Case study 5" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/f9BbEEe0b2YbY7EJUid6fq;1100x777.png?auto=webp" alt="Case study 6" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/duGMkpNsYlOdxS50IooVjt;1100x777.png?auto=webp" alt="Case study 7" style="width:100%;border-radius:8px;display:block">
-              <img src="https://carbon-media.accelerator.net/0000000mKt5/b4189HjaIZab7mK6gwXrrM;1100x777.png?auto=webp" alt="Case study 8" style="width:100%;border-radius:8px;display:block">
+            <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:28px">The full design case study documents the research, ideation, execution and results of the Silverstream work — providing insight into the design decisions, collaboration process and outcomes that shaped the final products.</p>
+            <!-- Carousel player -->
+            <div style="position:relative;background:#0d0d0d;border-radius:12px;overflow:hidden;user-select:none;border:1px solid var(--border)">
+              <img id="ss-cs-img" src="https://carbon-media.accelerator.net/0000000mKt5/kIbnnQE5mADcAnDIpgpElJ;1100x777.png?auto=webp" style="display:block;width:100%;max-height:680px;object-fit:contain;padding:32px 80px;box-sizing:border-box;transition:opacity 0.2s" alt="Case study slide">
+              <button onclick="ssCsNav(-1)" style="position:absolute;left:0;top:0;bottom:0;width:72px;background:linear-gradient(to right,rgba(13,13,13,0.9),transparent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <button onclick="ssCsNav(1)" style="position:absolute;right:0;top:0;bottom:0;width:72px;background:linear-gradient(to left,rgba(13,13,13,0.9),transparent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+              <div id="ss-cs-counter" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:#555;background:rgba(0,0,0,0.6);padding:4px 12px;border-radius:100px">1 / 8</div>
             </div>
+            <!-- dot indicators -->
+            <div id="ss-cs-dots" style="display:flex;justify-content:center;gap:6px;margin-top:16px"></div>
           </div>
         </div>
       </div>
+      <script>
+        (function(){
+          var slides = [
+            'https://carbon-media.accelerator.net/0000000mKt5/kIbnnQE5mADcAnDIpgpElJ;1100x777.png?auto=webp',
+            'https://carbon-media.accelerator.net/0000000mKt5/bI7x9ZlgTmFblBpdWpKAaT;1100x777.png?auto=webp',
+            'https://carbon-media.accelerator.net/0000000mKt5/c3d8DmzqdQwdaFExSaKzGX;1100x777.png?auto=webp',
+            'https://carbon-media.accelerator.net/0000000mKt5/3gT9Xf6dUgQg0tqer8hG6v;1100x777.png?auto=webp',
+            'https://carbon-media.accelerator.net/0000000mKt5/lqGOSLvVUzFc3yVLFzLRQk;1100x777.png?auto=webp',
+            'https://carbon-media.accelerator.net/0000000mKt5/f9BbEEe0b2YbY7EJUid6fq;1100x777.png?auto=webp',
+            'https://carbon-media.accelerator.net/0000000mKt5/duGMkpNsYlOdxS50IooVjt;1100x777.png?auto=webp',
+            'https://carbon-media.accelerator.net/0000000mKt5/b4189HjaIZab7mK6gwXrrM;1100x777.png?auto=webp'
+          ];
+          var idx = 0;
+          var el = document.getElementById('ss-cs-img');
+          var counter = document.getElementById('ss-cs-counter');
+          var dotsEl = document.getElementById('ss-cs-dots');
+          // build dots
+          slides.forEach(function(_, i) {
+            var d = document.createElement('div');
+            d.style.cssText = 'width:6px;height:6px;border-radius:50%;background:'+(i===0?'#fff':'#333')+';cursor:pointer;transition:background 0.2s';
+            d.onclick = function(){ ssCsNav(i - idx); };
+            dotsEl.appendChild(d);
+          });
+          function updateDots() {
+            Array.from(dotsEl.children).forEach(function(d,i){ d.style.background = i===idx?'#fff':'#333'; });
+          }
+          window.ssCsNav = function(dir) {
+            idx = (idx + dir + slides.length) % slides.length;
+            el.style.opacity = '0';
+            setTimeout(function(){ el.src = slides[idx]; el.style.opacity = '1'; counter.textContent = (idx+1)+' / '+slides.length; updateDots(); }, 150);
+          };
+        })();
+      </script>
 
     </div>
   </div>
