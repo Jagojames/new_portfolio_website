@@ -2811,6 +2811,13 @@
               <button onclick="ggmrPrev()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;transition:color 0.2s,border-color 0.2s" onmouseover="this.style.color='#fff';this.style.borderColor='#555'" onmouseout="this.style.color='';this.style.borderColor=''">← Prev</button>
               <button onclick="ggmrNext()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;transition:color 0.2s,border-color 0.2s" onmouseover="this.style.color='#fff';this.style.borderColor='#555'" onmouseout="this.style.color='';this.style.borderColor=''">Next →</button>
             </div>
+            <!-- description — updates on click -->
+            <div id="ggmr-desc" style="margin-top:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;transition:opacity 0.2s;opacity:0">
+              <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:6px">Challenge</p>
+              <p id="ggmr-challenge" style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px"></p>
+              <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:#444;text-transform:uppercase;margin-bottom:6px">Solution</p>
+              <p id="ggmr-solution" style="font-size:13px;color:var(--muted);line-height:1.6"></p>
+            </div>
           </div>
         </div>
 
@@ -2887,6 +2894,12 @@
           var cropTitle    = document.getElementById('ggmr-crop-title');
           var cropChallenge= document.getElementById('ggmr-crop-challenge');
           var cropSolution = document.getElementById('ggmr-crop-solution');
+          var desc     = document.getElementById('ggmr-desc');
+          var chal     = document.getElementById('ggmr-challenge');
+          var sol      = document.getElementById('ggmr-solution');
+
+          // Move overlay to body so position:fixed escapes GSAP's transform containment
+          document.body.appendChild(overlay);
 
           var CROP_W = 620; // matches max-width of card
           var CROP_H = 220; // matches height of crop area
@@ -2932,13 +2945,19 @@
 
             var doShow = function() {
               showCrop(p);
-              // Animate in
               overlay.style.opacity = '1';
               overlay.style.pointerEvents = 'auto';
               card.style.transform = 'scale(1) translateY(0)';
-              // Blur bill image
               img.style.filter = 'blur(4px)';
             };
+
+            // Also update right-column description
+            desc.style.opacity = '0';
+            setTimeout(function(){
+              chal.textContent = p.challenge;
+              sol.textContent  = p.solution;
+              desc.style.opacity = '1';
+            }, 120);
 
             if (needSwitch) {
               cropImg.onload = doShow;
