@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECA International — Jago Livingstone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Tokens ─── */
+    :root {
+      --orange:      #F97316;
+      --orange-glow: rgba(249,115,22,0.15);
+      --bg:          #080808;
+      --surface:     #111111;
+      --surface2:    #161616;
+      --border:      #202020;
+      --text:        #FFFFFF;
+      --muted:       #888888;
+      --mono:        'Courier New', Courier, monospace;
+    }
+    [data-theme="light"] {
+      --bg:          #F5F4F0;
+      --surface:     #FFFFFF;
+      --surface2:    #EDECE8;
+      --border:      #C8C6BF;
+      --text:        #111111;
+      --muted:       #4A4A4A;
+      --orange-glow: rgba(249,115,22,0.10);
+    }
+
+    html { background: var(--bg); scroll-behavior: smooth; }
+    body {
+      background: transparent;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: var(--orange); color: #000; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+    /* ─── Dot grid ─── */
+    #dot-grid {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1px);
+      background-size: 24px 24px;
+      animation: dot-breathe 8s ease-in-out infinite;
+    }
+    [data-theme="light"] #dot-grid {
+      background-image: radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px);
+    }
+    @keyframes dot-breathe {
+      0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 52px;
+      transition: background 0.4s, border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,0.88);
+      backdrop-filter: blur(24px);
+      border-color: var(--border);
+    }
+    [data-theme="light"] nav.scrolled { background: rgba(245,244,240,0.92); }
+    .nav-logo {
+      font-family: var(--mono); font-size: 13px; letter-spacing: 0.2em;
+      color: var(--orange); text-transform: uppercase; cursor: pointer;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 13px; letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-back {
+      border: 1px solid var(--border); color: var(--muted) !important;
+      padding: 8px 18px; border-radius: 6px;
+      transition: border-color 0.2s, color 0.2s !important;
+      font-size: 12px !important; letter-spacing: 0.06em; font-family: var(--mono);
+    }
+    .nav-back:hover { border-color: var(--orange) !important; color: var(--orange) !important; }
+    .theme-toggle {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
+      background: transparent; cursor: pointer; color: var(--muted);
+      font-size: 15px; transition: border-color 0.2s, color 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* ─── Mobile nav ─── */
+    .nav-burger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 6px; z-index: 210;
+    }
+    .nav-burger span {
+      display: block; width: 22px; height: 2px; background: var(--text);
+      border-radius: 1px; transition: transform 0.3s, opacity 0.2s;
+    }
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+    }
+
+    /* ─── Layout util ─── */
+    .container {
+      max-width: 1280px; margin: 0 auto; padding: 0 52px;
+    }
+    @media (max-width: 768px) { .container { padding: 0 24px; } }
+
+    /* ─── Eyebrow label ─── */
+    .eyebrow {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+      color: var(--orange); text-transform: uppercase; margin-bottom: 20px;
+    }
+
+    /* ─── Tag pill ─── */
+    .tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); border: 1px solid var(--border);
+      border-radius: 100px; padding: 5px 14px;
+    }
+
+    /* ──────────────────────────────────────────
+       HERO
+    ────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding-top: 100px; padding-bottom: 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-client {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em;
+      color: var(--orange); text-transform: uppercase; margin-bottom: 32px;
+      opacity: 0; transform: translateY(16px);
+      animation: fade-up 0.8s 0.2s ease forwards;
+    }
+    .hero-headline {
+      font-family: 'Michroma', sans-serif; font-weight: 400;
+      font-size: clamp(48px, 7vw, 100px);
+      line-height: 1.0; letter-spacing: -0.01em; margin-bottom: 36px;
+      opacity: 0; transform: translateY(20px);
+      animation: fade-up 0.9s 0.35s ease forwards;
+    }
+    .hero-sub {
+      font-size: clamp(17px, 2vw, 22px); color: var(--muted);
+      line-height: 1.6; max-width: 640px; margin-bottom: 48px;
+      opacity: 0; transform: translateY(16px);
+      animation: fade-up 0.8s 0.5s ease forwards;
+    }
+    .hero-tags {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      opacity: 0; transform: translateY(12px);
+      animation: fade-up 0.7s 0.65s ease forwards;
+    }
+    .hero-rule {
+      position: absolute; bottom: 0; left: 52px; right: 52px;
+      height: 1px; background: var(--border);
+    }
+    @keyframes fade-up {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) {
+      #hero { padding-bottom: 60px; }
+      .hero-rule { left: 24px; right: 24px; }
+    }
+
+    /* ──────────────────────────────────────────
+       GENERIC SECTION
+    ────────────────────────────────────────── */
+    .cs-section {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-section:last-of-type { border-bottom: none; }
+    @media (max-width: 768px) { .cs-section { padding: 72px 0; } }
+
+    /* Two-column layout: label | content */
+    .cs-cols {
+      display: grid; grid-template-columns: 220px 1fr; gap: 80px; align-items: start;
+    }
+    .cs-label {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+      color: var(--muted); text-transform: uppercase; padding-top: 6px;
+      position: sticky; top: 100px;
+    }
+    .cs-body h2 {
+      font-size: clamp(32px, 4vw, 52px); font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 32px;
+    }
+    .cs-body p {
+      font-size: 17px; color: var(--muted); line-height: 1.75;
+      max-width: 680px; margin-bottom: 20px;
+    }
+    .cs-body p:last-child { margin-bottom: 0; }
+    @media (max-width: 768px) {
+      .cs-cols { grid-template-columns: 1fr; gap: 24px; }
+      .cs-label { position: static; }
+    }
+
+    /* ──────────────────────────────────────────
+       BIG STATEMENT
+    ────────────────────────────────────────── */
+    .big-statement {
+      padding: 140px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .big-statement h2 {
+      font-size: clamp(36px, 5.5vw, 80px); font-weight: 800;
+      letter-spacing: -0.035em; line-height: 1.05;
+      max-width: 1000px;
+    }
+    .big-statement h2 em {
+      font-style: normal; color: var(--orange);
+    }
+    .big-statement .sub {
+      font-size: 19px; color: var(--muted); line-height: 1.65;
+      max-width: 560px; margin-top: 32px;
+    }
+    @media (max-width: 768px) { .big-statement { padding: 80px 0; } }
+
+    /* ──────────────────────────────────────────
+       THREE EXPERIMENTS
+    ────────────────────────────────────────── */
+    #experiments {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .experiments-header {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: end; margin-bottom: 80px;
+    }
+    .experiments-header h2 {
+      font-size: clamp(32px, 4vw, 52px); font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.1;
+    }
+    .experiments-header p {
+      font-size: 17px; color: var(--muted); line-height: 1.7;
+    }
+    @media (max-width: 768px) {
+      .experiments-header { grid-template-columns: 1fr; gap: 24px; margin-bottom: 48px; }
+    }
+
+    /* Experiment cards */
+    .experiment-list { display: flex; flex-direction: column; gap: 2px; }
+
+    .experiment {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .experiment:hover { border-color: #383838; }
+
+    .experiment-header {
+      display: grid; grid-template-columns: 80px 1fr auto;
+      align-items: center; gap: 32px;
+      padding: 36px 40px; cursor: pointer;
+    }
+    .exp-num {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+      color: var(--orange); opacity: 0.7;
+    }
+    .exp-meta h3 {
+      font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .exp-meta p { font-size: 15px; color: var(--muted); line-height: 1.5; }
+    .exp-tags { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .exp-chevron {
+      width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: border-color 0.2s, color 0.2s, transform 0.3s;
+      flex-shrink: 0;
+    }
+    .experiment.open .exp-chevron { transform: rotate(180deg); border-color: var(--orange); color: var(--orange); }
+
+    .experiment-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+      border-top: 0px solid var(--border);
+    }
+    .experiment.open .experiment-body {
+      max-height: 1200px;
+      border-top: 1px solid var(--border);
+    }
+    .experiment-body-inner { padding: 40px; }
+
+    /* Prototype frame */
+    .proto-frame {
+      width: 100%; height: 680px; border: 1px solid var(--border);
+      border-radius: 10px; background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .proto-frame iframe {
+      width: 100%; height: 100%; border: none; display: block;
+    }
+    .proto-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      color: var(--muted); text-align: center;
+    }
+    .proto-placeholder p { font-size: 14px; font-family: var(--mono); letter-spacing: 0.06em; }
+
+    /* Coming soon badge */
+    .coming-soon {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+      color: var(--muted); border: 1px solid var(--border);
+      border-radius: 100px; padding: 6px 16px; text-transform: uppercase;
+    }
+    .coming-soon::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--muted); display: block;
+    }
+
+    @media (max-width: 768px) {
+      .experiment-header { grid-template-columns: 48px 1fr; gap: 16px; padding: 24px; }
+      .exp-tags { display: none; }
+      .exp-chevron { grid-column: 3; grid-row: 1; }
+      .experiment-body-inner { padding: 24px; }
+      .proto-frame { height: 480px; }
+    }
+
+    /* ──────────────────────────────────────────
+       DESIGN CHALLENGE — FOUR PILLARS
+    ────────────────────────────────────────── */
+    .pillars {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 64px;
+    }
+    .pillar {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 36px 28px;
+    }
+    .pillar-icon {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+      color: var(--orange); text-transform: uppercase; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pillar-icon::before {
+      content: ''; width: 20px; height: 1px; background: var(--orange);
+    }
+    .pillar h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .pillar p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    @media (max-width: 900px) {
+      .pillars { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .pillars { grid-template-columns: 1fr; }
+    }
+
+    /* ──────────────────────────────────────────
+       PROCESS LINE
+    ────────────────────────────────────────── */
+    .process-line {
+      display: flex; align-items: center; gap: 0; margin-top: 48px;
+      flex-wrap: wrap;
+    }
+    .process-step {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+      color: var(--muted); padding: 10px 20px; border: 1px solid var(--border);
+      background: var(--surface); white-space: nowrap;
+    }
+    .process-step:first-child { border-radius: 6px 0 0 6px; }
+    .process-step:last-child  { border-radius: 0 6px 6px 0; }
+    .process-arrow {
+      font-size: 12px; color: var(--orange);
+      padding: 10px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--surface); padding: 10px 12px;
+    }
+
+    /* ──────────────────────────────────────────
+       TAKEAWAY — LARGE PULLQUOTE
+    ────────────────────────────────────────── */
+    .pullquote {
+      border-left: 2px solid var(--orange); padding-left: 36px; margin: 48px 0;
+    }
+    .pullquote p {
+      font-size: clamp(20px, 2.5vw, 28px); line-height: 1.5; font-weight: 500;
+      color: var(--text); max-width: 680px; letter-spacing: -0.01em;
+    }
+
+    /* ──────────────────────────────────────────
+       NEXT PROJECT
+    ────────────────────────────────────────── */
+    #next {
+      padding: 120px 0;
+      border-top: 1px solid var(--border);
+    }
+    .next-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 48px;
+    }
+    .next-label {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .next-title {
+      font-size: clamp(28px, 4vw, 48px); font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.1; max-width: 520px;
+    }
+    .next-arrow {
+      width: 64px; height: 64px; border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 22px; color: var(--muted); text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.3s;
+    }
+    .next-arrow:hover { border-color: var(--orange); color: var(--orange); transform: translateX(6px); }
+    @media (max-width: 768px) {
+      .next-inner { flex-direction: column; align-items: flex-start; gap: 32px; }
+    }
+
+    /* ──────────────────────────────────────────
+       CONTACT / FOOTER
+    ────────────────────────────────────────── */
+    #contact {
+      padding: 120px 0 80px;
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner { max-width: 640px; }
+    .contact-inner h2 {
+      font-size: clamp(36px, 5vw, 64px); font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 40px;
+    }
+    .contact-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 17px; color: var(--orange); text-decoration: none;
+      border-bottom: 1px solid var(--orange); padding-bottom: 4px;
+      transition: gap 0.2s;
+    }
+    .contact-cta:hover { gap: 16px; }
+    footer {
+      padding: 32px 0; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+    @media (max-width: 768px) {
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* ──────────────────────────────────────────
+       SCROLL REVEAL
+    ────────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+  </style>
+</head>
+<body>
+
+<div id="dot-grid" aria-hidden="true"></div>
+
+<!-- ─── Nav ─── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">Jago</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Get in touch</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀</button>
+    <a href="index.html" class="nav-back">← All work</a>
+  </div>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-client">ECA International</p>
+    <h1 class="hero-headline">Reimagining global<br>mobility with AI.</h1>
+    <p class="hero-sub">Exploring how AI could simplify the complex process of estimating the cost of relocating employees around the world.</p>
+    <div class="hero-tags">
+      <span class="tag">Product Design</span>
+      <span class="tag">AI</span>
+      <span class="tag">Innovation</span>
+      <span class="tag">0→1</span>
+    </div>
+  </div>
+  <div class="hero-rule"></div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CONTEXT
+═══════════════════════════════════════════ -->
+<section class="cs-section">
+  <div class="container">
+    <div class="cs-cols">
+      <div class="cs-label">// Context</div>
+      <div class="cs-body reveal">
+        <h2>The opportunity</h2>
+        <p>ECA International provides data, software and advisory services for organisations managing global employee assignments — from cost-of-living and salary data to housing, taxation and expatriate allowances.</p>
+        <p>Relocation estimates are inherently complex. Costs vary by country, city, salary, housing, taxation, allowances and individual circumstances.</p>
+        <p>The opportunity was to explore whether AI could make that complexity easier to navigate — without losing the accuracy and expertise ECA's customers depend on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     MY ROLE
+═══════════════════════════════════════════ -->
+<section class="cs-section">
+  <div class="container">
+    <div class="cs-cols">
+      <div class="cs-label">// My role</div>
+      <div class="cs-body reveal">
+        <h2>Brought in to explore what was possible.</h2>
+        <p>I was brought in as a contractor to work on an innovation project exploring how AI could transform the relocation estimation experience.</p>
+        <p>Working from an early-stage concept, I explored different interaction models, product opportunities and ways AI could change how people interact with ECA's complex data.</p>
+        <p>The work involved moving quickly from ideas to tangible prototypes — using design to explore, communicate and test what a future AI-powered experience could look like.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     BIG STATEMENT
+═══════════════════════════════════════════ -->
+<div class="big-statement">
+  <div class="container">
+    <div class="reveal">
+      <h2>Three experiments.<br><em>One bigger question.</em></h2>
+      <p class="sub">How might AI change the way people interact with complex global mobility data?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     EXPERIMENTS
+═══════════════════════════════════════════ -->
+<section id="experiments">
+  <div class="container">
+
+    <div class="experiments-header">
+      <h2 class="reveal">Rather than designing a single solution, I explored several possible directions.</h2>
+      <p class="reveal reveal-delay-1">Each experiment approached the problem from a different angle — different interaction model, different entry point, different relationship with the data.</p>
+    </div>
+
+    <div class="experiment-list">
+
+      <!-- 01 -->
+      <div class="experiment" id="exp-01">
+        <div class="experiment-header" onclick="toggleExp('exp-01')">
+          <span class="exp-num">01</span>
+          <div class="exp-meta">
+            <h3>AI Transcribe &amp; Build</h3>
+            <p>From conversation to structured requirements.</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <div class="exp-tags">
+              <span class="tag">AI</span>
+              <span class="tag">Conversational UX</span>
+              <span class="tag">Product Exploration</span>
+            </div>
+            <div class="exp-chevron" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 4l4 4 4-4"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="experiment-body">
+          <div class="experiment-body-inner">
+            <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:36px">
+              Exploring how unstructured information could be captured, interpreted and transformed into the building blocks of a relocation estimate. Rather than asking users to fill in structured forms, what if they could just describe the situation — and AI handled the interpretation?
+            </p>
+            <div class="proto-frame">
+              <iframe
+                src="eca-prototype.html"
+                title="AI Transcribe & Build prototype"
+                loading="lazy"
+                allow="same-origin"
+              ></iframe>
+            </div>
+            <p style="font-size:12px;color:var(--muted);font-family:var(--mono);margin-top:16px;letter-spacing:0.06em">
+              INTERACTIVE PROTOTYPE — AI TRANSCRIBE &amp; BUILD
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 -->
+      <div class="experiment" id="exp-02">
+        <div class="experiment-header" onclick="toggleExp('exp-02')">
+          <span class="exp-num">02</span>
+          <div class="exp-meta">
+            <h3>Mobile AI</h3>
+            <p>A more natural way to interact with relocation intelligence.</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <div class="exp-tags">
+              <span class="tag">AI</span>
+              <span class="tag">Mobile UX</span>
+              <span class="tag">Conversational Interaction</span>
+            </div>
+            <div class="exp-chevron" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 4l4 4 4-4"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="experiment-body">
+          <div class="experiment-body-inner">
+            <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:36px">
+              Exploring how AI could create a more accessible and conversational experience for interacting with complex relocation information on mobile. Most existing tools are designed for desktop power users — this explored a different kind of entry point.
+            </p>
+            <div class="proto-frame">
+              <div class="proto-placeholder">
+                <span class="coming-soon">Prototype coming soon</span>
+                <p>Mobile AI exploration</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 -->
+      <div class="experiment" id="exp-03">
+        <div class="experiment-header" onclick="toggleExp('exp-03')">
+          <span class="exp-num">03</span>
+          <div class="exp-meta">
+            <h3>AI Builder</h3>
+            <p>Helping users build complex relocation estimates through AI.</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <div class="exp-tags">
+              <span class="tag">AI</span>
+              <span class="tag">Product Design</span>
+              <span class="tag">0→1</span>
+            </div>
+            <div class="exp-chevron" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 4l4 4 4-4"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="experiment-body">
+          <div class="experiment-body-inner">
+            <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:36px">
+              Exploring how AI could help users create, refine and understand relocation scenarios without having to navigate every underlying variable themselves. The goal was to make the full power of ECA's data accessible — without requiring expert knowledge to use it.
+            </p>
+            <div class="proto-frame">
+              <div class="proto-placeholder">
+                <span class="coming-soon">Prototype coming soon</span>
+                <p>AI Builder exploration</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     DESIGN CHALLENGE
+═══════════════════════════════════════════ -->
+<section class="cs-section">
+  <div class="container">
+    <div class="cs-cols">
+      <div class="cs-label">// The design challenge</div>
+      <div class="cs-body">
+        <h2 class="reveal">Making complexity feel simple.</h2>
+        <p class="reveal reveal-delay-1">The challenge wasn't simply to add an AI interface to an existing product.</p>
+        <p class="reveal reveal-delay-1">It was to understand where AI could genuinely reduce complexity — and where human expertise, transparency and control still mattered.</p>
+        <div class="pillars reveal reveal-delay-2">
+          <div class="pillar">
+            <div class="pillar-icon">Automation</div>
+            <h3>Let AI carry the weight</h3>
+            <p>Letting AI handle complexity where it could — so users don't have to think about every variable.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">Control</div>
+            <h3>Keep humans in charge</h3>
+            <p>Ensuring users stayed in control of important decisions, rather than handing everything to the machine.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">Clarity</div>
+            <h3>Make the invisible visible</h3>
+            <p>Making complex calculations and recommendations understandable — not a black box of AI output.</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">Trust</div>
+            <h3>Build confidence, not dependency</h3>
+            <p>Ensuring the experience didn't erode the expert trust ECA's customers already place in their data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FROM IDEA TO PROTOTYPE
+═══════════════════════════════════════════ -->
+<section class="cs-section">
+  <div class="container">
+    <div class="cs-cols">
+      <div class="cs-label">// Process</div>
+      <div class="cs-body">
+        <h2 class="reveal">Using prototypes to make the future tangible.</h2>
+        <p class="reveal reveal-delay-1">Because the project was exploratory, the prototypes became a way of thinking. Rather than trying to define the entire product upfront, I used interaction design to explore different possibilities, expose assumptions and communicate ideas with stakeholders.</p>
+        <div class="process-line reveal reveal-delay-2">
+          <span class="process-step">Idea</span>
+          <span class="process-arrow">→</span>
+          <span class="process-step">Interaction</span>
+          <span class="process-arrow">→</span>
+          <span class="process-step">Prototype</span>
+          <span class="process-arrow">→</span>
+          <span class="process-step">Evaluate</span>
+          <span class="process-arrow">→</span>
+          <span class="process-step">Refine</span>
+        </div>
+        <p class="reveal reveal-delay-2" style="margin-top:36px">The goal was not to create a finished product. It was to discover what the product could become.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     TAKEAWAY
+═══════════════════════════════════════════ -->
+<section class="cs-section">
+  <div class="container">
+    <div class="cs-cols">
+      <div class="cs-label">// What I took from it</div>
+      <div class="cs-body">
+        <h2 class="reveal">AI is most useful when it removes complexity — not when it simply adds intelligence.</h2>
+        <div class="pullquote reveal reveal-delay-1">
+          <p>The best AI experience isn't necessarily the one with the most AI. It's the one that makes something previously difficult feel considerably easier.</p>
+        </div>
+        <p class="reveal reveal-delay-2">For ECA, that meant exploring how AI could sit between the user and a highly complex body of data — helping people get to useful answers without needing to understand everything happening underneath.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     NEXT PROJECT
+═══════════════════════════════════════════ -->
+<section id="next">
+  <div class="container">
+    <a href="index.html#work" class="next-inner" style="text-decoration:none;color:inherit;display:flex">
+      <div>
+        <p class="next-label">Next</p>
+        <h2 class="next-title">Designing intelligent products for complex environments.</h2>
+      </div>
+      <div class="next-arrow">→</div>
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <h2 class="reveal">Have a difficult<br>product problem?</h2>
+      <p style="font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:36px" class="reveal reveal-delay-1">I'm interested in working with ambitious teams tackling complex problems — particularly where technology creates an opportunity to rethink the product itself.</p>
+      <a href="mailto:jagojames@gmail.com" class="contact-cta reveal reveal-delay-2">
+        Let's talk →
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;width:100%">
+    <p>© 2026 Jago Livingstone</p>
+    <p>Product Design · AI · Innovation</p>
+  </div>
+</footer>
+
+<script>
+
+  /* ─── Theme ─── */
+  (function() {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next === 'dark' ? '' : next);
+      if (next === 'dark') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', next === 'dark' ? '' : 'light');
+      themeToggle.textContent = next === 'light' ? '☾' : '☀';
+    });
+    const saved = localStorage.getItem('theme');
+    themeToggle.textContent = saved === 'light' ? '☾' : '☀';
+  }
+
+  /* ─── Nav scroll ─── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* ─── Scroll reveal ─── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ─── Experiment accordion ─── */
+  function toggleExp(id) {
+    const el = document.getElementById(id);
+    const isOpen = el.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.experiment.open').forEach(e => e.classList.remove('open'));
+    // Open clicked if it was closed
+    if (!isOpen) el.classList.add('open');
+  }
+  // Open first by default
+  document.getElementById('exp-01').classList.add('open');
+
+</script>
+</body>
+</html>
