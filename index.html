@@ -3452,8 +3452,9 @@
     }
   }
   function openProject(id) {
-    // Hide home view but keep main nav
+    // Hide home view and main nav
     homeView.style.display = 'none';
+    document.getElementById('nav').style.display = 'none';
     // Hide all projects
     document.querySelectorAll('.project-page').forEach(p => {
       p.classList.remove('active');
@@ -3479,6 +3480,7 @@
       p.classList.remove('active');
       p.style.display = 'none';
     });
+    document.getElementById('nav').style.display = '';
     homeView.style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'instant' });
     gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
