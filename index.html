@@ -2766,7 +2766,31 @@
       <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// Design decisions</div>
       <div>
         <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:12px">Seven problems.<br>Seven solutions.</h2>
-        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:40px">Each element of the redesign responded to a specific piece of user feedback — translating frustration into a clear design brief.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:32px">Each element of the redesign responded to a specific piece of user feedback — translating frustration into a clear design brief.</p>
+        <!-- Bill pages carousel -->
+        <div style="position:relative;background:#0d0d0d;border-radius:12px;overflow:hidden;user-select:none;border:1px solid var(--border);margin-bottom:40px">
+          <img id="ggmr-bill-img" src="images/ggmr-bill-01.jpg" style="display:block;width:100%;max-height:680px;object-fit:contain;padding:24px 80px;box-sizing:border-box;transition:opacity 0.2s" alt="Vodafone bill redesign">
+          <button onclick="ggmrNav(-1)" style="position:absolute;left:0;top:0;bottom:0;width:72px;background:linear-gradient(to right,rgba(13,13,13,0.9),transparent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button onclick="ggmrNav(1)" style="position:absolute;right:0;top:0;bottom:0;width:72px;background:linear-gradient(to left,rgba(13,13,13,0.9),transparent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#666;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <div id="ggmr-bill-counter" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:#555;background:rgba(0,0,0,0.6);padding:4px 12px;border-radius:100px">1 / 4</div>
+        </div>
+        <script>
+          (function(){
+            var imgs = ['images/ggmr-bill-01.jpg','images/ggmr-bill-02.jpg','images/ggmr-bill-03.jpg','images/ggmr-bill-04.jpg'];
+            var idx = 0;
+            var el = document.getElementById('ggmr-bill-img');
+            var counter = document.getElementById('ggmr-bill-counter');
+            window.ggmrNav = function(dir) {
+              idx = (idx + dir + imgs.length) % imgs.length;
+              el.style.opacity = '0';
+              setTimeout(function(){ el.src = imgs[idx]; el.style.opacity = '1'; counter.textContent = (idx+1)+' / '+imgs.length; }, 150);
+            };
+          })();
+        </script>
         <div style="display:flex;flex-direction:column;gap:2px">
 
           <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 28px;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:start">
