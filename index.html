@@ -2768,17 +2768,17 @@
         <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:12px">Seven problems.<br>Seven solutions.</h2>
         <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:32px">Each element of the redesign responded to a specific piece of user feedback — translating frustration into a clear design brief.</p>
         <!-- Interactive annotated bill viewer -->
-        <div style="display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;margin-bottom:0">
+        <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:start;margin-bottom:0">
 
           <!-- Bill image + spotlight highlight -->
-          <div style="position:relative;border-radius:10px;overflow:hidden;background:#f5f5f0;line-height:0">
+          <div style="position:relative;border-radius:10px;overflow:hidden;background:#f5f5f0;line-height:0;flex:1;min-width:280px">
             <img id="ggmr-img" src="images/ggmr-bill-01.jpg" style="width:100%;display:block;transition:opacity 0.2s" alt="Vodafone bill redesign">
             <!-- orange highlight box -->
             <div id="ggmr-hl" style="position:absolute;border:2px solid #F97316;border-radius:3px;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1),opacity 0.2s;box-shadow:0 0 0 9999px rgba(0,0,0,0.55);opacity:0;background:transparent"></div>
           </div>
 
           <!-- Points list -->
-          <div style="display:flex;flex-direction:column;gap:6px;position:sticky;top:80px">
+          <div style="width:260px;flex-shrink:0;min-width:200px;display:flex;flex-direction:column;gap:6px;position:sticky;top:80px">
             <div id="ggmr-pt-0" onclick="ggmrSelect(0)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
               <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">01</div>
               <div style="font-size:13px;font-weight:600;color:var(--text)">Date Information</div>
@@ -2817,7 +2817,7 @@
 
         <!-- Description panel -->
         <div id="ggmr-desc" style="margin-top:16px;background:var(--surface);border:1px solid var(--orange);border-radius:10px;padding:24px 28px;min-height:120px;transition:opacity 0.2s;opacity:0">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px">
             <div>
               <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:8px">Challenge</p>
               <p id="ggmr-challenge" style="font-size:14px;color:var(--muted);line-height:1.65"></p>
@@ -2832,19 +2832,19 @@
         <script>
         (function(){
           var points = [
-            { page:'images/ggmr-bill-01.jpg', l:1,  t:1,  w:22, h:8,  title:'Date Information',
+            { page:'images/ggmr-bill-01.jpg', l:2,  t:1.5,w:16, h:6,  title:'Date Information',
               challenge:'Users referenced their bills by month and year, but the date information was not easily accessible within the existing layout.',
               solution:'Restructured the date hierarchy — increasing the prominence of the month and ensuring it was easy to locate within a filing system. Font size increased, colour adjusted to balance with other key elements.' },
-            { page:'images/ggmr-bill-01.jpg', l:1,  t:36, w:20, h:9,  title:'Bill Total',
+            { page:'images/ggmr-bill-01.jpg', l:2,  t:36, w:16, h:9,  title:'Bill Total',
               challenge:'The large, red font used to display the total amount due was causing unnecessary alarm and negative emotional responses before customers had read anything else.',
               solution:'Reduced the font size of the total while keeping it the most prominent figure on the page. Removed the red colour, replacing it with a neutral tone to reduce urgency and financial anxiety.' },
-            { page:'images/ggmr-bill-01.jpg', l:63, t:17, w:30, h:22, title:'QR Code Introduction',
+            { page:'images/ggmr-bill-01.jpg', l:64, t:22, w:28, h:20, title:'QR Code Introduction',
               challenge:'In 2012, customers were still reliant on physical bills. Vodafone wanted to encourage digital adoption without forcing a sudden, jarring change to customer behaviour.',
               solution:'Introduced a QR code as a soft nudge toward digital engagement — allowing customers to access their bill online instantly, bridging physical and digital without friction.' },
-            { page:'images/ggmr-bill-01.jpg', l:63, t:41, w:34, h:44, title:'Plan Summary',
+            { page:'images/ggmr-bill-01.jpg', l:64, t:40, w:33, h:52, title:'Plan Summary',
               challenge:'Customers had to dig through multiple pages to find details about their plans — causing confusion, especially for those managing multiple plans simultaneously.',
               solution:'Added a summary of all active plans on the first page. Consistently placed to enhance scan-ability and allow customers to immediately understand what they were being charged for.' },
-            { page:'images/ggmr-bill-01.jpg', l:1,  t:82, w:65, h:15, title:'Positive Pay-Off',
+            { page:'images/ggmr-bill-01.jpg', l:2,  t:79, w:64, h:18, title:'Positive Pay-Off',
               challenge:'Customers felt a negative emotional impact throughout — exacerbated by heavy use of red, which carries associations with warnings, urgency and debt.',
               solution:'Introduced a positive closing message using a friendlier colour palette including green — deliberately designed to leave customers with a more positive feeling after reviewing their bill.' },
             { page:'images/ggmr-bill-02.jpg', l:1,  t:11, w:65, h:41, title:'Monthly Charge Summary',
@@ -2863,18 +2863,15 @@
           var sol  = document.getElementById('ggmr-solution');
 
           function setActive(i) {
-            // deactivate old
             if (current >= 0) {
               var old = document.getElementById('ggmr-pt-'+current);
               old.style.borderColor = ''; old.style.background = '';
             }
             current = i;
             var p = points[i];
-            // highlight list item
             var el = document.getElementById('ggmr-pt-'+i);
             el.style.borderColor = 'var(--orange)';
             el.style.background  = 'rgba(249,115,22,0.06)';
-            // switch page if needed
             if (img.src.indexOf(p.page) === -1) {
               img.style.opacity = '0';
               hl.style.opacity  = '0';
@@ -2885,7 +2882,6 @@
             } else {
               placeHighlight(p);
             }
-            // update description
             desc.style.opacity = '0';
             setTimeout(function(){
               chal.textContent = p.challenge;
@@ -2903,6 +2899,15 @@
             hl.style.height = (p.h / 100 * ih) + 'px';
             hl.style.opacity = '1';
           }
+
+          // reposition highlight on window resize
+          var resizeTimer;
+          window.addEventListener('resize', function(){
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function(){
+              if (current >= 0) placeHighlight(points[current]);
+            }, 100);
+          });
 
           window.ggmrSelect = function(i){ setActive(i); };
           window.ggmrNext   = function(){ setActive((current + 1) % points.length); };
