@@ -3850,6 +3850,9 @@
     </div>
 
     <!-- Drag-scroll track -->
+    <div style="position:relative">
+      <div style="position:absolute;left:0;top:0;bottom:20px;width:80px;background:linear-gradient(to right,var(--bg),transparent);z-index:2;pointer-events:none"></div>
+      <div style="position:absolute;right:0;top:0;bottom:20px;width:80px;background:linear-gradient(to left,var(--bg),transparent);z-index:2;pointer-events:none"></div>
     <div id="testi-track" style="display:flex;gap:20px;padding:4px 52px 20px;cursor:grab;user-select:none;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none">
 
       <!-- Card template repeated for each testimonial -->
@@ -4043,6 +4046,7 @@
       </div>
 
     </div><!-- /testi-track -->
+    </div><!-- /testi-track-wrapper -->
   </div><!-- /testimonials -->
 
   <!-- ── TESTIMONIAL MODAL ── -->
@@ -4088,33 +4092,87 @@
   (function(){
     var track = document.getElementById('testi-track');
     var isDown = false, startX, scrollLeft, moved = false;
-    track.addEventListener('mousedown', function(e){
-      isDown = true; moved = false;
+    var velX = 0, lastMouseX = 0, lastMouseT = 0, rafId = null;
+    var friction = 0.91;
+
+    function momentum() {
+      if (Math.abs(velX) < 0.4) { velX = 0; return; }
+      track.scrollLeft += velX;
+      velX *= friction;
+      rafId = requestAnimationFrame(momentum);
+    }
+
+    track.addEventListener('mousedown', function(e) {
+      cancelAnimationFrame(rafId);
+      isDown = true; moved = false; velX = 0;
       startX = e.pageX - track.offsetLeft;
       scrollLeft = track.scrollLeft;
+      lastMouseX = e.pageX;
+      lastMouseT = performance.now();
       track.style.cursor = 'grabbing';
+      track.style.transition = 'none';
     });
-    window.addEventListener('mouseup', function(){ isDown = false; track.style.cursor = 'grab'; });
-    track.addEventListener('mousemove', function(e){
+
+    window.addEventListener('mouseup', function() {
+      if (!isDown) return;
+      isDown = false;
+      track.style.cursor = 'grab';
+      rafId = requestAnimationFrame(momentum);
+    });
+
+    window.addEventListener('mousemove', function(e) {
       if (!isDown) return;
       var x = e.pageX - track.offsetLeft;
-      var walk = (x - startX) * 1.2;
-      if (Math.abs(walk) > 4) moved = true;
+      var walk = x - startX;
+      if (Math.abs(walk) > 5) moved = true;
       track.scrollLeft = scrollLeft - walk;
+      var now = performance.now();
+      var dt = now - lastMouseT;
+      if (dt > 0) velX = -(e.pageX - lastMouseX) / dt * 14;
+      lastMouseX = e.pageX;
+      lastMouseT = now;
     });
 
     /* click → open modal only if not dragging */
-    track.addEventListener('click', function(e){
+    track.addEventListener('click', function(e) {
       if (moved) return;
       var card = e.target.closest('.testi-card');
       if (!card) return;
       openTestiModal(parseInt(card.dataset.idx));
     });
 
-    /* Touch support */
-    var touchStartX, touchScrollLeft;
-    track.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].pageX; touchScrollLeft = track.scrollLeft; }, { passive:true });
-    track.addEventListener('touchmove', function(e){ var dx = touchStartX - e.touches[0].pageX; track.scrollLeft = touchScrollLeft + dx; }, { passive:true });
+    /* Touch support with momentum */
+    var touchStartX, touchScrollLeft, touchLastX = 0, touchLastT = 0, touchVel = 0;
+    track.addEventListener('touchstart', function(e) {
+      cancelAnimationFrame(rafId);
+      touchStartX = e.touches[0].pageX;
+      touchScrollLeft = track.scrollLeft;
+      touchLastX = e.touches[0].pageX;
+      touchLastT = performance.now();
+      touchVel = 0;
+    }, { passive: true });
+    track.addEventListener('touchmove', function(e) {
+      var dx = touchStartX - e.touches[0].pageX;
+      var now = performance.now();
+      var dt = now - touchLastT;
+      if (dt > 0) touchVel = (e.touches[0].pageX - touchLastX) / dt * 14;
+      touchLastX = e.touches[0].pageX;
+      touchLastT = now;
+      track.scrollLeft = touchScrollLeft + dx;
+    }, { passive: true });
+    track.addEventListener('touchend', function() {
+      velX = -touchVel;
+      rafId = requestAnimationFrame(momentum);
+    });
+
+    /* Scroll wheel horizontal support */
+    track.addEventListener('wheel', function(e) {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      cancelAnimationFrame(rafId);
+      velX = e.deltaY * 0.8;
+      rafId = requestAnimationFrame(momentum);
+    }, { passive: false });
   })();
 
   /* ── Modal ── */
