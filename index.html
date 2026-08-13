@@ -4551,11 +4551,9 @@
     });
     document.getElementById('nav').style.display = '';
     homeView.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out', onComplete: function() {
-      const workSection = document.getElementById('work');
-      if (workSection) workSection.scrollIntoView({ behavior: 'smooth' });
-    }});
+    const workSection = document.getElementById('work');
+    if (workSection) window.scrollTo({ top: workSection.offsetTop, behavior: 'instant' });
+    gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
   }
 
