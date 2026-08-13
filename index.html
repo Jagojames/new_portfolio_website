@@ -2285,6 +2285,7 @@
 
   <!-- ── HERO ── -->
   <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:80px 52px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--border)">
+    <img src="images/sap-hero.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:0.18;pointer-events:none;display:block">
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(249,115,22,0.05) 0%,transparent 65%);pointer-events:none"></div>
     <div style="max-width:1100px;margin:0 auto;width:100%">
       <p style="font-family:var(--mono);font-size:11px;letter-spacing:0.22em;color:var(--orange);text-transform:uppercase;margin-bottom:32px">SAP</p>
@@ -4552,7 +4553,7 @@
     document.getElementById('nav').style.display = '';
     homeView.style.display = 'block';
     const workSection = document.getElementById('work');
-    if (workSection) window.scrollTo({ top: workSection.offsetTop, behavior: 'instant' });
+    if (workSection) workSection.scrollIntoView({ behavior: 'instant' });
     gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
   }
