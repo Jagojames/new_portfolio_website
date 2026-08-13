@@ -1255,7 +1255,6 @@
     <a href="#work" onmousedown="this.style.color='#f97316';var s=this;setTimeout(function(){s.style.color=''},400)" onclick="if(document.querySelector('.project-page.active')){event.preventDefault();goHome();setTimeout(function(){document.getElementById('work').scrollIntoView({behavior:'smooth'})},400)}">Work</a>
     <a href="#about" onmousedown="this.style.color='#f97316';var s=this;setTimeout(function(){s.style.color=''},400)" onclick="if(document.querySelector('.project-page.active')){event.preventDefault();goHome();setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},400)}">About</a>
     <a href="#" data-project="cv" onmousedown="var s=this;s.style.color='#f97316';setTimeout(function(){s.style.color=''},400)" onclick="event.preventDefault();setTimeout(function(){openProject('cv')},300)">CV</a>
-    <a href="#" data-project="jago-llm" onmousedown="var s=this;s.style.color='#f97316';setTimeout(function(){s.style.color=''},400)" onclick="event.preventDefault();setTimeout(function(){openProject('jago-llm')},300)">Jago LLM</a>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">☀</button>
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
@@ -1271,7 +1270,6 @@
     <a href="#work"    onclick="closeMobileMenu();setTimeout(function(){document.getElementById('work').scrollIntoView({behavior:'smooth'})},320)">Work</a>
     <a href="#about"   onclick="closeMobileMenu();setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},320)">About</a>
     <a href="#"        onclick="event.preventDefault();closeMobileMenu();setTimeout(function(){openProject('cv')},340)">CV</a>
-    <a href="#"        onclick="event.preventDefault();closeMobileMenu();setTimeout(function(){openProject('jago-llm')},340)">Jago LLM</a>
     <a href="#contact" onclick="closeMobileMenu();setTimeout(function(){document.getElementById('contact').scrollIntoView({behavior:'smooth'})},320)">Get in touch</a>
   </nav>
   <div class="mobile-menu-footer">
@@ -3411,8 +3409,8 @@
 </div>
 
 
-<!-- ── Jago LLM ── -->
-<div id="project-jago-llm" class="project-page">
+<!-- ── Jago LLM ── HIDDEN -->
+<div id="project-jago-llm" class="project-page" style="display:none!important">
 
   <nav class="proj-nav">
     <button class="back-btn" onclick="window.location.href=window.location.pathname">← Back to work</button>
