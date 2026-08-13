@@ -2278,83 +2278,219 @@
 
 <!-- ── 3. SAP ── -->
 <div id="project-sap" class="project-page">
+
   <nav class="proj-nav">
     <button class="back-btn" onclick="goHome()">← Back to work</button>
   </nav>
 
-  <div class="proj-hero" style="background-image:url('https://carbon-media.accelerator.net/0000000mKt5/4fiqQzOlj3HeqBDdvclQbv;crop(348,0,778,778)/528x528.png')"></div>
-
-  <div class="proj-body">
-    <div class="proj-eyebrow">// UX/UI · £1M+ Product</div>
-    <h1 class="proj-title">SAP</h1>
-
-    <div class="proj-meta">
-      <div class="proj-meta-item"><div class="proj-meta-label">Role</div><div class="proj-meta-val">UX/UI Designer</div></div>
-      <div class="proj-meta-item"><div class="proj-meta-label">Client</div><div class="proj-meta-val">SAP</div></div>
-      <div class="proj-meta-item"><div class="proj-meta-label">Years</div><div class="proj-meta-val">4 Years</div></div>
-      <div class="proj-meta-item"><div class="proj-meta-label">Disciplines</div><div class="proj-meta-val">UX/UI · Research · AI</div></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Overview</div>
-      <div class="drop-zone drop-zone-lg"><span>Add your project overview text here</span></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// CDS Promo Video</div>
-      <div class="vid-player">
-        <video id="vid-cds" src="https://carbon-media.accelerator.net/0000000mKt5/hOcBnu4o5lBe7kux90FU9P;audio,video(1920x1080,1280x720,960x540,768x432)/master.m3u8" autoplay muted loop playsinline style="width:100%;max-height:480px;object-fit:contain;background:#000"></video>
-        <div class="vid-controls">
-          <button class="vid-btn" data-vid="vid-cds" data-action="playpause"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></button>
-          <div class="vid-progress" data-vid="vid-cds" data-action="seek"><div class="vid-progress-fill" id="vid-cds-fill"></div></div>
-          <span class="vid-time" id="vid-cds-time">0:00</span>
-          <span class="vid-muted-badge" id="vid-cds-badge">🔇 Muted</span>
-          <div class="vid-volume">
-            <button class="vid-btn" data-vid="vid-cds" data-action="mute"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-            <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-cds" data-action="volume">
-          </div>
-        </div>
+  <!-- ── HERO ── -->
+  <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:80px 52px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--border)">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(249,115,22,0.05) 0%,transparent 65%);pointer-events:none"></div>
+    <div style="max-width:1100px;margin:0 auto;width:100%">
+      <p style="font-family:var(--mono);font-size:11px;letter-spacing:0.22em;color:var(--orange);text-transform:uppercase;margin-bottom:32px">SAP</p>
+      <h1 style="font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(32px,4vw,60px);line-height:1.05;letter-spacing:-0.01em;margin-bottom:28px">Enterprise UX at<br>the highest stakes.</h1>
+      <p style="font-size:clamp(15px,1.5vw,18px);color:var(--muted);line-height:1.65;max-width:580px;margin-bottom:40px">Four years designing next-generation SaaS and AI products for one of the world's largest enterprise software companies — contributing to a £3.5M acquisition and a £1.5M per-licence suite.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">UX/UI</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">Enterprise SaaS</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">AI</span>
+        <span style="display:inline-flex;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:5px 14px">Conversational Design</span>
       </div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// BoSH Prototype</div>
-      <div class="vid-player">
-        <video id="vid-bosh" src="https://carbon-media.accelerator.net/0000000mKt5/frN25GXPdNxbNSAfCLhgPr;video.mp4" autoplay muted loop playsinline style="width:100%;max-height:480px;object-fit:contain;background:#000"></video>
-        <div class="vid-controls">
-          <button class="vid-btn" data-vid="vid-bosh" data-action="playpause" title="Play / Pause">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
-          </button>
-          <div class="vid-progress" data-vid="vid-bosh" data-action="seek">
-            <div class="vid-progress-fill" id="vid-bosh-fill"></div>
-          </div>
-          <span class="vid-time" id="vid-bosh-time">0:00</span>
-          <span class="vid-noaudio-badge">No audio</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Process & Approach</div>
-      <div class="drop-zone drop-zone-lg"><span>Add your process write-up here</span></div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Work Images</div>
-      <div class="img-grid-2">
-        <div class="img-slot">IMAGE 01</div>
-        <div class="img-slot">IMAGE 02</div>
-        <div class="img-slot">IMAGE 03</div>
-        <div class="img-slot">IMAGE 04</div>
-      </div>
-    </div>
-
-    <div class="content-block">
-      <div class="content-block-label">// Outcome</div>
-      <div class="drop-zone"><span>Add results, metrics, or outcome here</span></div>
     </div>
   </div>
 
+  <!-- ── META ── -->
+  <div style="padding:48px 52px 0">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="proj-meta" style="margin-bottom:0">
+        <div class="proj-meta-item"><div class="proj-meta-label">Role</div><div class="proj-meta-val">Lead UX/UI Designer</div></div>
+        <div class="proj-meta-item"><div class="proj-meta-label">Client</div><div class="proj-meta-val">SAP</div></div>
+        <div class="proj-meta-item"><div class="proj-meta-label">Duration</div><div class="proj-meta-val">4 Years</div></div>
+        <div class="proj-meta-item"><div class="proj-meta-label">Disciplines</div><div class="proj-meta-val">UX/UI · Research · AI · Conversational Design</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTEXT ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// Context</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px">The scale of the challenge.</h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">SAP is one of the world's largest enterprise software companies. The challenge across four years was helping design next-generation SaaS products that would be used by thousands of professionals across UK, Poland and Germany.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">The work spanned two major projects: the CDS suite — a complex enterprise product that contributed to a £3.5M acquisition and still sells at £1.5M per licence — and BoSh, a next-generation AI-powered self-healing operations platform.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px">Each required translating probabilistic AI outputs into interfaces that non-technical users could trust and act on — without losing the depth that expert users demanded.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MY ROLE ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// My role</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px">Lead designer across two major product lines.</h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">I led UX/UI design across multiple workstreams — running user research, designing interaction models, building prototypes and working directly with engineering across distributed teams in UK, Poland and Germany.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">On BoSh, I introduced conversational design as a core interaction model — challenging the team's approach to language and completely changing how the product gathered information from users via chatbot.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px">The role required operating simultaneously as researcher, designer, communicator and strategic partner — keeping design intent intact as requirements shifted across long delivery cycles.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BIG STATEMENT ── -->
+  <div style="padding:120px 52px;border-bottom:1px solid var(--border)">
+    <div style="max-width:1100px;margin:0 auto">
+      <h2 style="font-size:clamp(36px,5.5vw,76px);font-weight:800;letter-spacing:-0.035em;line-height:1.05;max-width:900px">Two products.<br><span style="color:var(--orange)">Both still live.</span></h2>
+      <p style="font-size:19px;color:var(--muted);line-height:1.65;max-width:520px;margin-top:28px">The CDS suite contributed to a £3.5M acquisition and remains on SAP's price list at £1.5M per licence. BoSh redefined how enterprise teams interact with AI-generated operational insights.</p>
+    </div>
+  </div>
+
+  <!-- ── WORK ── -->
+  <div style="padding:80px 52px;border-bottom:1px solid var(--border)">
+    <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:12px">
+
+      <!-- 01 CDS -->
+      <div class="ss-exp" id="sap-exp-01" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <div onclick="sapToggle('sap-exp-01')" class="acc-hdr">
+          <span class="acc-num" style="font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:var(--orange);opacity:0.8">01</span>
+          <div class="acc-mid">
+            <h3 style="font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:5px">CDS Suite</h3>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:14px">The enterprise product behind a £3.5M acquisition.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">Enterprise SaaS</span>
+              <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">UX/UI</span>
+            </div>
+          </div>
+          <div class="acc-right" style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+            <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#4F9EFF;white-space:nowrap">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="16" height="16" rx="2"/><polygon points="22,8 22,16 18,12" fill="currentColor" stroke="none"/></svg>
+              Video
+            </span>
+            <div class="sap-chevron" style="width:30px;height:30px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform 0.3s,border-color 0.2s,color 0.2s;flex-shrink:0">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l4 4 4-4"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="sap-body" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);border-top:0px solid var(--border)">
+          <div style="padding:36px">
+            <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:28px">The CDS suite was a complex enterprise SaaS platform requiring multiple years of sustained design leadership. The product had to serve expert users across multiple markets — UK, Poland and Germany — while remaining commercially competitive at enterprise scale. The final design contributed directly to a £3.5M acquisition and the product remains on SAP's price list at £1.5M per licence.</p>
+            <div class="vid-player">
+              <video id="vid-cds" src="https://carbon-media.accelerator.net/0000000mKt5/hOcBnu4o5lBe7kux90FU9P;audio,video(1920x1080,1280x720,960x540,768x432)/master.m3u8" autoplay muted loop playsinline style="width:100%;max-height:480px;object-fit:contain;background:#000"></video>
+              <div class="vid-controls">
+                <button class="vid-btn" data-vid="vid-cds" data-action="playpause"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></button>
+                <div class="vid-progress" data-vid="vid-cds" data-action="seek"><div class="vid-progress-fill" id="vid-cds-fill"></div></div>
+                <span class="vid-time" id="vid-cds-time">0:00</span>
+                <span class="vid-muted-badge" id="vid-cds-badge">🔇 Muted</span>
+                <div class="vid-volume">
+                  <button class="vid-btn" data-vid="vid-cds" data-action="mute"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+                  <input class="vid-volume-slider" type="range" min="0" max="1" step="0.05" value="0" data-vid="vid-cds" data-action="volume">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 BoSh -->
+      <div class="ss-exp" id="sap-exp-02" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <div onclick="sapToggle('sap-exp-02')" class="acc-hdr">
+          <span class="acc-num" style="font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:var(--orange);opacity:0.8">02</span>
+          <div class="acc-mid">
+            <h3 style="font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:5px">BoSh — AI Self-Healing Operations</h3>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:14px">Redesigning how enterprise teams interact with AI-generated insights.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">AI</span>
+              <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);border-radius:100px;padding:4px 12px">Conversational Design</span>
+            </div>
+          </div>
+          <div class="acc-right" style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+            <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#4F9EFF;white-space:nowrap">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="16" height="16" rx="2"/><polygon points="22,8 22,16 18,12" fill="currentColor" stroke="none"/></svg>
+              Video
+            </span>
+            <div class="sap-chevron" style="width:30px;height:30px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform 0.3s,border-color 0.2s,color 0.2s;flex-shrink:0">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l4 4 4-4"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="sap-body" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1);border-top:0px solid var(--border)">
+          <div style="padding:36px">
+            <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:28px">BoSh (Business Operations Self-Healing) was a next-generation SaaS platform that used AI to identify and resolve operational issues autonomously. My role was to make those AI-generated recommendations legible and trustworthy for non-technical users — without removing the depth that engineering teams needed. I also introduced conversational design as a core interaction model, fundamentally changing how the chatbot gathered and surfaced information.</p>
+            <div class="vid-player">
+              <video id="vid-bosh" src="https://carbon-media.accelerator.net/0000000mKt5/frN25GXPdNxbNSAfCLhgPr;video.mp4" autoplay muted loop playsinline style="width:100%;max-height:480px;object-fit:contain;background:#000"></video>
+              <div class="vid-controls">
+                <button class="vid-btn" data-vid="vid-bosh" data-action="playpause">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                </button>
+                <div class="vid-progress" data-vid="vid-bosh" data-action="seek">
+                  <div class="vid-progress-fill" id="vid-bosh-fill"></div>
+                </div>
+                <span class="vid-time" id="vid-bosh-time">0:00</span>
+                <span class="vid-noaudio-badge">No audio</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── DESIGN CHALLENGE ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// Design challenge</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px">Making AI trustworthy at enterprise scale.</h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">The hardest design problem across both products was trust. Enterprise users don't act on AI recommendations they can't explain to their team or their auditors. Every design decision had to balance automation with transparency.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:36px">The four key tensions I worked through:</p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 24px">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Clarity
+            </div>
+            <h3 style="font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.02em">Visible, not black-box</h3>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65">Making AI recommendations explainable — so users understood the logic before they acted on it.</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 24px">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>Scale
+            </div>
+            <h3 style="font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.02em">One system, many markets</h3>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65">Designing patterns that worked across UK, Poland and Germany — different contexts, same product.</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 24px">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20.55a5 5 0 0 0-8.9-2.07"/><circle cx="19.5" cy="13.5" r="2.5"/></svg>Personas
+            </div>
+            <h3 style="font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.02em">Expert and non-expert</h3>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65">Serving technical engineers and business stakeholders within the same interface — without dumbing it down or locking anyone out.</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:32px 24px">
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--orange);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Pace
+            </div>
+            <h3 style="font-size:20px;font-weight:700;margin-bottom:10px;letter-spacing:-0.02em">Long cycles, fast iteration</h3>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65">Keeping design intent consistent through multi-year delivery cycles while responding quickly to shifting requirements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAKEAWAY ── -->
+  <div style="padding:100px 52px;border-bottom:1px solid var(--border)">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:80px;max-width:1100px;margin:0 auto">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;padding-top:6px;position:sticky;top:80px">// Takeaway</div>
+      <div>
+        <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;line-height:1.1;margin-bottom:28px">Design as competitive advantage.</h2>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px;margin-bottom:18px">Four years at SAP reinforced something I believe deeply: in enterprise software, design is not decoration — it's the thing that determines whether a product gets adopted or abandoned. Users have no choice but to use the software, but they have every choice about whether to trust it.</p>
+        <p style="font-size:17px;color:var(--muted);line-height:1.75;max-width:640px">The £3.5M acquisition and £1.5M per-licence pricing of the CDS suite are a direct reflection of what happens when design takes a seat at the strategic table from day one.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NEXT PROJECT ── -->
   <div class="proj-next" onclick="openProject('monkeynuts')">
     <div><div class="proj-next-label">Next Project</div><div class="proj-next-name">Monkey Nuts Studio</div></div>
     <div class="proj-next-arrow">→</div>
@@ -4343,6 +4479,28 @@
       exp.querySelector('.ss-body').style.borderTopWidth = '0';
       const ch = exp.querySelector('.ss-chevron');
       ch.style.transform = ''; ch.style.borderColor = ''; ch.style.color = '';
+    });
+    if (!isOpen) {
+      el.dataset.open = '1';
+      body.style.maxHeight = '2400px';
+      body.style.borderTopWidth = '1px';
+      body.style.borderTopColor = 'var(--border)';
+      chevron.style.transform = 'rotate(180deg)';
+      chevron.style.borderColor = 'var(--orange)';
+      chevron.style.color = 'var(--orange)';
+    }
+  }
+  function sapToggle(id) {
+    const el = document.getElementById(id);
+    const body = el.querySelector('.sap-body');
+    const chevron = el.querySelector('.sap-chevron');
+    const isOpen = el.dataset.open === '1';
+    document.querySelectorAll('#project-sap .ss-exp').forEach(exp => {
+      exp.dataset.open = '0';
+      exp.querySelector('.sap-body').style.maxHeight = '0';
+      exp.querySelector('.sap-body').style.borderTopWidth = '0';
+      const ch = exp.querySelector('.sap-chevron');
+      if (ch) { ch.style.transform = ''; ch.style.borderColor = ''; ch.style.color = ''; }
     });
     if (!isOpen) {
       el.dataset.open = '1';
