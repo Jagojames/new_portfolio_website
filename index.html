@@ -3778,6 +3778,8 @@
     document.getElementById('testi-modal-body').innerHTML = d.body.split('\n\n').map(function(p){ return '<p style="margin-bottom:16px">'+p+'</p>'; }).join('');
     var modal = document.getElementById('testi-modal');
     var inner = document.getElementById('testi-modal-inner');
+    /* Move to body so position:fixed escapes GSAP transform on project page */
+    document.body.appendChild(modal);
     modal.style.display = 'flex';
     inner.scrollTop = 0;
     requestAnimationFrame(function(){
