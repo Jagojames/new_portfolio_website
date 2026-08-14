@@ -4383,7 +4383,7 @@
     trigger: '#galaxy-scroll-spacer',
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 2.2,   // heavy scrub = inertia and momentum — elements carry through scroll stops
+    scrub: 1.4,   // balanced scrub — responsive but still smooth
     onUpdate(self) {
       const p = self.progress;
 
@@ -4769,6 +4769,15 @@
     modal.style.display = 'none';
     document.body.style.overflow = '';
   }
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeCertsModal();
+  });
+  // Close on backdrop click
+  document.addEventListener('click', function(e) {
+    var modal = document.getElementById('certs-modal');
+    if (modal && modal.style.display === 'block' && e.target === modal) closeCertsModal();
+  });
   function sapToggle(id) {
     const el = document.getElementById(id);
     const body = el.querySelector('.sap-body');
@@ -4792,6 +4801,8 @@
     }
   }
   function openProject(id) {
+    // Always clear any modal-induced scroll lock
+    document.body.style.overflow = '';
     // Hide home view and main nav
     homeView.style.display = 'none';
     document.getElementById('nav').style.display = 'none';
@@ -4824,6 +4835,8 @@
   }
 
   function goHome() {
+    // Always clear any modal-induced scroll lock
+    document.body.style.overflow = '';
     document.querySelectorAll('.project-page').forEach(p => {
       p.classList.remove('active');
       p.style.display = 'none';
@@ -4832,6 +4845,8 @@
     homeView.style.display = 'block';
     const workSection = document.getElementById('work');
     if (workSection) workSection.scrollIntoView({ behavior: 'instant' });
+    // Refresh ScrollTrigger so positions recalculate after home view re-appears
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
     gsap.fromTo(homeView, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
   }
