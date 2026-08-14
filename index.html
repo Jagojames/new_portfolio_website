@@ -2962,11 +2962,9 @@
 
           <!-- Bill image -->
           <div style="flex:0 0 370px;min-width:0">
-            <div id="ggmr-img-wrap" onclick="ggmrClear()" style="position:relative;border-radius:10px;overflow:hidden;background:#f5f5f0;line-height:0;cursor:default">
+            <div style="position:relative;border-radius:10px;overflow:hidden;background:#f5f5f0;line-height:0">
               <img id="ggmr-img" src="images/ggmr-bill-01.jpg" style="width:100%;display:block;transition:opacity 0.2s" alt="Vodafone bill redesign">
               <div id="ggmr-hl" style="position:absolute;border:2px solid #F97316;border-radius:3px;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1),opacity 0.2s;box-shadow:0 0 0 9999px rgba(0,0,0,0.55);opacity:0;background:transparent"></div>
-              <!-- Clear hint — visible only when highlight is active -->
-              <div id="ggmr-clear-hint" style="position:absolute;top:10px;right:10px;opacity:0;pointer-events:none;transition:opacity 0.2s;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.15);border-radius:100px;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;color:#fff;text-transform:uppercase">✕ click to clear</div>
             </div>
           </div>
 
@@ -3147,18 +3145,12 @@
           }
           window.ggmrSetPage = ggmrSetPage;
 
-          var wrap = document.getElementById('ggmr-img-wrap');
-          var hint = document.getElementById('ggmr-clear-hint');
-
           function ggmrClear() {
-            if (current < 0) return; // nothing active
+            if (current < 0) return;
             closeDetail(current);
             hl.style.opacity = '0';
-            if (wrap) wrap.style.cursor = 'default';
-            if (hint) { hint.style.opacity = '0'; hint.style.pointerEvents = 'none'; }
             current = -1;
           }
-          window.ggmrClear = ggmrClear;
 
           function closeDetail(i) {
             var detail = document.getElementById('ggmr-detail-'+i);
@@ -3186,9 +3178,6 @@
             if (chev) { chev.style.transform = 'rotate(180deg)'; chev.style.color = 'var(--orange)'; }
             el.style.borderColor = 'var(--orange)';
             el.style.background  = 'rgba(249,115,22,0.06)';
-            // show clear hint on image
-            if (wrap) wrap.style.cursor = 'pointer';
-            if (hint) { hint.style.opacity = '1'; hint.style.pointerEvents = 'none'; }
           }
 
           function setActive(i) {
@@ -3196,11 +3185,7 @@
             if (current >= 0 && current !== i) closeDetail(current);
             // toggle: click same item closes it
             if (current === i) {
-              closeDetail(i);
-              hl.style.opacity = '0';
-              if (wrap) wrap.style.cursor = 'default';
-              if (hint) { hint.style.opacity = '0'; hint.style.pointerEvents = 'none'; }
-              current = -1;
+              ggmrClear();
               return;
             }
             current = i;
@@ -3233,6 +3218,13 @@
           window.ggmrSelect = function(i){ setActive(i); };
           window.ggmrNext   = function(){ setActive((current + 1) % points.length); };
           window.ggmrPrev   = function(){ setActive((current - 1 + points.length) % points.length); };
+
+          // Click anywhere outside the sidebar cards or page buttons to clear
+          document.addEventListener('click', function(e) {
+            if (current < 0) return;
+            var inside = e.target.closest('[id^="ggmr-pt-"],[id^="ggmr-pg-"]');
+            if (!inside) ggmrClear();
+          });
 
           // start closed,user opens on click
         })();
