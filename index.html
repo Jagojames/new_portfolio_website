@@ -2969,52 +2969,102 @@
 
           <!-- Points list -->
           <div style="flex:1;min-width:280px;display:flex;flex-direction:column;gap:6px;position:sticky;top:80px">
-            <div id="ggmr-pt-0" onclick="ggmrSelect(0)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
-              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">01</div>
-              <div style="font-size:13px;font-weight:600;color:var(--text)">Date Information</div>
+
+            <div id="ggmr-pt-0" onclick="ggmrSelect(0)" style="cursor:pointer;border-radius:8px;border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color 0.2s,background 0.2s">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
+                <div><div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">01</div><div style="font-size:13px;font-weight:600;color:var(--text)">Date Information</div></div>
+                <svg id="ggmr-chev-0" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--muted);flex-shrink:0;transition:transform 0.3s"><path d="M2 4l4 4 4-4"/></svg>
+              </div>
+              <div id="ggmr-detail-0" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)">
+                <div class="ggmr-detail-inner" style="padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border)">
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:6px">Challenge</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Solution</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                </div>
+              </div>
             </div>
-            <div id="ggmr-pt-1" onclick="ggmrSelect(1)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
-              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">02</div>
-              <div style="font-size:13px;font-weight:600;color:var(--text)">Bill Total</div>
+
+            <div id="ggmr-pt-1" onclick="ggmrSelect(1)" style="cursor:pointer;border-radius:8px;border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color 0.2s,background 0.2s">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
+                <div><div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">02</div><div style="font-size:13px;font-weight:600;color:var(--text)">Bill Total</div></div>
+                <svg id="ggmr-chev-1" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--muted);flex-shrink:0;transition:transform 0.3s"><path d="M2 4l4 4 4-4"/></svg>
+              </div>
+              <div id="ggmr-detail-1" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)">
+                <div class="ggmr-detail-inner" style="padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border)">
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:6px">Challenge</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Solution</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                </div>
+              </div>
             </div>
-            <div id="ggmr-pt-2" onclick="ggmrSelect(2)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
-              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">03</div>
-              <div style="font-size:13px;font-weight:600;color:var(--text)">QR Code</div>
+
+            <div id="ggmr-pt-2" onclick="ggmrSelect(2)" style="cursor:pointer;border-radius:8px;border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color 0.2s,background 0.2s">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
+                <div><div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">03</div><div style="font-size:13px;font-weight:600;color:var(--text)">QR Code</div></div>
+                <svg id="ggmr-chev-2" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--muted);flex-shrink:0;transition:transform 0.3s"><path d="M2 4l4 4 4-4"/></svg>
+              </div>
+              <div id="ggmr-detail-2" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)">
+                <div class="ggmr-detail-inner" style="padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border)">
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:6px">Challenge</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Solution</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                </div>
+              </div>
             </div>
-            <div id="ggmr-pt-3" onclick="ggmrSelect(3)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
-              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">04</div>
-              <div style="font-size:13px;font-weight:600;color:var(--text)">Plan Summary</div>
+
+            <div id="ggmr-pt-3" onclick="ggmrSelect(3)" style="cursor:pointer;border-radius:8px;border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color 0.2s,background 0.2s">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
+                <div><div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">04</div><div style="font-size:13px;font-weight:600;color:var(--text)">Plan Summary</div></div>
+                <svg id="ggmr-chev-3" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--muted);flex-shrink:0;transition:transform 0.3s"><path d="M2 4l4 4 4-4"/></svg>
+              </div>
+              <div id="ggmr-detail-3" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)">
+                <div class="ggmr-detail-inner" style="padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border)">
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:6px">Challenge</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Solution</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                </div>
+              </div>
             </div>
-            <div id="ggmr-pt-4" onclick="ggmrSelect(4)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
-              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">05</div>
-              <div style="font-size:13px;font-weight:600;color:var(--text)">Positive Pay-Off</div>
+
+            <div id="ggmr-pt-4" onclick="ggmrSelect(4)" style="cursor:pointer;border-radius:8px;border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color 0.2s,background 0.2s">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
+                <div><div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">05</div><div style="font-size:13px;font-weight:600;color:var(--text)">Positive Pay-Off</div></div>
+                <svg id="ggmr-chev-4" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--muted);flex-shrink:0;transition:transform 0.3s"><path d="M2 4l4 4 4-4"/></svg>
+              </div>
+              <div id="ggmr-detail-4" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)">
+                <div class="ggmr-detail-inner" style="padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border)">
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:6px">Challenge</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Solution</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                </div>
+              </div>
             </div>
-            <div id="ggmr-pt-5" onclick="ggmrSelect(5)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
-              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">06</div>
-              <div style="font-size:13px;font-weight:600;color:var(--text)">Monthly Charges</div>
+
+            <div id="ggmr-pt-5" onclick="ggmrSelect(5)" style="cursor:pointer;border-radius:8px;border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color 0.2s,background 0.2s">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
+                <div><div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">06</div><div style="font-size:13px;font-weight:600;color:var(--text)">Monthly Charges</div></div>
+                <svg id="ggmr-chev-5" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--muted);flex-shrink:0;transition:transform 0.3s"><path d="M2 4l4 4 4-4"/></svg>
+              </div>
+              <div id="ggmr-detail-5" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)">
+                <div class="ggmr-detail-inner" style="padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border)">
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:6px">Challenge</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Solution</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                </div>
+              </div>
             </div>
-            <div id="ggmr-pt-6" onclick="ggmrSelect(6)" style="cursor:pointer;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.2s,background 0.2s">
-              <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">07</div>
-              <div style="font-size:13px;font-weight:600;color:var(--text)">Usage Charts</div>
+
+            <div id="ggmr-pt-6" onclick="ggmrSelect(6)" style="cursor:pointer;border-radius:8px;border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color 0.2s,background 0.2s">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
+                <div><div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:var(--orange);margin-bottom:3px">07</div><div style="font-size:13px;font-weight:600;color:var(--text)">Usage Charts</div></div>
+                <svg id="ggmr-chev-6" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--muted);flex-shrink:0;transition:transform 0.3s"><path d="M2 4l4 4 4-4"/></svg>
+              </div>
+              <div id="ggmr-detail-6" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)">
+                <div class="ggmr-detail-inner" style="padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border)">
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:6px">Challenge</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                  <div style="padding-top:12px"><p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Solution</p><p style="font-size:12px;color:var(--muted);line-height:1.6"></p></div>
+                </div>
+              </div>
             </div>
+
             <!-- prev / next -->
             <div style="display:flex;gap:8px;margin-top:4px">
               <button onclick="ggmrPrev()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;transition:color 0.2s,border-color 0.2s" onmouseover="this.style.color='#fff';this.style.borderColor='#555'" onmouseout="this.style.color='';this.style.borderColor=''">← Prev</button>
               <button onclick="ggmrNext()" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;transition:color 0.2s,border-color 0.2s" onmouseover="this.style.color='#fff';this.style.borderColor='#555'" onmouseout="this.style.color='';this.style.borderColor=''">Next →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Description panel -->
-        <div id="ggmr-desc" style="margin-top:16px;background:var(--surface);border:1px solid var(--orange);border-radius:10px;padding:24px 28px;min-height:120px;transition:opacity 0.2s;opacity:0">
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px">
-            <div>
-              <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--orange);text-transform:uppercase;margin-bottom:8px">Challenge</p>
-              <p id="ggmr-challenge" style="font-size:14px;color:var(--muted);line-height:1.65"></p>
-            </div>
-            <div>
-              <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Solution</p>
-              <p id="ggmr-solution" style="font-size:14px;color:var(--muted);line-height:1.65"></p>
             </div>
           </div>
         </div>
@@ -3048,20 +3098,47 @@
           var current = -1;
           var img = document.getElementById('ggmr-img');
           var hl  = document.getElementById('ggmr-hl');
-          var desc = document.getElementById('ggmr-desc');
-          var chal = document.getElementById('ggmr-challenge');
-          var sol  = document.getElementById('ggmr-solution');
+
+          function closeDetail(i) {
+            var detail = document.getElementById('ggmr-detail-'+i);
+            var chev   = document.getElementById('ggmr-chev-'+i);
+            var el     = document.getElementById('ggmr-pt-'+i);
+            if (!detail) return;
+            detail.style.maxHeight = '0';
+            if (chev) chev.style.transform = '';
+            el.style.borderColor = '';
+            el.style.background  = '';
+          }
+
+          function openDetail(i, p) {
+            var detail = document.getElementById('ggmr-detail-'+i);
+            var chev   = document.getElementById('ggmr-chev-'+i);
+            var el     = document.getElementById('ggmr-pt-'+i);
+            if (!detail) return;
+            // populate text
+            var inner = detail.querySelector('.ggmr-detail-inner');
+            var ps = inner.querySelectorAll('p');
+            ps[1].textContent = p.challenge;
+            ps[3].textContent = p.solution;
+            // open
+            detail.style.maxHeight = detail.scrollHeight + 400 + 'px';
+            if (chev) { chev.style.transform = 'rotate(180deg)'; chev.style.color = 'var(--orange)'; }
+            el.style.borderColor = 'var(--orange)';
+            el.style.background  = 'rgba(249,115,22,0.06)';
+          }
 
           function setActive(i) {
-            if (current >= 0) {
-              var old = document.getElementById('ggmr-pt-'+current);
-              old.style.borderColor = ''; old.style.background = '';
+            // close previous
+            if (current >= 0 && current !== i) closeDetail(current);
+            // toggle: click same item closes it
+            if (current === i) {
+              closeDetail(i);
+              current = -1;
+              return;
             }
             current = i;
             var p = points[i];
-            var el = document.getElementById('ggmr-pt-'+i);
-            el.style.borderColor = 'var(--orange)';
-            el.style.background  = 'rgba(249,115,22,0.06)';
+            // switch bill image if needed
             if (img.src.indexOf(p.page) === -1) {
               img.style.opacity = '0';
               hl.style.opacity  = '0';
@@ -3072,12 +3149,7 @@
             } else {
               placeHighlight(p);
             }
-            desc.style.opacity = '0';
-            setTimeout(function(){
-              chal.textContent = p.challenge;
-              sol.textContent  = p.solution;
-              desc.style.opacity = '1';
-            }, 150);
+            openDetail(i, p);
           }
 
           function placeHighlight(p) {
@@ -3104,7 +3176,10 @@
           window.ggmrPrev   = function(){ setActive((current - 1 + points.length) % points.length); };
 
           // start on first point after a short delay
-          setTimeout(function(){ setActive(0); }, 400);
+          setTimeout(function(){
+            current = -1; // ensure first call opens rather than toggles
+            setActive(0);
+          }, 400);
         })();
         </script>
       </div>
