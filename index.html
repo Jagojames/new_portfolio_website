@@ -95,6 +95,32 @@
     [data-theme="light"] ::-webkit-scrollbar-track { background: var(--bg); }
     [data-theme="light"] ::-webkit-scrollbar-thumb { background: #BBB; }
 
+    /* ─── Light mode: hero / galaxy ─── */
+    /* Vignette used hardcoded dark rgba — swap to bg colour */
+    [data-theme="light"] #galaxy-vignette {
+      background: linear-gradient(
+        to bottom,
+        rgba(245,244,240,0.18) 0%,
+        transparent 22%,
+        transparent 65%,
+        rgba(245,244,240,0.88) 100%
+      );
+    }
+    /* Galaxy particles are bright — multiply makes dark bg transparent on light surface */
+    [data-theme="light"] #galaxy-container canvas {
+      mix-blend-mode: multiply;
+      opacity: 0.82;
+    }
+    /* Hero title stays readable on light bg */
+    [data-theme="light"] #galaxy-content .hero-title {
+      color: var(--text);
+      text-shadow: 0 1px 18px rgba(245,244,240,0.7);
+    }
+    [data-theme="light"] #galaxy-content .tag {
+      color: var(--orange);
+      border-color: rgba(249,115,22,0.35);
+    }
+
     /* ─── Theme Toggle Button ─── */
     .theme-toggle {
       display: flex;
