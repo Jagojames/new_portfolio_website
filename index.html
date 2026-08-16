@@ -107,19 +107,8 @@
        No orange. No black. No heavy gradients.
        ══════════════════════════════════════════════ */
 
-    /* ── Galaxy: light-blue sky background so particles have a proper ground ── */
-    [data-theme="light"] #galaxy-intro {
-      background: linear-gradient(to bottom, #EAF2FF 0%, #F3F8FF 45%, #FFFFFF 100%);
-    }
-    /* Vignette: very subtle, fades only to white at the very bottom */
-    [data-theme="light"] #galaxy-vignette {
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        transparent 70%,
-        rgba(255,255,255,0.96) 100%
-      );
-    }
+    /* ── Galaxy ── */
+    [data-theme="light"] #galaxy-vignette { background: none; }
     [data-theme="light"] #galaxy-container canvas { opacity: 0.92; }
 
     /* ── Hero ── */
@@ -4447,10 +4436,10 @@
       var THREE = window.THREE;
       if (!THREE) return;
       if (t === 'light') {
-        m.stars.uniforms.uDenseColor.value  = new THREE.Color('#2B7FFF');
-        m.stars.uniforms.uSparseColor.value = new THREE.Color('#90C4FF');
-        m.dust.uniforms.uDenseColor.value   = new THREE.Color('#C8E4FF');
-        m.dust.uniforms.uSparseColor.value  = new THREE.Color('#C8E4FF');
+        m.stars.uniforms.uDenseColor.value  = new THREE.Color('#4FA3FF');
+        m.stars.uniforms.uSparseColor.value = new THREE.Color('#B8D8FF');
+        m.dust.uniforms.uDenseColor.value   = new THREE.Color('#DCF0FF');
+        m.dust.uniforms.uSparseColor.value  = new THREE.Color('#DCF0FF');
       } else {
         m.stars.uniforms.uDenseColor.value  = new THREE.Color('#1885ff');
         m.stars.uniforms.uSparseColor.value = new THREE.Color('#ffb28a');
