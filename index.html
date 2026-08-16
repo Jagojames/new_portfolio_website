@@ -58,13 +58,13 @@
     /* ─── Light Mode ─── */
     [data-theme="light"] {
       --bg:          #FFFFFF;
-      --surface:     #F4F7FF;
-      --surface2:    #E8EEFF;
-      --border:      #C5D1EC;
-      --text:        #0D1B3E;
-      --muted:       #4A6080;
+      --surface:     #FFFFFF;
+      --surface2:    #F5F8FF;
+      --border:      #E2E8F2;
+      --text:        #111827;
+      --muted:       #6B7A99;
       --orange:      #1769E0;
-      --orange-glow: rgba(23,105,224,0.10);
+      --orange-glow: rgba(23,105,224,0.08);
     }
     /* ─── Dot grid ─── */
     #dot-grid {
@@ -81,97 +81,101 @@
       50% { opacity: 0.35; }
     }
     [data-theme="light"] #dot-grid {
-      background-image: radial-gradient(circle, rgba(0,0,0,0.1) 1px, transparent 1px);
+      background-image: radial-gradient(circle, rgba(23,105,224,0.10) 1px, transparent 1px);
     }
 
     [data-theme="light"] body { -webkit-font-smoothing: auto; }
+    [data-theme="light"] nav {
+      background: #FFFFFF;
+    }
     [data-theme="light"] nav.scrolled {
-      background: rgba(245,244,240,0.92);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
       border-color: var(--border);
+      box-shadow: 0 1px 0 0 var(--border);
     }
     [data-theme="light"] .dot-bg {
-      background-image: radial-gradient(circle, #C8C6BF 1px, transparent 1px);
-      opacity: 0.7;
+      background-image: radial-gradient(circle, #C5D1EC 1px, transparent 1px);
+      opacity: 0.5;
     }
     [data-theme="light"] ::-webkit-scrollbar-track { background: var(--bg); }
     [data-theme="light"] ::-webkit-scrollbar-thumb { background: #BBB; }
 
     /* ══════════════════════════════════════════════
-       LIGHT MODE — full colour-system overrides
-       Blue + White + Blue-grey. No orange. No black.
+       LIGHT MODE — White · Blue · Blue-grey
+       Clean, minimal, Apple/Linear aesthetic.
+       No orange. No black. No heavy gradients.
        ══════════════════════════════════════════════ */
 
-    /* Galaxy vignette: was hardcoded dark rgba, now fades to white bg */
+    /* ── Galaxy ── */
     [data-theme="light"] #galaxy-vignette {
       background: linear-gradient(
         to bottom,
-        rgba(255,255,255,0.10) 0%,
+        rgba(255,255,255,0.08) 0%,
         transparent 20%,
-        transparent 62%,
-        rgba(255,255,255,0.92) 100%
+        transparent 64%,
+        rgba(255,255,255,0.94) 100%
       );
     }
-    /* Canvas blends cleanly on white — no multiply needed with blue particles */
-    [data-theme="light"] #galaxy-container canvas {
-      opacity: 0.90;
-    }
+    [data-theme="light"] #galaxy-container canvas { opacity: 0.88; }
 
-    /* Hero name → primary blue */
+    /* ── Hero ── */
     [data-theme="light"] #h-title,
-    [data-theme="light"] #h-title-below { color: #1769E0; }
-
-    /* "Founding Designer" tag → blue system */
-    [data-theme="light"] #galaxy-content .tag {
+    [data-theme="light"] #h-title-below          { color: #1769E0; }
+    [data-theme="light"] #galaxy-content .tag    {
       color: #1769E0;
-      border-color: rgba(23,105,224,0.35);
-      background: rgba(23,105,224,0.07);
+      border-color: rgba(23,105,224,0.30);
+      background: rgba(23,105,224,0.06);
     }
 
-    /* Buttons: blue bg → white text (currently hardcoded #000) */
-    [data-theme="light"] .btn-fill       { color: #fff; }
-    [data-theme="light"] .badge-orange   { color: #fff; }
-    [data-theme="light"] ::selection     { background: #1769E0; color: #fff; }
+    /* ── Buttons & interactive ── */
+    [data-theme="light"] .btn-fill               { color: #fff; }
+    [data-theme="light"] .cv-download            { color: #fff !important; }
+    [data-theme="light"] .badge-orange           { background: #1769E0; color: #fff; }
+    [data-theme="light"] ::selection             { background: #1769E0; color: #fff; }
 
-    /* LLM cursor: blue */
-    [data-theme="light"] .llm-cursor { background: #1769E0; }
+    /* ── Back button (project pages) ── */
+    [data-theme="light"] .back-btn:hover         { background: rgba(23,105,224,0.07); }
 
-    /* CTA glow: use blue tint */
+    /* ── Typewriter cursor & LLM cursor ── */
+    [data-theme="light"] .llm-cursor             { background: #1769E0; }
+
+    /* ── CTA glow ── */
     [data-theme="light"] .cta-glow {
-      background: radial-gradient(ellipse at center, rgba(23,105,224,0.14) 0%, transparent 70%);
+      background: radial-gradient(ellipse at center, rgba(23,105,224,0.12) 0%, transparent 70%);
     }
 
-    /* Scrollbar thumb */
-    [data-theme="light"] ::-webkit-scrollbar-thumb { background: #A0B4D8; }
+    /* ── Scrollbar ── */
+    [data-theme="light"] ::-webkit-scrollbar-thumb { background: #B8C8E0; }
 
-    /* Panel badge (Designer Setup) */
-    [data-theme="light"] .badge-orange { background: #1769E0; }
+    /* ── Skill / tool tags ── */
+    [data-theme="light"] .skill:hover            { border-color: #1769E0; color: #1769E0; }
+    [data-theme="light"] .cv-tool               { border-color: #DCE4F0; color: #6B7A99; }
 
-    /* Ticker / footer logo orange overrides */
-    [data-theme="light"] footer .f-logo { color: #1769E0; }
+    /* ── Stats / CV numbers ── */
+    [data-theme="light"] .stat-num              { color: #1769E0; }
+    [data-theme="light"] .cv-ach-num            { color: #1769E0; }
 
-    /* Skill tags hover */
-    [data-theme="light"] .skill:hover {
-      border-color: #1769E0;
-      color: #1769E0;
-    }
+    /* ── Footer ── */
+    [data-theme="light"] footer .f-logo         { color: #1769E0; }
 
-    /* Proj-next hover & nav active */
-    [data-theme="light"] .proj-next:hover { border-color: rgba(23,105,224,0.3); }
+    /* ── Proj-next ── */
+    [data-theme="light"] .proj-next:hover       { border-color: rgba(23,105,224,0.25); }
 
-    /* Stat numbers: blue instead of orange */
-    [data-theme="light"] .stat-num { color: #1769E0; }
-
-    /* CV achievement numbers */
-    [data-theme="light"] .cv-ach-num { color: #1769E0; }
-
-    /* Tool tags illuminate to blue */
-    [data-theme="light"] .cv-tool { border-color: #C5D1EC; color: #4A6080; }
-
-    /* Blue pills (4F9EFF chips) get slightly darker in light mode for contrast */
-    [data-theme="light"] span[style*="4F9EFF"] {
+    /* ── Blue pill chips (4F9EFF) → accessible blue in light ── */
+    [data-theme="light"] span[style*="4F9EFF"]  {
       color: #1769E0 !important;
-      border-color: rgba(23,105,224,0.35) !important;
+      border-color: rgba(23,105,224,0.30) !important;
+      background: rgba(23,105,224,0.06) !important;
     }
+
+    /* ── Panel card (Designer Setup) ── */
+    [data-theme="light"] .panel-card {
+      box-shadow: 0 2px 16px rgba(23,105,224,0.08);
+    }
+
+    /* ── Dot grid: lighter in light mode ── */
+    [data-theme="light"] #dot-grid { opacity: 0.4; }
 
     /* ─── Theme Toggle Button ─── */
     .theme-toggle {
