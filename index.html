@@ -4999,7 +4999,7 @@
 
     var EASE = 'power4.out';
 
-    // ── Header: eyebrow → name (from left) → subtitle (from right) → contact → button ──
+    // ── Header: above-the-fold, so play as a timed entrance (not scroll-driven) ──
     var header = page.querySelector('.cv-header');
     if (header) {
       var eyebrow = header.querySelector('.proj-eyebrow');
@@ -5008,22 +5008,20 @@
       var contact = header.querySelectorAll('p')[1];
       var dlBtn   = header.querySelector('.cv-download');
 
-      var htl = gsap.timeline({
-        scrollTrigger: {
-          trigger: header,
-          start: 'top 92%',
-          end:   'top 18%',
-          scrub: 1.8,
-        }
-      });
+      // Set initial hidden states
+      if (eyebrow) gsap.set(eyebrow, { opacity: 0, y: 16 });
+      if (name)    gsap.set(name,    { opacity: 0, x: -40, scale: 0.96 });
+      if (subline) gsap.set(subline, { opacity: 0, x: 28,  y: 10 });
+      if (contact) gsap.set(contact, { opacity: 0, y: 14 });
+      if (dlBtn)   gsap.set(dlBtn,   { opacity: 0, y: 18 });
 
-      if (eyebrow) { gsap.set(eyebrow, { opacity: 0, y: 14 });              htl.to(eyebrow, { opacity: 1, y: 0,            ease: EASE }, 0);    }
-      if (name)    { gsap.set(name,    { opacity: 0, x: -42, scale: 0.96 }); htl.to(name,    { opacity: 1, x: 0, scale: 1, ease: EASE }, 0.06); }
-      if (subline) { gsap.set(subline, { opacity: 0, x: 30,  y: 10 });       htl.to(subline, { opacity: 1, x: 0, y: 0,     ease: EASE }, 0.12); }
-      if (contact) { gsap.set(contact, { opacity: 0, y: 14 });               htl.to(contact, { opacity: 1, y: 0,            ease: EASE }, 0.18); }
-      if (dlBtn)   { gsap.set(dlBtn,   { opacity: 0, y: 18 });               htl.to(dlBtn,   { opacity: 1, y: 0,            ease: EASE }, 0.24); }
-
-      cvTriggers.push(htl.scrollTrigger);
+      // Staggered entrance timeline — starts after the page fade-in (0.5s)
+      var htl = gsap.timeline({ delay: 0.45 });
+      if (eyebrow) htl.to(eyebrow, { opacity: 1, y: 0,            duration: 0.7, ease: 'power3.out' }, 0);
+      if (name)    htl.to(name,    { opacity: 1, x: 0, scale: 1,  duration: 0.8, ease: 'power4.out' }, 0.1);
+      if (subline) htl.to(subline, { opacity: 1, x: 0, y: 0,      duration: 0.7, ease: 'power3.out' }, 0.22);
+      if (contact) htl.to(contact, { opacity: 1, y: 0,            duration: 0.6, ease: 'power3.out' }, 0.34);
+      if (dlBtn)   htl.to(dlBtn,   { opacity: 1, y: 0,            duration: 0.6, ease: 'power3.out' }, 0.44);
     }
 
     // ── Achievement cards: depth-plane entrance matching Impact stat boxes ──
