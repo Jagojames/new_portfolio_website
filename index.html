@@ -57,13 +57,14 @@
 
     /* ─── Light Mode ─── */
     [data-theme="light"] {
-      --bg: #F5F4F0;
-      --surface: #FFFFFF;
-      --surface2: #EDECE8;
-      --border: #C8C6BF;
-      --text: #111111;
-      --muted: #4A4A4A;
-      --orange-glow: rgba(249,115,22,0.12);
+      --bg:          #FFFFFF;
+      --surface:     #F4F7FF;
+      --surface2:    #E8EEFF;
+      --border:      #C5D1EC;
+      --text:        #0D1B3E;
+      --muted:       #4A6080;
+      --orange:      #1769E0;
+      --orange-glow: rgba(23,105,224,0.10);
     }
     /* ─── Dot grid ─── */
     #dot-grid {
@@ -95,30 +96,81 @@
     [data-theme="light"] ::-webkit-scrollbar-track { background: var(--bg); }
     [data-theme="light"] ::-webkit-scrollbar-thumb { background: #BBB; }
 
-    /* ─── Light mode: hero / galaxy ─── */
-    /* Vignette used hardcoded dark rgba — swap to bg colour */
+    /* ══════════════════════════════════════════════
+       LIGHT MODE — full colour-system overrides
+       Blue + White + Blue-grey. No orange. No black.
+       ══════════════════════════════════════════════ */
+
+    /* Galaxy vignette: was hardcoded dark rgba, now fades to white bg */
     [data-theme="light"] #galaxy-vignette {
       background: linear-gradient(
         to bottom,
-        rgba(245,244,240,0.18) 0%,
-        transparent 22%,
-        transparent 65%,
-        rgba(245,244,240,0.88) 100%
+        rgba(255,255,255,0.10) 0%,
+        transparent 20%,
+        transparent 62%,
+        rgba(255,255,255,0.92) 100%
       );
     }
-    /* Galaxy particles are bright — multiply makes dark bg transparent on light surface */
+    /* Canvas blends cleanly on white — no multiply needed with blue particles */
     [data-theme="light"] #galaxy-container canvas {
-      mix-blend-mode: multiply;
-      opacity: 0.82;
+      opacity: 0.90;
     }
-    /* Hero title stays readable on light bg */
-    [data-theme="light"] #galaxy-content .hero-title {
-      color: var(--text);
-      text-shadow: 0 1px 18px rgba(245,244,240,0.7);
-    }
+
+    /* Hero name → primary blue */
+    [data-theme="light"] #h-title,
+    [data-theme="light"] #h-title-below { color: #1769E0; }
+
+    /* "Founding Designer" tag → blue system */
     [data-theme="light"] #galaxy-content .tag {
-      color: var(--orange);
-      border-color: rgba(249,115,22,0.35);
+      color: #1769E0;
+      border-color: rgba(23,105,224,0.35);
+      background: rgba(23,105,224,0.07);
+    }
+
+    /* Buttons: blue bg → white text (currently hardcoded #000) */
+    [data-theme="light"] .btn-fill       { color: #fff; }
+    [data-theme="light"] .badge-orange   { color: #fff; }
+    [data-theme="light"] ::selection     { background: #1769E0; color: #fff; }
+
+    /* LLM cursor: blue */
+    [data-theme="light"] .llm-cursor { background: #1769E0; }
+
+    /* CTA glow: use blue tint */
+    [data-theme="light"] .cta-glow {
+      background: radial-gradient(ellipse at center, rgba(23,105,224,0.14) 0%, transparent 70%);
+    }
+
+    /* Scrollbar thumb */
+    [data-theme="light"] ::-webkit-scrollbar-thumb { background: #A0B4D8; }
+
+    /* Panel badge (Designer Setup) */
+    [data-theme="light"] .badge-orange { background: #1769E0; }
+
+    /* Ticker / footer logo orange overrides */
+    [data-theme="light"] footer .f-logo { color: #1769E0; }
+
+    /* Skill tags hover */
+    [data-theme="light"] .skill:hover {
+      border-color: #1769E0;
+      color: #1769E0;
+    }
+
+    /* Proj-next hover & nav active */
+    [data-theme="light"] .proj-next:hover { border-color: rgba(23,105,224,0.3); }
+
+    /* Stat numbers: blue instead of orange */
+    [data-theme="light"] .stat-num { color: #1769E0; }
+
+    /* CV achievement numbers */
+    [data-theme="light"] .cv-ach-num { color: #1769E0; }
+
+    /* Tool tags illuminate to blue */
+    [data-theme="light"] .cv-tool { border-color: #C5D1EC; color: #4A6080; }
+
+    /* Blue pills (4F9EFF chips) get slightly darker in light mode for contrast */
+    [data-theme="light"] span[style*="4F9EFF"] {
+      color: #1769E0 !important;
+      border-color: rgba(23,105,224,0.35) !important;
     }
 
     /* ─── Theme Toggle Button ─── */
@@ -4379,11 +4431,33 @@
   (function() {
     const btn = document.getElementById('themeToggle');
     const saved = localStorage.getItem('theme') || 'dark';
+    // Galaxy colours per theme
+    // Dark:  dense=#1885ff  sparse=#ffb28a  dust=#ffdace
+    // Light: dense=#1464D8  sparse=#60A5FA  dust=#BAD4F5
+    window._applyGalaxyTheme = function(t) {
+      var m = window._galaxyMats;
+      if (!m) return;
+      var THREE = window.THREE;
+      if (!THREE) return;
+      if (t === 'light') {
+        m.stars.uniforms.uDenseColor.value  = new THREE.Color('#1464D8');
+        m.stars.uniforms.uSparseColor.value = new THREE.Color('#60A5FA');
+        m.dust.uniforms.uDenseColor.value   = new THREE.Color('#BAD4F5');
+        m.dust.uniforms.uSparseColor.value  = new THREE.Color('#BAD4F5');
+      } else {
+        m.stars.uniforms.uDenseColor.value  = new THREE.Color('#1885ff');
+        m.stars.uniforms.uSparseColor.value = new THREE.Color('#ffb28a');
+        m.dust.uniforms.uDenseColor.value   = new THREE.Color('#ffdace');
+        m.dust.uniforms.uSparseColor.value  = new THREE.Color('#ffdace');
+      }
+    };
+
     function applyTheme(t) {
       document.documentElement.setAttribute('data-theme', t);
       btn.textContent = t === 'light' ? '🌙' : '☀';
       btn.setAttribute('aria-label', t === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
       localStorage.setItem('theme', t);
+      window._applyGalaxyTheme(t);
     }
     applyTheme(saved);
     btn.addEventListener('click', () => {
@@ -5781,6 +5855,9 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js'
 
+// Expose THREE globally so applyTheme (regular script) can recolour particles
+window.THREE = THREE
+
 /* --- Galaxy constants --- */
 const GALAXY_RADIUS      = 13
 const ARM_COUNT          = 2
@@ -5997,6 +6074,13 @@ function bootGalaxy() {
   stars.material.uniforms.uPixelRatio.value = pixelRatio
   dust.material.uniforms.uPixelRatio.value  = pixelRatio
   galaxy.add(stars.points, dust.points)
+
+  // Expose materials so applyTheme can recolour particles live
+  window._galaxyMats = { stars: stars.material, dust: dust.material }
+  // Apply correct colours for initial theme
+  window._applyGalaxyTheme && window._applyGalaxyTheme(
+    document.documentElement.getAttribute('data-theme') || 'dark'
+  )
 
   const composer = new EffectComposer(renderer)
   composer.setPixelRatio(pixelRatio)
