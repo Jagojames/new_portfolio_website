@@ -5026,16 +5026,24 @@
       cvTriggers.push(htl.scrollTrigger);
     }
 
-    // ── Achievement cards: staggered depth entrance ──
+    // ── Achievement cards: depth-plane entrance matching Impact stat boxes ──
+    var achDepth = [
+      { y: 70,  scale: 0.93, start: 'top 90%', end: 'top 16%' },
+      { y: 82,  scale: 0.94, start: 'top 88%', end: 'top 12%' },
+      { y: 94,  scale: 0.94, start: 'top 86%', end: 'top 8%'  },
+      { y: 106, scale: 0.95, start: 'top 84%', end: 'top 4%'  },
+      { y: 118, scale: 0.95, start: 'top 82%', end: 'top 0%'  },
+    ];
     page.querySelectorAll('.cv-ach').forEach(function(ach, i) {
-      gsap.set(ach, { opacity: 0, y: 55 + i * 8, scale: 0.93 });
+      var d = achDepth[Math.min(i, achDepth.length - 1)];
+      gsap.set(ach, { opacity: 0, y: d.y, scale: d.scale });
       var anim = gsap.to(ach, {
         opacity: 1, y: 0, scale: 1, ease: EASE,
         scrollTrigger: {
           trigger: ach,
-          start: 'top 90%',
-          end:   'top 28%',
-          scrub: 2.0,
+          start: d.start,
+          end:   d.end,
+          scrub: 2.2,
         }
       });
       cvTriggers.push(anim.scrollTrigger);
