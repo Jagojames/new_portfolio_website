@@ -4603,7 +4603,7 @@
     trigger: '#galaxy-scroll-spacer',
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 1.4,   // balanced scrub,responsive but still smooth
+    scrub: 0.3,   // fast response — camera smoothing is handled in the render loop
     onUpdate(self) {
       const p = self.progress;
 
@@ -6100,6 +6100,10 @@ function bootGalaxy() {
 
   /* scroll-driven state (updated by window.__galaxyScroll) */
   const scrollState = { active: false, camZ: 26, camY: 9, lookY: -1.5, explode: 0 }
+
+  // Smoothed camera targets — lerped in the render loop so motion feels weighty
+  // even though scrub is fast. These start at the formation end-state values.
+  const camS = { y: 9, z: 26, lookY: -1.5 }
   window.__galaxyScroll = (p) => {
     scrollState.active = p > 0.01
     const camT = Math.min(1, p / 0.6)
@@ -6145,17 +6149,24 @@ function bootGalaxy() {
     dust.material.uniforms.uExplode.value  = scrollState.explode
 
     // Camera: formation easing when idle, scroll override when scrolling
-    const baseY = scrollState.active ? scrollState.camY  : THREE.MathUtils.lerp(18, 9, eased)
-    const baseZ = scrollState.active ? scrollState.camZ  : THREE.MathUtils.lerp(52, 26, eased)
-    const lookY = scrollState.active ? scrollState.lookY : THREE.MathUtils.lerp(0, -1.5, eased)
+    const targetY     = scrollState.active ? scrollState.camY    : THREE.MathUtils.lerp(18, 9,    eased)
+    const targetZ     = scrollState.active ? scrollState.camZ    : THREE.MathUtils.lerp(52, 26,   eased)
+    const targetLookY = scrollState.active ? scrollState.lookY   : THREE.MathUtils.lerp(0, -1.5,  eased)
+
+    // Lerp camera toward targets — provides the weighted, cinematic feel
+    // independently of scrub, so scrub can be fast (responsive) without feeling jerky
+    const lf = 0.055   // ~97% convergence per second at 60fps
+    camS.y     += (targetY     - camS.y)     * lf
+    camS.z     += (targetZ     - camS.z)     * lf
+    camS.lookY += (targetLookY - camS.lookY) * lf
 
     smoothed.x += (pointer.x - smoothed.x) * 0.04
     smoothed.y += (pointer.y - smoothed.y) * 0.04
 
     // Dampen pointer parallax during explosion so it doesn't fight the effect
     const parallaxScale = 1 - scrollState.explode * 0.9
-    camera.position.set(smoothed.x * 2.4 * parallaxScale, baseY + smoothed.y * 1.6 * parallaxScale, baseZ)
-    camera.lookAt(0, lookY, 0)
+    camera.position.set(smoothed.x * 2.4 * parallaxScale, camS.y + smoothed.y * 1.6 * parallaxScale, camS.z)
+    camera.lookAt(0, camS.lookY, 0)
 
     // Rotation speeds up during explosion for added drama
     galaxy.rotation.y = elapsed * (0.012 + scrollState.explode * 0.06)
