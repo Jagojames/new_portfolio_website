@@ -1833,19 +1833,19 @@
           <div style="padding:36px">
             <p style="font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:32px">Exploring how AI could create a more accessible and conversational experience for interacting with complex relocation information on mobile. Most existing tools are designed for desktop power users, this explored a different kind of entry point.</p>
             <div style="display:flex;gap:10px;margin-bottom:24px">
-              <button onclick="switchMobileProto('text')" id="btn-proto-text" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;border:1px solid #4F9EFF;background:rgba(79,158,255,0.12);color:#4F9EFF;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all 0.2s">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="16" height="16" rx="2"/><polygon points="22,8 22,16 18,12" fill="currentColor" stroke="none"/></svg>
-                Text version
-              </button>
-              <button onclick="switchMobileProto('voice')" id="btn-proto-voice" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all 0.2s">
+              <button onclick="switchMobileProto('voice')" id="btn-proto-voice" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;border:1px solid #4F9EFF;background:rgba(79,158,255,0.12);color:#4F9EFF;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all 0.2s">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
                 Voice version
+              </button>
+              <button onclick="switchMobileProto('text')" id="btn-proto-text" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all 0.2s">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="16" height="16" rx="2"/><polygon points="22,8 22,16 18,12" fill="currentColor" stroke="none"/></svg>
+                Text version
               </button>
             </div>
             <div style="display:flex;justify-content:center;align-items:center;padding:48px 20px;background:var(--surface2);border:1px solid var(--border);border-radius:10px">
               <iframe
                 id="mobile-ai-iframe"
-                src="eca-mobile-ai_22.html"
+                src="eca-mobile-ai-voice.html"
                 width="393"
                 height="852"
                 frameborder="0"
