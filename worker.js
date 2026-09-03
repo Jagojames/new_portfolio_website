@@ -126,7 +126,14 @@ export default {
       });
     }
 
-    // Authenticated — pass request through to origin
-    return fetch(request);
+    // Authenticated — pass request through to GitHub Pages origin directly
+    const originUrl = new URL(request.url);
+    originUrl.hostname = "jagojames.github.io";
+    return fetch(originUrl.toString(), {
+      method: request.method,
+      headers: request.headers,
+      body: request.body,
+      redirect: "follow",
+    });
   },
 };
